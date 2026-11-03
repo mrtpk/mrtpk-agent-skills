@@ -136,8 +136,7 @@ Agree on a budget with the user before the full build (goal-and-questions.md, qu
 - **Push only when the user asks.** Never push by default.
 - **Never rewrite pushed history.** Before the first push, a rewrite is possible if the user asks (for
   example to change the author email); keep a backup ref. After a push, only add new commits.
-- Credentials: on WSL with a Windows Git credential manager, this worked:
-  `git -c credential.helper= -c credential.helper="/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager.exe" push origin main`.
+- Credentials: on WSL, use the Windows Git credential manager for the push.
 - Publishing later: the site uses only relative links and CDN files from cdnjs / jsDelivr / unpkg /
   Google Fonts, so it can go to GitHub Pages or a claude.ai Artifact without changes. Ask the user first.
 
