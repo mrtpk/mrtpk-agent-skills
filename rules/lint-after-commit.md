@@ -1,13 +1,23 @@
 ---
-description: Run flake8 and mypy after every commit to keep code clean
+description: Run flake8 and mypy after every commit in a Python repository
 alwaysApply: true
 ---
 
-# Lint & Type Check After Commit
+# Lint and type check after commit
 
-After making a commit, always run `flake8` and `mypy` to ensure clean code.
+Apply this rule only when the repository has Python files.
 
-- Run both inside the workspace virtual environment (see the virtual-env rule).
-- Commands: `flake8 .` and `mypy .`
-- If either reports issues, fix them and amend/add a follow-up commit before
-  continuing.
+After each commit, run flake8 and mypy in the workspace environment (see the virtual-env rule).
+
+uv:
+
+- `uv run --with flake8 flake8 . --extend-exclude .venv`
+- `uv run --with mypy mypy . --exclude '\.venv'`
+
+conda:
+
+- `conda run -n <env> flake8 . --extend-exclude .venv`
+- `conda run -n <env> mypy . --exclude '\.venv'`
+- When flake8 or mypy is absent, install it with `conda install -n <env> flake8 mypy`.
+
+When a command reports issues, fix the issues. Then make a new commit with the fixes. Do not amend a commit that is pushed.
