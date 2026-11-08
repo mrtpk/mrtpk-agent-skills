@@ -11,10 +11,10 @@ The skill has the figure toolkit in `tools/`. Copy it into the blog repo (for ex
 Build the figures of one post:
 
 ```
-uv run --with cairosvg python <tools>/build_figures.py <post folder> [--lib <folder with svglib.py and figkit.py>]
+uv run --with cairosvg --with numpy --with pillow python <tools>/build_figures.py <post folder> [--lib <folder with svglib.py and figkit.py>]
 ```
 
-`--lib` defaults to the folder of `build_figures.py`. Install the Inter font, so that the PNG matches the SVG.
+Add `--with <package>` for every package that a figure script imports (figures that compute data from the post's script need numpy, and often pillow). `--lib` defaults to the folder of `build_figures.py`. Install the Inter font, so that the PNG matches the SVG.
 
 When the blog repo has its own `build_figures.py`, use it. It can have other arguments (for example no `--lib`); read its usage first.
 

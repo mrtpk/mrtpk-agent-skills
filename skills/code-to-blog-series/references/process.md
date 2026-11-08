@@ -56,7 +56,7 @@ For each part:
 3. Write the figure scripts from `templates/figure.py`. Build them. Read each PNG with the Read tool. Fix overlaps and clipping.
 4. Extract every code block of the post into a temporary file and run it. The output must match the post.
 5. Write `linkedin-post.md` from `templates/linkedin-post.md` (optional).
-6. Commit the part on the branch that the author named.
+6. Do not commit yet. Commit after the review in Phase 6, so that the review fixes stay in one commit per post.
 
 When the author says "run unattended", do all parts, then report once.
 
@@ -65,6 +65,7 @@ When the author says "run unattended", do all parts, then report once.
 1. Start a fact-check subagent with the prompt in `review.md`. Give it the post folders, the KB and the scripts. Use the model and effort that the author names.
 2. Triage each finding. Check it in the code or in the script output. Reject findings that are wrong; tell the author why.
 3. Apply the confirmed fixes. Re-run the scripts and the figures.
+4. Commit one commit per post on the branch that the author named. Changes after this (author comments) go in new commits, one per post.
 
 ## Phase 7: Author review
 

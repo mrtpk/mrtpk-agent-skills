@@ -50,12 +50,15 @@ Details and gates: `references/process.md`.
 
 ## Hard rules
 
-- Every number in a post comes from a script output. Do not type a number by hand. The only exception: a result that the author approves for publication from memory or from the author's own documents (tag `[author]` or `[doc]`; see `pitfalls.md`, "Lost numbers"). Write it as the author approved it.
+- Measured numbers come from a script output. Do not type a measured number by hand. This is the default, not an absolute rule. Other numbers are allowed when their source is clear in the post and in the KB:
+  - results that a cited paper or reference reports (say "the paper reports ..." and link it; tag `[ref]`);
+  - results that the author approves from memory or from the author's own documents (tag `[author]` or `[doc]`; see `pitfalls.md`, "Lost numbers").
+  Copy them exactly from the source. Do not mix them with script numbers in one claim without saying which is which.
 - Every code block in a post runs. Extract and run each block before you commit.
 - Every claim about a third-party library cites a pinned file:line in the KB. The post does not cite it.
 - The KB is never published. Keep it out of the blog repo.
 - Apply `references/publishing-safety.md` to every published file.
 - Facts that only the author knows get the tag `[author]`. Do not invent an anecdote, a date, a motive or a result.
-- Save the author's decisions as you get them: in the agent's persistent memory when it has one, and always in `notes/questions.md` (answer and date).
+- Save the author's decisions as you get them: in the agent's persistent memory when it has one, and always in `notes/questions.md`. The answer date is for the internal notes only; it does not override a date rule for the posts.
 - Use the workspace Python environment (uv by default): `uv run --with numpy python <script>.py`.
 - Do not push, merge or publish without an explicit request.

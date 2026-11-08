@@ -9,8 +9,8 @@ Apply this check to every published file: posts, scripts, figure scripts, SVG, P
    - the internal project name
    - organisation names in old URLs (for example a GitHub org in an eval script)
    - internal constant names, file names and paths of the original code
-2. Grep for code ownership phrases: "my code", "our code", "the code I have", "in the code", "commented out", "the original source", "line ".
-3. Grep for accuracy claims: "%", "top-1", "top1", "accuracy". Each one must come from a script in the post, or be the agreed sentence about lost numbers.
+2. Grep for code ownership phrases: "my code", "our code", "the code I have", "in the code", "commented out", "the original source", and line citations. Use word boundaries, so that "line" does not match "pipeline" or "online": `grep -rniE '\bline [0-9]+|\blines? [0-9]+-[0-9]+|\.py:[0-9]+' <files>`.
+3. Grep for accuracy claims: "%", "top-1", "top1", "accuracy", "F1", "FPS". Each one must come from a script in the post, a named reference, or a result that the author approved.
 4. Check that no file in `notes/` or the KB is in the blog repo.
 5. Check the figure scripts: the docstrings cite the series scripts, not the original source files.
 

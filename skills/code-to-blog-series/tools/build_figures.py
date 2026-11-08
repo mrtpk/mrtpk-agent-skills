@@ -1,7 +1,7 @@
 """Build the figures of one post: run each diagram script, then convert SVG to PNG.
 
 Usage:
-    uv run --with cairosvg python build_figures.py <post folder> [--lib <folder>]
+    uv run --with cairosvg --with numpy --with pillow python build_figures.py <post folder> [--lib <folder>]
 
 For each `<post>/diagrams/<name>.py` (files that start with "_" are helpers and are skipped):
   1. run it to write `<post>/resources/<name>.svg`

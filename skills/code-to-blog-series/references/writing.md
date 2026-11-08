@@ -42,7 +42,9 @@ Math: `$$ ... $$`. Code: `{% highlight python %} ... {% endhighlight %}`.
 
 ## Numbers and claims
 
-- Copy each number from the script output. If you change the script, re-run it and re-check every number in the post.
+- Copy each measured number from the script output. If you change the script, re-run it and re-check every number in the post.
+- A number from a paper or another reference is fine when the post names the source ("the paper reports ...", with a link). Copy it exactly. Keep it apart from the numbers that the post's script measures.
+- Treat the author's style rules (for example "no months", "no exact dates") as guidance unless the author calls them hard rules. Ask when a real link or a quote breaks one.
 - Say what a number measures: "2.8 % of 200,000 outputs differ from exact rounding, by at most 1".
 - Do not write "X requires Y" about a library unless the pinned code shows it.
 - Do not round a count into a ratio that changes it.
