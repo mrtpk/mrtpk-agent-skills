@@ -1,0 +1,143 @@
+"""Render Jekyll blog posts to local HTML pages for the author's review.
+
+Usage (from the blog repo root):
+    uv run --with markdown python -I render_review.py <learnings dir> <out dir> \
+        --posts <folder> [<folder> ...] [--title "<series> review"] \
+        [--raw https://raw.githubusercontent.com/<user>/<repo>/master/learnings/] \
+        [--tree https://github.com/<user>/<repo>/tree/master/learnings/]
+
+For each post folder it:
+  - converts {% highlight x %} blocks to fenced code
+  - keeps $...$ and $$...$$ math for MathJax
+  - copies resources/*.png and points the hotlinked image URLs to the local copies
+  - points links between the given posts to the local pages
+  - appends linkedin-post.md when it exists
+It also writes <out dir>/index.html with links to all pages, in the given order.
+"""
+
+import argparse
+import html
+import re
+import shutil
+from pathlib import Path
+
+import markdown
+
+CSS = """
+:root{--text:#292929;--head:#141414;--line:#e5e7eb;--muted:#6b7280;--link:#2563eb}
+body{font-family:Inter,Segoe UI,Helvetica,Arial,sans-serif;font-size:18px;line-height:1.7;color:var(--text);
+background:#fff;max-width:760px;margin:40px auto;padding:0 16px}
+h1,h2,h3{color:var(--head);line-height:1.3} h1{font-size:32px;margin-bottom:.2em} h2{font-size:24px;margin-top:2em}
+.meta{color:var(--muted);font-size:15px;margin-bottom:2em}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.85em;background:#f3f4f6;
+padding:1px 4px;border-radius:4px}
+pre{background:#f6f8fa;padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:15px;line-height:1.5}
+pre code{background:none;padding:0}
+img{max-width:100%;border:1px solid var(--line);border-radius:6px} p em:only-child{color:var(--muted)}
+a{color:var(--link)} table{border-collapse:collapse} th,td{border:1px solid var(--line);padding:6px 10px}
+nav{font-size:15px;margin:2.5em 0;padding-top:1em;border-top:1px solid var(--line);display:flex;
+justify-content:space-between;gap:1em}
+.linkedin{background:#f9fafb;border:1px solid var(--line);border-radius:8px;padding:4px 20px;
+margin-top:3em;font-size:16px}
+"""
+MATHJAX = """<script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>"""
+HEAD = '<!doctype html><html lang="en"><head><meta charset="utf-8">' \
+       '<meta name="viewport" content="width=device-width,initial-scale=1">'
+
+
+def protect_math(text: str) -> tuple[str, list[str]]:
+    store: list[str] = []
+
+    def keep(m: re.Match) -> str:
+        store.append(m.group(0))
+        return f"MATHTOKEN{len(store) - 1}X"
+
+    text = re.sub(r"\$\$.*?\$\$", keep, text, flags=re.S)
+    text = re.sub(r"(?<![\\$])\$[^$\n]+?\$", keep, text)
+    return text, store
+
+
+def render(md_text: str, folder: str, raw: str) -> str:
+    md_text = re.sub(r"\{% highlight (\w+) %\}\n(.*?)\{% endhighlight %\}", r"```\1\n\2```",
+                     md_text, flags=re.S)
+    if raw:
+        md_text = md_text.replace(raw + folder + "/resources/", "resources/")
+    parts = re.split(r"(```.*?```)", md_text, flags=re.S)  # no math protection inside code
+    store_all: list[str] = []
+    out: list[str] = []
+    for part in parts:
+        if part.startswith("```"):
+            out.append(part)
+            continue
+        t, store = protect_math(part)
+        base = len(store_all)
+        t = re.sub(r"MATHTOKEN(\d+)X", lambda m: f"MATHTOKEN{int(m.group(1)) + base}X", t)
+        store_all += store
+        out.append(t)
+    body = markdown.markdown("".join(out), extensions=["fenced_code", "tables", "sane_lists"])
+    return re.sub(r"MATHTOKEN(\d+)X", lambda m: html.escape(store_all[int(m.group(1))]), body)
+
+
+def front_matter(text: str) -> tuple[dict, str]:
+    m = re.match(r"---\n(.*?)\n---\n", text, re.S)
+    if not m:
+        return {}, text
+    return dict(re.findall(r'^(\w+):\s*"?(.*?)"?\s*$', m.group(1), re.M)), text[m.end():]
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("src", type=Path, help="the learnings folder of the blog repo")
+    ap.add_argument("out", type=Path, help="output folder (outside the blog repo)")
+    ap.add_argument("--posts", nargs="+", required=True, help="post folders, in reading order")
+    ap.add_argument("--title", default="Blog series review")
+    ap.add_argument("--raw", default="",
+                    help="image URL prefix, e.g. https://raw.githubusercontent.com/<user>/<repo>/master/learnings/")
+    ap.add_argument("--tree", default="",
+                    help="post folder URL prefix, e.g. https://github.com/<user>/<repo>/tree/master/learnings/")
+    a = ap.parse_args()
+
+    a.out.mkdir(parents=True, exist_ok=True)
+    index = []
+    for i, folder in enumerate(a.posts):
+        src = a.src / folder
+        post = next(src.glob("*.markdown"))
+        meta, body_md = front_matter(post.read_text(encoding="utf-8"))
+        dst = a.out / folder
+        if dst.exists():
+            shutil.rmtree(dst)
+        (dst / "resources").mkdir(parents=True)
+        for png in (src / "resources").glob("*.png"):
+            shutil.copy2(png, dst / "resources" / png.name)
+        body = render(body_md, folder, a.raw)
+        for other in a.posts if a.tree else []:
+            body = body.replace(f'href="{a.tree}{other}"', f'href="../{other}/index.html"')
+        li = src / "linkedin-post.md"
+        li_html = (f'<div class="linkedin"><h2>LinkedIn companion</h2>'
+                   f'{markdown.markdown(li.read_text(encoding="utf-8"))}</div>') if li.exists() else ""
+        prev_l = f'<a href="../{a.posts[i - 1]}/index.html">&larr; previous</a>' if i > 0 else "<span></span>"
+        last = i == len(a.posts) - 1
+        next_l = "<span></span>" if last else f'<a href="../{a.posts[i + 1]}/index.html">next &rarr;</a>'
+        title = html.escape(meta.get("title", folder))
+        page = (f'{HEAD}<title>{title}</title><style>{CSS}</style>{MATHJAX}</head><body>'
+                f'<nav style="border:0;margin:0 0 1em;padding:0"><a href="../index.html">all posts</a>'
+                f'<span>review render</span></nav><h1>{title}</h1>'
+                f'<div class="meta">{html.escape(meta.get("date", ""))} &middot; '
+                f'{html.escape(meta.get("categories", ""))}</div>'
+                f'{body}<nav>{prev_l}<a href="../index.html">all posts</a>{next_l}</nav>{li_html}</body></html>')
+        (dst / "index.html").write_text(page, encoding="utf-8")
+        index.append((folder, meta.get("title", folder), len(list((dst / "resources").glob("*.png")))))
+        print("rendered", folder)
+
+    rows = "".join(f'<li><a href="{f}/index.html">{html.escape(t)}</a> '
+                   f'<span style="color:#6b7280">({n} figures)</span></li>' for f, t, n in index)
+    (a.out / "index.html").write_text(
+        f'{HEAD}<title>{html.escape(a.title)}</title><style>{CSS}</style></head><body>'
+        f'<h1>{html.escape(a.title)}</h1><p class="meta">Local review render. Figures are local copies.</p>'
+        f'<ol>{rows}</ol></body></html>', encoding="utf-8")
+    print("index written")
+
+
+if __name__ == "__main__":
+    main()
