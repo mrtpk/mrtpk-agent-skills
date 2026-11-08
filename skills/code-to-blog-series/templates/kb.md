@@ -12,9 +12,10 @@
 | Tag | Meaning |
 |---|---|
 | **[code]** | Read from the source, with file:line |
-| **[author]** | Confirmed by the author from memory; not in the code |
-| **[ref]** | From the pinned reference (<name> <tag>), with file:line |
-| **[sim]** | Reproduced by a script in this session; script name and numbers given |
+| **[author]** | Confirmed by the author in this session; not in the code |
+| **[doc]** | From a document or media file by the author or the team; file or URL with page, section or timestamp |
+| **[ref]** | From the pinned reference (<repo tag, or arXiv id and version>), with file:line or section/figure/table |
+| **[sim]** | Measured or reproduced by a script in this session; script name and numbers given |
 | **[unknown]** | Nobody remembers it; left open |
 
 ## 1. What the system was

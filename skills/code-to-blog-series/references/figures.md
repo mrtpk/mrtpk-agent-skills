@@ -16,6 +16,8 @@ uv run --with cairosvg python <tools>/build_figures.py <post folder> [--lib <fol
 
 `--lib` defaults to the folder of `build_figures.py`. Install the Inter font, so that the PNG matches the SVG.
 
+When the blog repo has its own `build_figures.py`, use it. It can have other arguments (for example no `--lib`); read its usage first.
+
 ## Rules
 
 - One Python script per figure. No Mermaid. No hand-written SVG.

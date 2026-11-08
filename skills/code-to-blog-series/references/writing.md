@@ -1,6 +1,6 @@
 # Writing the posts
 
-The posts use the blog's voice, not ASD-STE100. When the blog repo has a style guide (for example `STYLE.md`), it is the source of truth. Otherwise use this file.
+The posts use the blog's voice, not ASD-STE100. When the blog repo has a style guide (for example `STYLE.md`), it is the source of truth, also for the title and date format. When the style guide and an existing series in the repo disagree, follow the existing series and tell the author. Otherwise use this file.
 
 ## Voice
 
@@ -26,7 +26,7 @@ The posts use the blog's voice, not ASD-STE100. When the blog repo has a style g
 10. `**Reference:**` list with link references.
 11. The link to the next part.
 
-## Front matter (Jekyll)
+## Front matter (Jekyll; default only, the blog's style guide wins)
 
 ```
 ---

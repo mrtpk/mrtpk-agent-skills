@@ -5,7 +5,7 @@ description: Read a codebase (old or current), build an internal knowledge base 
 
 # Code to blog series
 
-This skill turns a codebase into two outputs:
+This skill turns a codebase, and the documents around it (papers, old posts, videos, a resume), into two outputs:
 
 1. An **internal knowledge base (KB)**. It has every fact, with file:line citations and a status tag. It is never published.
 2. A **public blog series**. It has no citations, no internal names and no implication that the author still has the code (when the author asks for that). Every number comes from a script beside the post.
@@ -18,6 +18,7 @@ You are the supervisor. You read the code, talk with the author, run scripts and
 |---|---|
 | `references/process.md` | before you start; it has the phases and the gates |
 | `references/questions.md` | before the first discussion with the author |
+| `references/sources.md` | when the sources are not only code (paper, video, data, documents), or when they disagree |
 | `references/knowledge-base.md` | when you write the KB |
 | `references/writing.md` | before you write or edit a post |
 | `references/publishing-safety.md` | before you write a post, and before each commit |
@@ -29,30 +30,32 @@ You are the supervisor. You read the code, talk with the author, run scripts and
 | `scripts/render_review.py` | to render the posts to local HTML for the author |
 | `scripts/md2html.py` | to render the notes (KB, outline) to HTML |
 
-## Workflow (short form)
+## Where the files go
 
-1. **Survey.** Read the code. Do not change it. Write down what the system is. Ask the author to confirm. Do not write a guess about the purpose into the KB as fact.
-2. **Discuss.** Ask the questions in `references/questions.md`. Do not build before the author agrees on the scope and the rules.
-3. **KB.** Write `notes/<project>_kb.md` from `templates/kb.md`. Tag each claim: `[code]`, `[author]`, `[ref]`, `[sim]`, `[unknown]`.
-4. **Compare.** Check the design against a reference implementation, cloned at a fixed tag. Cite its file:line in the KB. Never cite a reference from memory.
-5. **Outline.** Write `notes/blog_outline.md`. Split a long topic into a series: one idea per part, 1500-2500 words per part.
-6. **Scripts first.** For each part, write the check script. Run it. Put every number of the part in the script output.
-7. **Write.** Write the post in the author's voice (`references/writing.md`). Copy numbers from the script output only.
-8. **Figures.** One svglib script per figure. Build the PNG. Look at every PNG.
-9. **Review.** Start one fact-check subagent per batch (`references/review.md`). Verify each finding yourself before you apply it.
-10. **Render.** Render HTML for the author with `scripts/render_review.py`. Wait for the author's review.
-11. **Commit.** One commit per post, on a branch. Merge and push only when the author asks.
+- `notes/` is a folder in the root of the project that you study (not in the blog repo). The KB, the survey, the questions, the outline and the review HTML go there. The author may name another folder.
+- The posts, their scripts and figures go in the blog repo.
+
+## Workflow (short form; the numbers are the phases in `references/process.md`)
+
+0. **Survey.** Read the code and the other sources. Do not change them. Write `notes/survey.md`: what the system is, who wrote which part, what is missing. Ask the author to confirm. Do not write a guess about the purpose into the KB as fact.
+1. **Discuss.** Ask the questions in `references/questions.md`. Write `notes/questions.md`. Do not build before the author agrees on the scope and the rules.
+2. **KB.** Write `notes/<project>_kb.md` from `templates/kb.md`. Tag each claim: `[code]`, `[author]`, `[doc]`, `[ref]`, `[sim]`, `[unknown]`.
+3. **Compare.** Check the design against a pinned reference: a repo at a tag, or a paper at an arXiv version. First check that the reference describes this method. Cite it in the KB. Never cite a reference from memory.
+4. **Outline.** Write `notes/blog_outline.md`. Split a long topic into a series: one idea per part, 1500-2500 words per part.
+5. **Scripts, posts, figures.** For each part: write and run the check script, then write the post in the author's voice (`references/writing.md`) with numbers from the script output only, then one svglib script per figure. Look at every PNG.
+6. **Review.** Start one fact-check subagent per batch (`references/review.md`). Verify each finding yourself before you apply it.
+7. **Author review and commit.** Render HTML with `scripts/render_review.py`. Apply the comments. One commit per post, on the branch the author names. Merge and push only when the author asks.
 
 Details and gates: `references/process.md`.
 
 ## Hard rules
 
-- Every number in a post comes from a script output. Do not type a number by hand.
+- Every number in a post comes from a script output. Do not type a number by hand. The only exception: a result that the author approves for publication from memory or from the author's own documents (tag `[author]` or `[doc]`; see `pitfalls.md`, "Lost numbers"). Write it as the author approved it.
 - Every code block in a post runs. Extract and run each block before you commit.
 - Every claim about a third-party library cites a pinned file:line in the KB. The post does not cite it.
 - The KB is never published. Keep it out of the blog repo.
 - Apply `references/publishing-safety.md` to every published file.
 - Facts that only the author knows get the tag `[author]`. Do not invent an anecdote, a date, a motive or a result.
-- Save the author's decisions to memory as you get them.
+- Save the author's decisions as you get them: in the agent's persistent memory when it has one, and always in `notes/questions.md` (answer and date).
 - Use the workspace Python environment (uv by default): `uv run --with numpy python <script>.py`.
 - Do not push, merge or publish without an explicit request.

@@ -2,16 +2,20 @@
 
 ## Phase 0: Survey
 
-1. Find the code root and the folders around it (docs, apps, test suites, eval reports, old docs such as .docx).
-2. Read the entry points, the operator registry, the core kernels and the tests. Use an Explore subagent for a large repo. Spot-check 3-5 claims of the subagent in the code.
-3. Write a 10-line summary: what the system does, the data flow, the main constraints.
-4. Tell the author your guess of what the system is. Let the author correct it. Record the correction as `[author]`.
+1. Find the code root and everything around it: docs, test suites, eval reports, data folders, archives, images, videos, old documents (.docx, .pdf), and the author's own posts or resume when given.
+2. Read the entry points, the core modules (the main algorithm, the model, the data pipeline) and the tests. Use an Explore subagent for a large repo. Spot-check 3-5 claims of the subagent in the code.
+3. For each part of the code, find out who wrote it: the author, the team, or a third party (paper authors, a library). Do not assume that the author wrote all of it. Ask when you cannot tell.
+4. Record what is missing or broken: missing files, code that cannot run here, data that is not in the folder, results that no file reproduces.
+5. Look at the media. Extract video frames with ffmpeg (for example 1 frame per second) into `notes/` and read the frames with text. Record each fact with its timestamp.
+6. List the conflicts between sources (dates, numbers, channel lists). Do not resolve them yourself; they go to the author.
+7. Write `notes/survey.md`: a 10-line summary (what the system does, the data flow, the main constraints), the source list, the ownership list, the missing items and the conflicts.
+8. Tell the author your guess of what the system is. Let the author correct it. Record the correction as `[author]`.
 
 Gate: the author confirms what the system is.
 
 ## Phase 1: Discuss
 
-Ask the questions in `questions.md`. Record each answer in memory and in the outline "Ground rules" section.
+Ask the questions in `questions.md`. Write them, with your proposed defaults, to `notes/questions.md`. Record each answer there (with the date), in memory when you have one, and in the outline "Ground rules" section.
 
 Gate: the author agrees on the audience, the publishing rules, the series split and the target repo.
 
@@ -22,13 +26,15 @@ Gate: the author agrees on the audience, the publishing rules, the series split 
 3. Add a "Defects and lessons" section. Use neutral words: "gap", "refinement".
 4. Add an "Open questions" section. Ask the author about each item. Mark the rest `[unknown]`.
 
-Gate: no untagged claim. No `[ref]` claim without a pinned file:line.
+Gate: no untagged claim. No `[ref]` claim without a pinned location (see `knowledge-base.md`).
 
 ## Phase 3: Compare with the reference
 
-1. Clone the reference at a fixed tag into the scratchpad (for example `git clone --depth 1 -b <tag> <url>`).
-2. For each design point, find the reference code. Write the citation into the KB.
-3. Write small simulations that run both versions on the same inputs. Record the results as `[sim]` with counts ("2.8 % of outputs differ, max difference 1").
+1. Pin the reference. A repo: clone it at a fixed tag into the scratchpad (for example `git clone --depth 1 -b <tag> <url>`). A paper: download the arXiv PDF at a fixed version (`<id>v<n>`). A document or video: record the URL and the date you read it.
+2. Check that the reference describes this method. Read the abstract and the method section. Compare the inputs, the outputs and the main idea with the code and the media. When they do not match, stop and tell the author; the author may have given the wrong reference. A paper that only cites the method is not the reference.
+3. For each design point, find the reference location (file:line, or section, figure, table, equation). Write the citation into the KB.
+4. Write small simulations that run both versions on the same inputs. Record the results as `[sim]` with counts ("2.8 % of outputs differ, max difference 1").
+5. When a version cannot run (old framework, missing files, a paper with no code), re-implement the cited lines or equations in a short script, and say "re-implementation of <location>" in the `[sim]` claim. When even that is not possible, record the comparison as `[ref]` against `[code]` without a simulation.
 
 Gate: every comparison in the outline has a `[ref]` or `[sim]` source.
 
@@ -50,7 +56,7 @@ For each part:
 3. Write the figure scripts from `templates/figure.py`. Build them. Read each PNG with the Read tool. Fix overlaps and clipping.
 4. Extract every code block of the post into a temporary file and run it. The output must match the post.
 5. Write `linkedin-post.md` from `templates/linkedin-post.md` (optional).
-6. Commit the part on the branch.
+6. Commit the part on the branch that the author named.
 
 When the author says "run unattended", do all parts, then report once.
 

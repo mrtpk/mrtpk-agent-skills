@@ -14,4 +14,7 @@
 | Overlaps | Connectors and labels overlap in the first builds. | Read every PNG after every build. |
 | Image links 404 | Posts hotlink images from the main branch, and the branch is not merged yet. | Render local HTML for review. Merge only on request. |
 | Global git identity | A repo script overwrites the global git user. | Set the author name and email in the repo config only. |
-| Lost numbers | The final results of the old project are lost. | Use a sentence that the author approves. Support it with measured numbers from the scripts only. |
+| Lost numbers | The final results of the old project are lost, or only the author's documents give them. | Publish a result only when the author approves it, as the author approved it (`[author]` or `[doc]`). Otherwise use a sentence that the author approves, supported by script numbers only. |
+| Wrong reference | The author gives a paper that only cites the method (a follow-up or a fusion paper). | Read the method section first. Compare with the code and the media. Tell the author when they do not match. |
+| Third-party code as the author's | The training code in the folder is by the paper authors. | Ask who wrote each part. Do not describe third-party code as the author's work. |
+| Conflicting sources | The resume, the video and the file dates give different years or numbers. | Record all of them. The author decides. Do not publish a precision (month, digit) the author did not confirm. |
