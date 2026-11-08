@@ -8,6 +8,8 @@ Agent instructions are in [AGENTS.md](AGENTS.md).
 
 - [`skills/codebase-explainer`](skills/codebase-explainer/SKILL.md) — plan and build a static HTML study
   site that teaches an open-source codebase, with cited claims, diagrams, guided tours and a fact-check pass.
+- [`skills/code-to-blog-series`](skills/code-to-blog-series/SKILL.md) — read a codebase, keep an internal knowledge
+  base with file:line citations, and write a technical blog series with check scripts, svglib figures and a fact-check pass.
 - [`skills/explore`](skills/explore/SKILL.md) — work as a partner on an unclear idea, and stop at a rough skeleton.
 - [`skills/lint`](skills/lint/SKILL.md) — run flake8 and mypy in the workspace environment (uv or conda), then fix the reported issues.
 
