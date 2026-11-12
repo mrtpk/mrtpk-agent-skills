@@ -182,9 +182,10 @@ def repo_lines(path: str) -> list[str] | None:
         if p is None or not p.is_file():
             _file_cache[path] = None
         else:
-            _file_cache[path] = p.read_text(encoding="utf-8", errors="replace").split("\n")
-            if _file_cache[path] and _file_cache[path][-1] == "":
-                _file_cache[path].pop()
+            lines = p.read_text(encoding="utf-8", errors="replace").split("\n")
+            if lines and lines[-1] == "":
+                lines.pop()
+            _file_cache[path] = lines
     return _file_cache[path]
 
 
@@ -231,7 +232,8 @@ def check_repo_sha() -> None:
     if out.returncode != 0:
         R.warn("repo", f"cannot read the repo commit: {out.stderr.strip()}")
     elif head != SHA:
-        R.error("repo", f"{REPO} is at {head[:12]}, but the site is pinned to {SHORT_SHA}. Line numbers would be wrong.")
+        R.error("repo", f"{REPO} is at {head[:12]}, but the site is pinned to {SHORT_SHA}. "
+                "Line numbers would be wrong.")
 
 
 _COMMIT_INFO: dict | None = None
@@ -291,6 +293,7 @@ class Page:
     has_viz_css: bool = False
     words: int = 0
     words_main: int = 0
+    _quiz_count: int = 0
 
     @property
     def title(self) -> str:
@@ -350,9 +353,9 @@ def load_sections() -> tuple[list[Section], dict[str, NavEntry]]:
                 if pid in entries:
                     R.error(rel(f), f"nav id {pid!r} is listed twice")
                     continue
-                e = NavEntry(pid, title, key, g.get("title"))
-                entries[pid] = e
-                items.append(e)
+                entry = NavEntry(pid, title, key, g.get("title"))
+                entries[pid] = entry
+                items.append(entry)
             groups.append((g.get("title"), items))
         if any(s.key == key for s in sections):
             R.error(rel(f), f"section {key!r} is defined in two nav files")
@@ -383,7 +386,8 @@ def load_glossary() -> dict[str, dict]:
                 R.error(rel(f), f'glossary entry {tid!r} needs "term" and "short"')
                 continue
             if len(entry["short"]) > 220:
-                R.warn(rel(f), f"glossary {tid!r}: 'short' is {len(entry['short'])} chars; keep it under 220 for the tooltip")
+                R.warn(rel(f), f"glossary {tid!r}: 'short' is {len(entry['short'])} chars; "
+                       "keep it under 220 for the tooltip")
             entry["_file"] = rel(f)
             terms[tid] = entry
     return terms
@@ -446,8 +450,8 @@ def run_diagrams(force: bool) -> dict[str, Path]:
         stale = force or not out.exists() or not stamp.exists() or stamp.read_text() != digest
         if stale:
             ran += 1
-            proc = subprocess.run([sys.executable, str(script), str(out)], capture_output=True, text=True, cwd=str(DIAGRAMS),
-                                  env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"})
+            proc = subprocess.run([sys.executable, str(script), str(out)], capture_output=True, text=True,
+                                  cwd=str(DIAGRAMS), env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"})
             if proc.returncode != 0:
                 R.error(rel(script), "diagram script failed:\n" + (proc.stderr.strip() or proc.stdout.strip()))
                 continue
@@ -543,7 +547,8 @@ def render_cite(ctx: Ctx, page: Page, arg: str, label: str | None, where: str) -
     url = github_url(path, a, b)
     shown = f"{path}:{a}" if a == b else f"{path}:{a}-{b}"
     text = label if label else f"<code>{esc(shown)}</code>"
-    return f'<a class="cite" href="{esc(url)}" target="_blank" rel="noopener" title="{esc(shown)} at {SHORT_SHA}">{text}</a>'
+    return (f'<a class="cite" href="{esc(url)}" target="_blank" rel="noopener" '
+            f'title="{esc(shown)} at {SHORT_SHA}">{text}</a>')
 
 
 def render_term(ctx: Ctx, page: Page, arg: str, label: str | None, where: str) -> str:
@@ -621,7 +626,8 @@ def render_code_version() -> str:
         rows.append(("Date", esc(ci["date"])))
     if ci["subject"]:
         rows.append(("Subject", f"\u201c{esc(ci['subject'])}\u201d"))
-    rows.append(("Browse", f'<a href="{esc(tree_url())}" target="_blank" rel="noopener">{esc(REPO_LABEL)} at {SHORT_SHA}</a>'))
+    rows.append(("Browse", f'<a href="{esc(tree_url())}" target="_blank" rel="noopener">'
+                           f'{esc(REPO_LABEL)} at {SHORT_SHA}</a>'))
     table = "<table><tbody>" + "".join(f"<tr><th>{k}</th><td>{v}</td></tr>" for k, v in rows) + "</tbody></table>"
     pins = submodule_pins()
     clone = REPO_URL + ("" if REPO_URL.endswith(".git") else ".git")
@@ -643,8 +649,9 @@ def render_code_version() -> str:
                    "<table><thead><tr><th>Submodule</th><th>Pinned commit</th></tr></thead><tbody>"
                    + "".join(trs) + "</tbody></table>")
     out.append('<aside class="callout callout-note"><p class="callout-title">Line numbers belong to this commit</p>'
-               f'<div class="callout-body"><p>Every code excerpt and every <code>file:line</code> link on this site points to commit '
-               f'<code>{SHORT_SHA}</code>. In a newer version, the line numbers and the code can be different.</p></div></aside>')
+               '<div class="callout-body"><p>Every code excerpt and every <code>file:line</code> link on this site '
+               f'points to commit <code>{SHORT_SHA}</code>. In a newer version, the line numbers and the code '
+               'can be different.</p></div></aside>')
     return "\n".join(out)
 
 
@@ -742,12 +749,14 @@ def render_code(ctx: Ctx, page: Page, m: re.Match, holder: Holder) -> str:
             lr = parse_range(ln)
             if lr is None or lr[0] < start or lr[1] > end:
                 R.error(where, f"x-tr line={ln!r} is outside lines {start}-{end}")
-            items.append(f'<li><span class="tr-line">{esc(ln)}</span> {expand_inline(ctx, page, tm.group(2).strip())}</li>')
+            items.append(f'<li><span class="tr-line">{esc(ln)}</span> '
+                         f'{expand_inline(ctx, page, tm.group(2).strip())}</li>')
         leftover = TR_RE.sub("", inner).strip()
         if leftover:
             R.error(where, "x-code may only contain <x-tr line=\"N\">...</x-tr> items")
         if items:
-            trs = ('<div class="code-tr"><p class="code-tr-title">Translated comments{f" ({COMMENT_LANGUAGE} → English)" if COMMENT_LANGUAGE else ""}</p>'
+            trs = ('<div class="code-tr"><p class="code-tr-title">Translated comments'
+                   f'{f" ({COMMENT_LANGUAGE} → English)" if COMMENT_LANGUAGE else ""}</p>'
                    f'<ul>{"".join(items)}</ul></div>')
     page.has_code = True
     title = a.get("title")
@@ -756,7 +765,8 @@ def render_code(ctx: Ctx, page: Page, m: re.Match, holder: Holder) -> str:
         f'<figure class="code-excerpt" data-lang="{esc(lang)}">'
         f'<div class="code-head">{title_html}<a class="code-path" href="{esc(url)}" target="_blank" rel="noopener" '
         f'title="Open on {HOST_NAME} at commit {SHORT_SHA}">{esc(shown)}</a>'
-        f'<span class="code-actions"><a class="code-gh" href="{esc(url)}" target="_blank" rel="noopener">{HOST_NAME} ↗</a>'
+        f'<span class="code-actions"><a class="code-gh" href="{esc(url)}" target="_blank" rel="noopener">'
+        f'{HOST_NAME} ↗</a>'
         f'<button type="button" class="code-copy" aria-label="Copy code">Copy</button></span></div>'
         f'<div class="code-body"><div class="code-gutter" aria-hidden="true">{gutter}</div>'
         f'<div class="code-scroll"><div class="code-inner">{bars}'
@@ -794,7 +804,8 @@ def render_diagram(ctx: Ctx, page: Page, attrs: dict, where: str, holder: Holder
         f'<figure class="diagram" id="fig-{esc(name)}">'
         f'<div class="diagram-card"><button type="button" class="diagram-zoom" aria-label="Zoom diagram: {esc(alt)}">'
         f"{svg}</button></div>"
-        f'<div class="diagram-meta">{cap_html}<a class="diagram-open" href="{esc(full)}" target="_blank">Open full size ↗</a></div>'
+        f'<div class="diagram-meta">{cap_html}<a class="diagram-open" href="{esc(full)}" target="_blank">'
+        'Open full size ↗</a></div>'
         f"</figure>"
     )
 
@@ -825,7 +836,8 @@ def render_viz(ctx: Ctx, page: Page, m: re.Match, holder: Holder) -> str:
     inner = (m.group(2) or "").strip()
     head = holder.put(
         f'<figure class="viz" id="viz-{esc(vid)}">'
-        f'<div class="viz-head"><span class="viz-badge">Interactive</span><span class="viz-title">{esc(title)}</span></div>'
+        '<div class="viz-head"><span class="viz-badge">Interactive</span>'
+        f'<span class="viz-title">{esc(title)}</span></div>'
         f'<div class="viz-mount" data-viz="{esc(vid)}" role="region" aria-label="{esc(title)}">'
         f'<div class="viz-fallback">'
     )
@@ -874,7 +886,8 @@ def render_img(ctx: Ctx, page: Page, m: re.Match, holder: Holder) -> str:
     width = a.get("width", "")
     style = f' style="max-width:{int(width)}px"' if width.isdigit() else ""
     return holder.put(
-        f'<figure class="figure-img"><a class="figure-img-card" href="{esc(url)}" target="_blank" title="Open full size">'
+        f'<figure class="figure-img"><a class="figure-img-card" href="{esc(url)}" target="_blank" '
+        'title="Open full size">'
         f'<img src="{esc(url)}" alt="{esc(alt)}" loading="lazy"{style}></a>{cap_html}</figure>'
     )
 
@@ -930,15 +943,18 @@ def render_blocks(ctx: Ctx, page: Page, s: str, holder: Holder) -> str:
             lvl_html = f'<span class="q-level q-{esc(lvl)}">{esc(lvl)}</span>' if lvl else ""
             qs.append(
                 f'<li class="q"><div class="q-text"><span class="q-num">{i}</span><div>{question}</div>{lvl_html}</div>'
-                f'<details class="q-answer"><summary>Show answer</summary><div class="q-answer-body">{answer}</div></details></li>'
+                '<details class="q-answer"><summary>Show answer</summary>'
+                f'<div class="q-answer-body">{answer}</div></details></li>'
             )
         rest = block_tag("x-q").sub("", m.group(2)).strip()
         if rest:
             R.error(where, "x-quiz may only contain <x-q> items")
         page._quiz_count = getattr(page, "_quiz_count", 0) + len(qs)
-        heading = "" if a.get("heading") == "none" else f'<h2 id="check-yourself">{esc(a.get("title", "Check yourself"))}</h2>'
+        heading = ("" if a.get("heading") == "none"
+                   else f'<h2 id="check-yourself">{esc(a.get("title", "Check yourself"))}</h2>')
         return (f'<section class="quiz">{heading}<ol class="q-list">{"".join(qs)}</ol>'
-                f'<p class="quiz-tools"><button type="button" class="quiz-toggle">Show all answers</button></p></section>')
+                '<p class="quiz-tools"><button type="button" class="quiz-toggle">Show all answers</button>'
+                '</p></section>')
 
     s = block_tag("x-quiz").sub(quiz, s)
 
@@ -948,7 +964,8 @@ def render_blocks(ctx: Ctx, page: Page, s: str, holder: Holder) -> str:
         page.has_deepdive = True
         open_attr = " open" if a.get("open") == "yes" else ""
         return (f'<details class="deepdive"{open_attr}><summary><span class="dd-label">Deep dive</span>'
-                f'<h3 class="dd-title">{esc(title)}</h3></summary><div class="dd-body">{m.group(2).strip()}</div></details>')
+                f'<h3 class="dd-title">{esc(title)}</h3></summary>'
+                f'<div class="dd-body">{m.group(2).strip()}</div></details>')
 
     s = block_tag("x-deepdive").sub(deepdive, s)
 
@@ -959,7 +976,8 @@ def render_blocks(ctx: Ctx, page: Page, s: str, holder: Holder) -> str:
         if not n.isdigit():
             R.error(where, 'x-stop needs n="<number>"')
         title = a.get("title", "")
-        return (f'<section class="stop" id="stop-{esc(n)}"><h2 class="stop-title"><span class="stop-num">{esc(n)}</span>'
+        return (f'<section class="stop" id="stop-{esc(n)}"><h2 class="stop-title">'
+                f'<span class="stop-num">{esc(n)}</span>'
                 f'{esc(title)}</h2>{m.group(2).strip()}</section>')
 
     s = block_tag("x-stop").sub(stop, s)
@@ -991,7 +1009,8 @@ def collect_headings(page: Page, s: str) -> str:
         heads.append((level, hid, strip_tags(inner).strip()))
         if "dd-title" in attrs:  # deep-dive titles sit inside <summary>; a link there would fight the toggle
             return f"<h{level}{attrs}>{inner}</h{level}>"
-        return f'<h{level}{attrs}>{inner}<a class="h-anchor" href="#{hid}" aria-label="Link to this section">#</a></h{level}>'
+        return (f'<h{level}{attrs}>{inner}<a class="h-anchor" href="#{hid}" '
+                f'aria-label="Link to this section">#</a></h{level}>')
 
     s = HEADING_RE.sub(sub, s)
     page.headings = heads
@@ -1087,7 +1106,8 @@ def insert_unlisted(ctx: Ctx) -> None:
                 R.error(page.where, f"nav_after: {after!r} is not in {sec.file}")
         if not placed:
             if not after:
-                R.warn(page.where, f"page is not in {sec.file}; added at the end of the section (add it to the nav file or use nav_after)")
+                R.warn(page.where, f"page is not in {sec.file}; added at the end of the section "
+                       "(add it to the nav file or use nav_after)")
             sec.groups[-1][1].append(entry)
         ctx.entries[pid] = entry
 
@@ -1124,12 +1144,43 @@ def render_toc(page: Page) -> str:
     items = []
     for level, hid, text in heads:
         items.append(f'<li class="toc-l{level}"><a href="#{hid}">{esc(text)}</a></li>')
-    return f'<nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ul>{"".join(items)}</ul></nav>'
+    return ('<nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p>'
+            f'<ul>{"".join(items)}</ul></nav>')
 
 
 def section_title(ctx: Ctx, key: str) -> str:
     sec = next((s for s in ctx.sections if s.key == key), None)
     return sec.title if sec else key.title()
+
+
+# Static HTML fragments of the page template (kept out of the f-string for line length).
+THEME_SCRIPT = (
+    '<script>try{var t=localStorage.getItem("explainer-theme");if(t==="light"||t==="dark")docum'
+    'ent.documentElement.setAttribute("data-theme",t);}catch(e){}</script>'
+)
+FONT_LINK = (
+    '<link rel="stylesheet" '
+    'href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..700;1,14'
+    '..32,400..700&amp;display=swap">'
+)
+MENU_BTN = (
+    '<button type="button" class="menu-btn" aria-label="Open navigation" '
+    'aria-controls="sidebar" aria-expanded="false"><span></span><span></span><span></span>'
+    '</button>'
+)
+SEARCH_INPUT = (
+    '<input type="search" id="search-input" placeholder="Search  ( / )" aria-label="Search the '
+    'site" autocomplete="off" spellcheck="false">'
+)
+THEME_ICON = (
+    '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3a9 9 0 1 '
+    '0 9 9 7 7 0 0 1-9-9z" fill="currentColor"/></svg>'
+)
+LIGHTBOX = (
+    '<div class="lightbox" hidden><div class="lightbox-bar"><span class="lightbox-hint">Scroll '
+    'to pan. Press Esc to close.</span><button type="button" class="lightbox-close">Close '
+    '✕</button></div><div class="lightbox-body"></div></div>'
+)
 
 
 def render_page(ctx: Ctx, page: Page, order: list[str]) -> str:
@@ -1151,7 +1202,8 @@ def render_page(ctx: Ctx, page: Page, order: list[str]) -> str:
         if entry and entry.group:
             crumbs.append(f"<span>{esc(entry.group)}</span>")
         crumbs.append(f'<span aria-current="page">{esc(page.meta.get("nav_title") or page.title)}</span>')
-    breadcrumbs = '<nav class="breadcrumbs" aria-label="Breadcrumbs">' + '<span class="sep">›</span>'.join(crumbs) + "</nav>"
+    breadcrumbs = ('<nav class="breadcrumbs" aria-label="Breadcrumbs">'
+                   + '<span class="sep">›</span>'.join(crumbs) + "</nav>")
 
     # level + meta row
     level = page.meta.get("level", "")
@@ -1169,9 +1221,11 @@ def render_page(ctx: Ctx, page: Page, order: list[str]) -> str:
     meta_row = f'<div class="page-meta">{"".join(meta_bits)}</div>' if meta_bits else ""
     ci = commit_info()
     t_url = tree_url()
-    version_line = (f'<p class="code-version">Code version: {esc(PROJECT)} @ <a href="{t_url}" target="_blank" rel="noopener" '
+    version_line = (f'<p class="code-version">Code version: {esc(PROJECT)} @ '
+                    f'<a href="{t_url}" target="_blank" rel="noopener" '
                     f'title="{SHA}"><code>{SHORT_SHA}</code></a>{" · " + esc(ci["day"]) if ci["day"] else ""}</p>')
-    foot_commit = (f'Code version: <a href="{t_url}" target="_blank" rel="noopener"><code class="foot-sha">{SHA}</code></a>'
+    foot_commit = (f'Code version: <a href="{t_url}" target="_blank" rel="noopener">'
+                   f'<code class="foot-sha">{SHA}</code></a>'
                    f'{" · " + esc(ci["date"]) if ci["date"] else ""}'
                    f'{" · “" + esc(ci["subject"]) + "”" if ci["subject"] else ""}'
                    f' · <a href="{href(page.id, "index")}#code-version">How to study this version</a>')
@@ -1183,7 +1237,8 @@ def render_page(ctx: Ctx, page: Page, order: list[str]) -> str:
         lis = []
         for pid in prereqs:
             if not ctx.known(pid):
-                R.error(where, f"prerequisites: unknown page id {pid!r}{suggest(pid, list(ctx.pages) + list(ctx.entries))}")
+                R.error(where, f"prerequisites: unknown page id {pid!r}"
+                               f"{suggest(pid, list(ctx.pages) + list(ctx.entries))}")
                 continue
             if ctx.live(pid):
                 lvl = ctx.pages[pid].meta.get("level", "")
@@ -1191,7 +1246,8 @@ def render_page(ctx: Ctx, page: Page, order: list[str]) -> str:
                 lis.append(f'<li><a href="{href(page.id, pid)}">{esc(ctx.title_of(pid))}</a>{badge}</li>')
             else:
                 R.warn(where, f"prerequisite {pid!r} is not written yet")
-                lis.append(f'<li><span class="soon-link">{esc(ctx.title_of(pid))}</span> <span class="soon-tag">soon</span></li>')
+                lis.append(f'<li><span class="soon-link">{esc(ctx.title_of(pid))}</span> '
+                           '<span class="soon-tag">soon</span></li>')
         prereq_html = ('<aside class="before-read"><p class="before-read-title">Before you read</p>'
                        f'<p>This page uses ideas from these pages:</p><ul>{"".join(lis)}</ul></aside>')
     elif page.meta.get("prerequisites", "").strip().lower() == "none":
@@ -1212,8 +1268,10 @@ def render_page(ctx: Ctx, page: Page, order: list[str]) -> str:
                 lis.append(f'<li><a href="{href(page.id, pid)}">{esc(ctx.title_of(pid))}</a>'
                            f'<span class="rel-sum">{esc(summ)}</span></li>')
             else:
-                lis.append(f'<li><span class="soon-link">{esc(ctx.title_of(pid))}</span> <span class="soon-tag">soon</span></li>')
-        related_html = f'<section class="related"><h2 id="related-pages">Related pages</h2><ul>{"".join(lis)}</ul></section>'
+                lis.append(f'<li><span class="soon-link">{esc(ctx.title_of(pid))}</span> '
+                           '<span class="soon-tag">soon</span></li>')
+        related_html = ('<section class="related"><h2 id="related-pages">Related pages</h2>'
+                        f'<ul>{"".join(lis)}</ul></section>')
         page.headings.append((2, "related-pages", "Related pages"))
 
     # prev / next
@@ -1263,6 +1321,12 @@ def render_page(ctx: Ctx, page: Page, order: list[str]) -> str:
     title_full = SITE_NAME if page.id == "index" else f"{page.title} · {SITE_NAME}"
     desc = page.meta.get("summary", "")
     built = time.strftime("%Y-%m-%d")
+    brand_html = (f'<a class="brand" href="{href(page.id, "index")}">'
+                  f'<span class="brand-mark" aria-hidden="true">{esc(BRAND_MARK)}</span>'
+                  f'<span class="brand-name">{SITE_NAME}</span></a>')
+    footer_html = (f'<footer class="page-foot"><p class="foot-commit">{foot_commit}</p><p>Source: '
+                   f'<a href="{REPO_URL}" target="_blank" rel="noopener">{esc(REPO_LABEL)}</a> · Built {built} · '
+                   'Code excerpts are copied from the repo at this commit by the build.</p></footer>')
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -1270,24 +1334,24 @@ def render_page(ctx: Ctx, page: Page, order: list[str]) -> str:
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title_full)}</title>
 <meta name="description" content="{esc(desc)}">
-<script>try{{var t=localStorage.getItem("explainer-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}}catch(e){{}}</script>
+{THEME_SCRIPT}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..700;1,14..32,400..700&amp;display=swap">
+{FONT_LINK}
 <link rel="stylesheet" href="{pre}assets/site.css">
 <link rel="icon" href="{pre}assets/favicon.svg" type="image/svg+xml">{page_css}
 </head>
 <body data-root="{pre}" data-page="{esc(page.id)}">
 <a class="skip" href="#main">Skip to content</a>
 <header class="topbar">
-  <button type="button" class="menu-btn" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false"><span></span><span></span><span></span></button>
-  <a class="brand" href="{href(page.id, "index")}"><span class="brand-mark" aria-hidden="true">{esc(BRAND_MARK)}</span><span class="brand-name">{SITE_NAME}</span></a>
+  {MENU_BTN}
+  {brand_html}
   <div class="search" role="search">
-    <input type="search" id="search-input" placeholder="Search  ( / )" aria-label="Search the site" autocomplete="off" spellcheck="false">
+    {SEARCH_INPUT}
     <div class="search-results" id="search-results" role="listbox" hidden></div>
   </div>
   <button type="button" class="theme-btn" aria-label="Switch between light and dark mode" title="Light / dark mode">
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z" fill="currentColor"/></svg>
+    {THEME_ICON}
   </button>
 </header>
 <div class="layout">
@@ -1307,12 +1371,12 @@ def render_page(ctx: Ctx, page: Page, order: list[str]) -> str:
 {page.html_body}
 {related_html}
 {prevnext}
-<footer class="page-foot"><p class="foot-commit">{foot_commit}</p><p>Source: <a href="{REPO_URL}" target="_blank" rel="noopener">{esc(REPO_LABEL)}</a> · Built {built} · Code excerpts are copied from the repo at this commit by the build.</p></footer>
+{footer_html}
 </article>
 {toc}
 </main>
 </div>
-<div class="lightbox" hidden><div class="lightbox-bar"><span class="lightbox-hint">Scroll to pan. Press Esc to close.</span><button type="button" class="lightbox-close">Close ✕</button></div><div class="lightbox-body"></div></div>
+{LIGHTBOX}
 <div class="tooltip" role="tooltip" id="term-tooltip" hidden></div>
 <script src="{pre}assets/search-index.js" defer></script>
 <script src="{pre}assets/site.js" defer></script>{page_js}
@@ -1347,7 +1411,8 @@ def template_checks(page: Page) -> None:
 
 def ste_check(page: Page) -> None:
     """Warn about sentences longer than the ASD-STE100 limit (STYLE.md section 6)."""
-    if not STE_CHECK or page.src is None or page.section not in TEMPLATE_SECTIONS or page.meta.get("checks", "").lower() == "off":
+    if (not STE_CHECK or page.src is None or page.section not in TEMPLATE_SECTIONS
+            or page.meta.get("checks", "").lower() == "off"):
         return
     t = page.body
     t = re.sub(r"<x-code\b.*?(?:/>|</x-code>)", " ", t, flags=re.S)
@@ -1480,8 +1545,8 @@ def main() -> int:
     if R.errors or strict_fail:
         for w in R.warnings:
             print(w)
-        for e in R.errors:
-            print(e)
+        for err in R.errors:
+            print(err)
         print(f"\nBUILD FAILED: {len(R.errors)} error(s), {len(R.warnings)} warning(s)."
               + (" (--strict: warnings count as errors)" if strict_fail and not R.errors else ""))
         if not args.preview:
@@ -1510,7 +1575,8 @@ def main() -> int:
         encoding="utf-8",
     )
     (out / "assets" / "favicon.svg").write_text(
-        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#1a5fb4"/>'
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">'
+        '<rect width="32" height="32" rx="7" fill="#1a5fb4"/>'
         '<text x="16" y="21" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" font-weight="bold" '
         f'fill="#ffffff" text-anchor="middle">{esc(BRAND_MARK[:3])}</text></svg>\n', encoding="utf-8")
     swap_in_site(out)

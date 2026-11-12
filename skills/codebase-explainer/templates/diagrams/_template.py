@@ -9,7 +9,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from svglib import BLUE, EMERALD, INK, MUTE, VIOLET, Diagram  # noqa: E402
+from svglib import BLUE, EMERALD, Diagram  # noqa: E402
 
 d = Diagram(width=1100)
 d.header("What the diagram explains", "Scope  ·  assumptions  ·  one-line summary",
@@ -23,7 +23,7 @@ d.arrow(346, y0 + 111, 444, y0 + 111, BLUE)          # end 2 px short of the tar
 d.arrow_label(395, y0 + 111, "what flows", BLUE)
 d.box(446, y0 + 76, 300, 70, "Next component", ["detail"], col=EMERALD)
 
-y = y0 + P1_H + 24
+y: float = y0 + P1_H + 24
 d.legend(30, y, [(BLUE, "role of blue"), (EMERALD, "role of emerald")])
 y += 40
 y = d.footnotes(30, y, ["Simplified: what this diagram leaves out."])

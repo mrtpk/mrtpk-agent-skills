@@ -29,7 +29,7 @@ d.arrow(400 + bw, bx_y + bh / 2, 754 - 2, bx_y + bh / 2, AMBER)
 d.arrow_label(400 + bw + 32, bx_y + bh / 2, "result", AMBER)
 d.box(754, bx_y, bw, bh, "Store", ["pkg/store.py", "put(key, value)"], col=EMERALD)
 
-y = y0 + P1_H + 24
+y: float = y0 + P1_H + 24
 d.legend(30, y, [(BLUE, "API (user side)"), (AMBER, "engine (main loop)"), (EMERALD, "storage")])
 y += 40
 y = d.footnotes(30, y, ["Simplified: this example leaves out errors, retries and threads.",
