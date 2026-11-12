@@ -3,10 +3,10 @@
 
 Standard library only. Run from the project folder:
 
-    python3 build.py                  # build site/
-    python3 build.py --strict         # warnings also fail the build
-    python3 build.py --preview        # write site/ even when there are errors
-    python3 build.py --force-diagrams # re-run every diagram script
+    uv run python build.py                  # build site/
+    uv run python build.py --strict         # warnings also fail the build
+    uv run python build.py --preview        # write site/ even when there are errors
+    uv run python build.py --force-diagrams # re-run every diagram script
 
 All project-specific values (name, upstream repo, pinned commit, ...) are in explainer.json.
 

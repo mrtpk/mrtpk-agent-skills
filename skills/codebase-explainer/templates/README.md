@@ -55,11 +55,11 @@ parent/
 ```
 
 ```bash
-python3 tools/gen_folder_tree.py   # update the code-map folder tree
-python3 build.py                   # build site/ from src/
-python3 build.py --strict          # also stop on warnings
-python3 build.py --preview         # write site/ even when a page has errors
-python3 build.py --force-diagrams  # run all diagram scripts again
+uv run python tools/gen_folder_tree.py   # update the code-map folder tree
+uv run python build.py                   # build site/ from src/
+uv run python build.py --strict          # also stop on warnings
+uv run python build.py --preview         # write site/ even when a page has errors
+uv run python build.py --force-diagrams  # run all diagram scripts again
 ```
 
 The build reads code excerpts directly from the checkout, so each excerpt is exact.

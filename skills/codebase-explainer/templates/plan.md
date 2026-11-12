@@ -93,7 +93,7 @@ a user request. Open questions go to `progress.md` "Questions for the user".
 
 ## 9. Definition of done
 
-- All planned pages exist (or are deferred by the user) and `python3 build.py` has 0 errors.
+- All planned pages exist (or are deferred by the user) and `uv run python build.py` has 0 errors.
 - Every concept and tour page has a diagram, code excerpts, a deep dive and "Check yourself".
 - Every batch is fact-checked; the FINAL-PASS TODO list is empty.
 - Site check at 1280 and 390 px: no overflow, no JS errors, no broken links; every visual works.

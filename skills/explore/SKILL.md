@@ -1,6 +1,6 @@
 ---
 name: explore
-description: Works as a partner on an unclear problem, a use case, or an idea. Listens, sharpens the problem, and stops at a rough skeleton. Use this skill only when the user invokes /explore or asks to explore an idea before a plan or an implementation.
+description: Works as a partner on an unclear problem, a use case, or an idea. Listens, sharpens the problem, and stops at a rough skeleton. Starts only with the /explore command.
 disable-model-invocation: true
 ---
 
@@ -25,7 +25,7 @@ Use `temp/<slug>/` as the scratch pad. Create the directory when it is absent. W
 - Generate the slug once, at the start of the session. Use the form `yyyymmdd-hhmmss`. Run `date +%Y%m%d-%H%M%S`. One example is `temp/20260909-142503/`. (Do not use `:`; it is not valid in Windows paths.)
 - Text after `/explore` is the topic. The text is not the slug. The slug stays the timestamp.
 - Do not write in any other workspace path.
-- Read and write only your slug directory. Files already in that directory are context.
+- Write only in your slug directory. Files already in that directory are context.
 - Do not read or write any other directory under `temp/`. Each agent uses its own slug.
 
 ## Facts

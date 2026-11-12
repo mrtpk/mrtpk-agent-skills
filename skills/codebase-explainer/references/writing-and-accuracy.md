@@ -9,7 +9,7 @@ Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SH
 ### 5.1 Language style (configurable)
 
 The site language is a project choice (goal-and-questions.md, question 6; `language_style` in
-`explainer.json`). **Suggested default: ASD-STE100** (`ste`), the common default of these skills. With plain English, keep
+`explainer.json`). **Suggested default: ASD-STE100** (`ste`). With plain English, keep
 rules 3, 6, 7, 8 and 10 below and drop the word limits.
 
 ASD-STE100 rules for site text (code, file names and technical names stay as they are):

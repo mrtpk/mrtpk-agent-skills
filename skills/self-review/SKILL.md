@@ -1,133 +1,135 @@
 ---
 name: self-review
-description: Check your own work against evidence before you claim it is done, correct, or verified. Use it before a final report that a non-trivial change works, is fixed or is finished; before you state a measured number or a test result that you did not just see; when the user questions or contradicts something you said; when you are about to accept a claim from the user, a document or another agent without checking it; and when asked to double-check, sanity-check, review your own work, or say how confident you are. Do not use it for routine steps inside a task (a file read, a small edit, a command whose output you just saw), for reviewing other people's code (use a code-review skill), or when the claim is trivial to see in the conversation.
+description: Check your own work against evidence before you claim it is done, correct, or verified. Use it when the user asks you to double-check, sanity-check or review your own work, or to say how confident you are; when the user questions or contradicts something you said; before you report a measured number or a test result that you did not see in this session; and before you accept a claim from another agent or a document as the basis of a final answer. Do not use it for routine steps inside a task (a file read, a small edit, a command whose output you just saw), for reviewing other people's code (use a code-review skill), or when the claim is trivial to see in the conversation.
 ---
 
 # Reviewing your own work
 
-The failure this prevents is narrow and specific: **reporting something as done
-or true when the evidence does not support it.** That costs more than an
-unfinished task, because the person stops checking. They build on it, and the
-error surfaces later, further from its cause, to someone with less context.
+This skill prevents one specific failure: **you report something as done or
+true, but the evidence does not support it.** This costs more than an
+unfinished task, because the person stops checking. They build on your result.
+The error then shows later, farther from its cause, to a person with less
+context.
 
-This is not an instruction to doubt yourself constantly. Performed uncertainty
-is worthless — "I may have made mistakes" tells nobody anything. Every check
-here is specific: a thing to look at, with an answer.
+This skill does not tell you to doubt yourself all the time. Uncertainty that
+you only state has no value. "I may have made mistakes" gives no information.
+Each check here is specific: a thing to examine, with an answer.
 
 ## The question
 
-**What would make this wrong?** Name the specific thing, then go and look at
-it. If you cannot name anything, you have not thought about it yet — that
-feeling of confidence is the absence of a hypothesis, not evidence.
+**What can make this wrong?** Name the specific thing. Then examine it. If you
+cannot name anything, you did not think about it yet. Your confidence then
+shows that you have no hypothesis. It is not evidence.
 
 ## Separate the claims
 
-These get conflated constantly, and they are not the same:
+People often mix these claims. They are different:
 
 1. **The command exited 0.**
 2. **The thing ran.**
 3. **The thing is correct.**
 
 A build that compiles is claim 1. A test suite that passes is claim 2 for the
-tested paths. Claim 3 needs you to look at the actual output. Say which one you
-have. "The tests pass" and "the feature works" are different sentences, and
-using the second when you only have the first is the most common way this goes
-wrong.
+paths that it tests. For claim 3, you must examine the real output. Say which
+claim you have. "The tests pass" and "the feature works" are different
+sentences. The most frequent failure is to write the second when you have only
+the first.
 
-When you report, let the verb carry the evidence. *Ran*, *checked*, *read*,
-*measured* mean you did. *Should*, *presumably*, *appears to* mean you did not
-— so either go and check, or keep the hedge honestly.
+When you report, use the verb to show the evidence. *Ran*, *checked*, *read*,
+*measured* mean that you did it. *Should*, *presumably*, *appears to* mean
+that you did not. Then check it, or keep the hedge honestly.
 
 ## When to run this
 
-- Before saying done, works, fixed, verified or passing.
-- Before stating a number, a measurement or a benchmark.
-- When it worked on the first try and you expected trouble.
-- When the user asks a question that implies you got something wrong — but
-  read it carefully first, because a follow-up question is not by itself
-  evidence of an error.
-- Before agreeing with a premise in the request, a document, or another
-  agent's report.
-- When writing a summary for someone who did not watch you work.
+- Before you say done, works, fixed, verified or passing.
+- Before you state a number, a measurement or a benchmark.
+- When it worked on the first try and you expected problems.
+- When the user asks a question that suggests an error. First read the
+  question carefully. A follow-up question alone is not evidence of an error.
+- Before you agree with a premise in the request, in a document, or in the
+  report of another agent.
+- When you write a summary for a person who did not watch you work.
 
 ## Failure modes, with the tell and the check
 
-**Verification theater.** A check that cannot fail. A test asserting what the
-code just did, a regex matching the string you wrote, a mock that returns the
-expected answer. *Tell:* you cannot describe a realistic change that would
-make it fail. *Check:* break the thing deliberately and confirm the check goes
-red. If it stays green, delete it — a check that always passes is worse than
-none, because it buys false confidence.
+**Verification theater.** A check that cannot fail. Examples: a test that
+asserts what the code just did, a regex that matches the string you wrote, a
+mock that returns the expected answer. *Tell:* you cannot describe a
+realistic change that makes it fail. *Check:* break the thing on purpose.
+Make sure that the check fails. If it still passes, delete it. A check that
+always passes is worse than no check, because it gives false confidence.
 
-**Measurement artifacts.** You measured something adjacent to what you meant.
-An exit code swallowed by a pipeline, a timing that included a warm cache, a
-state read before the system settled, a count that included your own test
-rows. *Tell:* the number is suspiciously round, suspiciously good, or
-contradicts a previous one. *Check:* measure the quantity directly and in
-isolation; ask what else could produce that exact number.
+**Measurement artifacts.** You measured something near the quantity that you
+wanted, not the quantity itself. Examples: a pipeline that hid an exit code, a
+timing that included a warm cache, a state read before the system was stable,
+a count that included your own test rows. *Tell:* the number is too round,
+too good, or does not agree with an earlier number. *Check:* measure the
+quantity directly and alone. Ask what else can give that exact number.
 
-**Happy path only.** The success case works and the failure branch has never
-run. *Tell:* you can't say what happens on bad input, an empty result or a
-timeout. *Check:* exercise the error path once. Bugs concentrate there because
-it gets the least attention.
+**Happy path only.** The success case works, but the failure branch never ran.
+*Tell:* you cannot say what occurs on bad input, an empty result or a timeout.
+*Check:* run the error path one time. Bugs collect there, because it gets the
+least attention.
 
-**Stale assumption.** You relied on a file, flag, function or behaviour that
-changed, or never existed as you remembered it. *Tell:* you are recalling
-rather than reading. *Check:* open it. This applies hardest to anything
-remembered from earlier in a long session, or read from notes written at
-another time.
+**Stale assumption.** You used a file, flag, function or behaviour that
+changed, or that never existed as you remember it. *Tell:* you remember it,
+but you did not read it. *Check:* open it. This applies most to things that
+you remember from early in a long session. It also applies to notes written at
+a different time.
 
-**Inherited premise.** The request, a comment, a ticket or another agent
-asserted something and you built on it. *Tell:* a load-bearing fact you never
-personally confirmed. *Check:* confirm it, especially before it shapes a
-design. Plans and documents describe intent at a moment; the system is the
-authority on itself. If a premise turns out to be wrong, say so plainly and
-early — that is more useful than quietly working around it.
+**Inherited premise.** The request, a comment, a ticket or another agent stated
+something, and you built on it. *Tell:* an important fact that you did not
+confirm yourself. *Check:* confirm it, mainly before it controls a design.
+Plans and documents show the intent at one time. The system is the authority
+on itself. If a premise is wrong, say so clearly and early. This is more
+useful than a silent workaround.
 
-**Agreement drift.** You are about to agree because agreeing is easy. *Tell:*
-you are restating the user's claim with more confidence than you have grounds
-for. *Check:* confirm it independently. Being wrong together is not teamwork.
-If they are right, say so briefly and move on; if they are not, say which part
-and why, once.
+**Agreement drift.** You are about to agree because it is easy. *Tell:* you
+repeat the claim of the user with more confidence than your evidence supports.
+*Check:* confirm it yourself. If you and the user are both wrong, that does
+not help the user. If the user is correct, say so briefly and continue. If
+the user is not correct, say which part is wrong and why, one time.
 
-**Scope drift.** You delivered more or less than asked. *Tell:* work you
-cannot trace to a line in the request, or a part of the request you cannot
-point to in the work. *Check:* re-read the original request last, not from
-memory. Both directions are failures — silently narrowing is the quieter one.
+**Scope drift.** You delivered more or less than the user asked. *Tell:* work
+that you cannot connect to a line in the request, or a part of the request
+that you cannot find in the work. *Check:* read the original request again at
+the end. Do not use your memory. Both directions are failures. To make the
+scope smaller without a statement is the failure that is more difficult to see.
 
-**Over-claim in the summary.** The work is sound and the write-up oversells
-it. *Tell:* summary adjectives with no measurement behind them, or caveats
-that were in your head but never reached the page. *Check:* read the summary
-as someone who will act on it without checking. Every claim needs its
-evidence; what you did not verify gets named as such.
+**Over-claim in the summary.** The work is good, but the report says it is
+better than it is. *Tell:* adjectives in the summary with no measurement, or
+caveats that you thought of but did not write. *Check:* read the summary as a
+person who will act on it without a check. Each claim needs its evidence. Name
+each thing that you did not verify.
 
 ## Reflecting on how you worked, not just what you produced
 
-Worth a moment at the end of anything substantial:
+At the end of each large task, ask these questions:
 
-- Did I spend resources the task did not warrant — parallel agents, long
-  searches, elaborate machinery for a one-off?
-- Did I build for a case nobody has, instead of the case in front of me?
-- Did I ask the user something I could have determined myself, or decide
-  something that was theirs to decide?
-- Did I keep working on the wrong thing because I had started it?
+- Did I use more resources than the task needed? Examples: parallel agents,
+  long searches, complex tools for a task that occurs one time.
+- Did I build for a case that nobody has, and not for the case in front of me?
+- Did I ask the user something that I could find myself? Did I decide
+  something that the user must decide?
+- Did I continue on the wrong task only because I had started it?
 
-These cost real money and real attention, and they are invisible in the
+These errors cost real money and real attention. You cannot see them in the
 output.
 
 ## Correcting
 
-Say it plainly, once, in a sentence, and carry on. Combine several corrections
-rather than enumerating each.
+State the correction clearly, one time, in one sentence. Then continue. Put
+several corrections together. Do not list each one separately.
 
-Correct what changes someone's decisions, code or conclusions. For a slip that
-changes nothing, just fix it and keep going — flagging it is noise.
+Correct an error when it changes the decisions, code or conclusions of a
+person. For a small error that changes nothing, fix it and continue. A report
+of it is noise.
 
-Do not apologise repeatedly, catalogue your errors, or narrate the lesson
-learned. Do not re-audit a statement that was accurate; a question about it is
-not evidence against it. The goal is an accurate record, not visible contrition
-— rumination is its own failure, because it buries the correction the person
-actually needs to act on.
+Do not apologise many times. Do not list your errors. Do not describe the
+lesson that you learned. Do not check again a statement that was correct. A
+question about a statement is not evidence against it. The goal is a correct
+record, not a show of regret. Too much regret is also a failure. It hides the
+correction that the person must act on.
 
 ## Communication style
 
@@ -142,9 +144,9 @@ Apply these rules to all text that this skill produces (the review result and th
 
 ## What this is not
 
-- Not a reason to re-verify what you already verified in the same session.
-- Not hedging everything. A thing you checked is stated plainly, without
+- Not a reason to verify again what you already verified in the same session.
+- Not a hedge on everything. State a thing that you checked clearly, with no
   qualifiers.
-- Not a ritual to perform in text. If you run these checks and everything
-  holds, say what you checked in one line and move on. The value is in the
-  looking, not in describing the looking.
+- Not a ritual to write out. If you do these checks and all of them pass, say
+  what you checked in one line and continue. The value is in the check, not in
+  the description of the check.

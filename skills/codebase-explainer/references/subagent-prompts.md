@@ -65,7 +65,7 @@ Do:
    and most tags (x-code with highlight, cite, term, link, diagram, note, simplified, warning, deepdive,
    quiz). Write one diagram for it with svglib at width 1100.
 5. Update STYLE.md: project vocabulary table, vendor/out-of-scope list, the sample page name.
-6. Run python3 build.py until it has 0 errors. Take screenshots at 1280 and 390 px if Playwright works.
+6. Run uv run python build.py until it has 0 errors. Take screenshots at 1280 and 390 px if Playwright works.
 Rules: site text in {LANGUAGE_STYLE}; light look always (dark only by toggle); Python standard library only.
 Report: files changed, build output summary, problems, questions for the supervisor.
 ```
@@ -89,7 +89,7 @@ Interactive visual: {name and behaviour, or "none"}.
 You own: these page files; src/glossary/{batch}.json; diagrams/{batch}_*.py; assets/viz/{name}.js.
 Glossary terms you own in this wave: {list}. Other terms: search src/glossary/*.json and reuse.
 Do not edit: build.py, assets/site.css, site.js, nav files, other glossary files, notes/facts.md,
-other writers' pages. Other writers build at the same time: use `python3 build.py --preview` while
+other writers' pages. Other writers build at the same time: use `uv run python build.py --preview` while
 another page is broken; your own pages must have 0 errors and no template warnings.
 
 Content rules:
@@ -134,7 +134,7 @@ glossary text, the rules copied into the visual):
 7. Recompute the arithmetic in worked examples. Check each recap link to a sibling site against that page.
 8. A claim that the code has a bug: do not write it on a page; report it with exact lines (the supervisor checks it).
 Fix defects in place (pages, diagram scripts, glossary, visual). Keep the writer's structure and the
-language rules. Run python3 build.py (or --preview) until your pages have 0 errors.
+language rules. Run uv run python build.py (or --preview) until your pages have 0 errors.
 
 Report (final message only):
 - Number of claims checked and number of defects fixed, by type (citation, value, logic, missing source, other).
@@ -155,7 +155,7 @@ Explainer folder: {EXPLAINER_PATH}. Target repo (READ ONLY): {TARGET_PATH} at {S
 3. Check that the same thing has the same name, number and default on every page (glossary, reference
    tables, tours, concepts). Re-run tools/*.py generators with --check.
 4. Check diagrams that show changed facts.
-5. Run python3 build.py: 0 errors. Run python3 build.py --strict and list the remaining warnings.
+5. Run uv run python build.py: 0 errors. Run uv run python build.py --strict and list the remaining warnings.
 Report: each TODO with its fix, other fixes, pages changed, build result.
 ```
 
@@ -184,7 +184,7 @@ only when there are problems to fix. One earlier site did this: 107 pages × 2 w
 Convert these diagrams to the current rules: {list}. Rules: STYLE.md §10 (width 1100, no text
 below 11, max 3 boxes across, max 3 panels; split if needed; keep all facts and sources).
 Update the <x-diagram> tags and captions on the pages if you split a diagram.
-Run python3 build.py --force-diagrams until 0 errors and no svglib edge warnings.
+Run uv run python build.py --force-diagrams until 0 errors and no svglib edge warnings.
 ```
 
 ---

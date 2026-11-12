@@ -20,7 +20,7 @@ Get these from the user. Do not invent them.
 - Write a `.done` marker file when a job ends. Wait for it with a blocking wait, not with short sleeps: a background-task notification, a monitor tool, or one loop such as `until [ -f job.done ]; do sleep 60; done`.
 - Check that a long job's log grows. A hung job with an idle server is common. Restart it only when the user gave permission for restarts. Else record the problem and follow the user's rule for failures.
 - Get each time from `date`. Never estimate a time in a log.
-- Keep three files and append to them:
+- Keep three files in the run folder that the user names (default: the folder of the experiment series). Append to them:
   - `progress-log.md`: time, action, result. One line per event.
   - `findings.md`: numbered findings (G1, G2, ...), each with the numbers and the source file.
   - `decisions.md`: numbered decisions with the reason and the rejected options.

@@ -17,7 +17,7 @@ Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SH
 
 ### 12.2 Before the Phase 1 review (stop here)
 - [ ] `explainer.json` filled in (name, repo path, URL, host, full SHA, language style, Prism languages); example pages replaced.
-- [ ] `python3 build.py` has 0 errors; `--strict` warnings are understood.
+- [ ] `uv run python build.py` has 0 errors; `--strict` warnings are understood.
 - [ ] Nav files list every planned page; the sidebar shows "soon" for the rest.
 - [ ] One sample page of each type: home (with system map and code version section), basics (with a
       visual), concept, tour (Tour 1), module page, code tree, one generated reference page.
@@ -46,7 +46,7 @@ Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SH
 - [ ] Generators run with `--check`; reference tables current.
 - [ ] Site check (template F): 0 overflow at 1280 and 390 px, 0 JS errors, 0 broken links and anchors,
       0 missing glossary terms, every visual works with mouse, keyboard and touch.
-- [ ] `python3 build.py` 0 errors; `--strict` warnings are only expected ones (for example links to
+- [ ] `uv run python build.py` 0 errors; `--strict` warnings are only expected ones (for example links to
       deferred pages).
 - [ ] README: status, code version, how to read, how to build, layout, how the content was made, and
       any checks that were skipped to save budget.

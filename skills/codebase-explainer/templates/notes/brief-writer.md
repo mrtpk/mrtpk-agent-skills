@@ -47,7 +47,7 @@ place in the code. Start with these.)
 - Search src/glossary/*.json before you add a term. Do not redefine; reuse with {{term id}}.
 - Do NOT edit: build.py, assets/site.css, assets/site.js, nav files, other glossary files, notes/*,
   STYLE.md, plan.md, progress.md, other pages.
-- Use `python3 build.py --preview` when another page is broken. Your pages must have 0 errors and no
+- Use `uv run python build.py --preview` when another page is broken. Your pages must have 0 errors and no
   template or language warnings.
 
 ## No subagents

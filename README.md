@@ -39,6 +39,7 @@ Use `.cursor/skills/` or `.claude/skills/` in the project. Use the global skills
 Or ask the agent to look at this repo and then install the skills.
 
 The agent invokes the skill by the `name` in `SKILL.md`.
+`explore` and `lint` start only with their slash commands (`/explore`, `/lint`). The agent does not start them by itself.
 
 ## Rules
 

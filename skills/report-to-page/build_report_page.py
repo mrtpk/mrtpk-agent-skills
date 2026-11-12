@@ -152,6 +152,8 @@ def main() -> int:
     ap.add_argument("out", type=Path)
     ap.add_argument("--header", type=Path, required=True, help="JSON file with title, eyebrow, lede, figures, footer")
     ap.add_argument("--kept-column", help="table column whose yes/no cells become kept/not kept labels")
+    ap.add_argument("--standalone", action="store_true",
+                    help="write a full HTML document (doctype, html, head, body) for use without the Artifact tool")
     a = ap.parse_args()
 
     head = json.loads(a.header.read_text(encoding="utf-8"))
@@ -215,6 +217,11 @@ def main() -> int:
 </div>
 {footer}
 """
+    if a.standalone:
+        head_part, _, body_part = page.partition("</style>")
+        page = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
+                '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
+                f"{head_part}</style>\n</head>\n<body>{body_part}</body>\n</html>\n")
     a.out.write_text(page, encoding="utf-8")
     print(f"{len(page)} bytes; {len(toc)} sections")
     return 0

@@ -1,15 +1,12 @@
 ---
 name: codebase-explainer
-description: Plan and build a static HTML study site ("<Project> Explained") that teaches an open-source codebase to a beginner and also gives full detail for study. The site has basics pages, concept pages, guided tours through real code, a code map, generated reference tables, SVG diagrams, interactive visuals, quizzes and a glossary. Every claim cites file:line at a pinned commit, and a separate fact-checker agent checks each batch. Use this skill whenever the user wants an explainer site, a learning site, a study guide, a walkthrough, a guided tour, onboarding docs or "explain this repo" material for a codebase or a GitHub/GitLab repository, even when they do not say "site" or "skill". Do not use it for API reference docs that a doc generator makes, for a single README, for a Markdown write-up, technical report or design notes (code-to-md-writeup), or for a slide-like presentation (design-plan-presentation).
+description: Plan and build a static HTML study site ("<Project> Explained") that teaches an open-source codebase to a beginner and also gives full detail for study. The site has basics pages, concept pages, guided tours through real code, a code map, generated reference tables, SVG diagrams, interactive visuals, quizzes and a glossary. Every claim cites file:line at a pinned commit, and a separate fact-checker agent checks each batch. Use this skill when the user wants an HTML website that teaches a codebase or a GitHub/GitLab repository: an explainer site, a learning site, a study site, or an onboarding site with guided tours. Do not use it for API reference docs that a doc generator makes, for a single README, for a Markdown write-up, technical report or design notes (code-to-md-writeup), or for a slide-like presentation (design-plan-presentation).
 ---
 
 # Codebase explainer
 
 This skill makes a static website that teaches one open-source codebase. The reader starts with no
-knowledge of the code. Each page starts simple, then gives a full "Deep dive". The skill comes from two
-real explainer sites for LLM inference engines (about 106 pages, 90 diagrams, 8 interactive visuals and
-320 glossary terms each; fact checkers corrected about 7 % of about 7,000 claims). The second site added
-the cost, resume and safety rules in this file and in `references/pitfalls.md`.
+knowledge of the code. Each page starts simple, then gives a full "Deep dive".
 
 You act as the **supervisor**. You plan, ask the user, delegate long work to subagents, review, track
 progress and commit. You do not write the pages yourself.
@@ -51,9 +48,8 @@ these questions, each with a proposed default (details in `references/goal-and-q
 3. Local files or published? Are CDN libraries OK?
 4. Structure: basics + concepts + tours + code map + reference? One page per file? (Suggested: one page per important module only.)
 5. Which folder for the explainer repo?
-6. Language style of the site text? (Suggested: ASD-STE100 Simplified Technical English, the common
-   default of these skills. Plain English is an option: set `language_style` to `ste` or `plain` in
-   `explainer.json`.)
+6. Language style of the site text? (Suggested: ASD-STE100 Simplified Technical English. Plain English
+   is an option: set `language_style` to `ste` or `plain` in `explainer.json`.)
 7. Scope: what gets full pages, what is out of scope (vendored code, submodules)?
 8. Site name? (Suggested: "<Project> Explained".)
 9. Look? (Suggested: a light article look, like a long-form magazine article; dark only by a toggle.)
@@ -80,7 +76,7 @@ section 2 with the date.
    language style, Prism languages). `git init`; set the author repo-local.
    Fill in the shared briefs `notes/brief-writer.md` and `notes/brief-factcheck.md` (in the kit). Every
    writer and fact checker reads them, so the prompts stay short and a new rule goes in one place.
-2. Run `python3 tools/gen_folder_tree.py && python3 build.py`. The example pages must build with 0 errors
+2. Run `uv run python tools/gen_folder_tree.py && uv run python build.py`. The example pages must build with 0 errors
    before you change anything else.
 3. Start the foundation subagent (template B): `STYLE.md` for this project, nav files with **every**
    planned page, core glossary, and one reference concept page.

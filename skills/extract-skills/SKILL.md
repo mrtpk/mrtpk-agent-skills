@@ -5,128 +5,135 @@ description: Mine the current conversation for reusable knowledge and turn what 
 
 # Extracting reusable skills from a conversation
 
-A long session produces two things: the work, and everything you had to learn
-to do the work. The work gets committed. The learning usually evaporates — the
-dead end you backed out of, the flag that had to come first, the command that
-looked right and silently did nothing. The next session pays for it again.
+A long session makes two things: the work, and the knowledge that you got to
+do the work. The work goes into a commit. The knowledge is usually lost. For
+example: the dead end that you stopped, the flag that had to come first, the
+command that looked correct but did nothing and gave no error. The next
+session must find this knowledge again.
 
-This is about harvesting the second thing. The hard part is not spotting
-candidates; it is refusing most of them. A pile of mediocre skills is worse
-than none, because each one costs context to load and attention to maintain,
-and a skill that duplicates a document will drift away from it.
+This skill collects that knowledge. The difficult part is not to find candidates.
+The difficult part is to reject most of them. Many weak skills are worse than no skills.
+Each skill uses context when it loads and attention when you maintain it. A
+skill that copies a document becomes different from that document over time.
 
 ## Step 1: Scan the conversation for candidates
 
-Re-read the session — the actual transcript, not your memory of it, because
-what you remember is the clean version. Look for:
+Read the session again. Read the transcript, not your memory of it. Your memory
+keeps only the clean version. Look for:
 
 - **A sequence you ran more than once.** Three steps in a fixed order, done
-  twice, is a workflow. The second time you did it is the evidence.
-- **Facts that cost time to discover.** A command whose obvious form is wrong,
-  a default that does not do what it says, an ordering constraint, a tool
-  missing where you assumed it existed. Measure the cost in minutes lost, not
-  in how clever the finding was.
-- **Corrections the user made.** Where they redirected your approach, that is a
-  preference you will otherwise violate again.
-- **Anything you worked out by reading source or docs.** If you had to derive
-  it, so will the next agent.
-- **Dead ends.** What did not work, and why, is as reusable as what did — it is
-  just never written down.
-- **Where you were wrong.** A wrong assumption that survived a while is the
-  highest-value thing in the transcript.
+  two times, is a workflow. The second run is the evidence.
+- **Facts that cost time to find.** Examples: a command whose obvious form is
+  wrong, a default that does not do what its name says, a constraint on
+  order, a tool that was not where you thought. Measure the cost in minutes
+  lost, not in how clever the finding was.
+- **Corrections the user made.** When the user changed your approach, that is
+  a preference. Without a record, you will break it again.
+- **Anything you found by reading source code or docs.** If you had to
+  derive it, the next agent must also derive it.
+- **Dead ends.** What did not work, and why, is as reusable as what did work.
+  Nobody writes it down.
+- **Where you were wrong.** A wrong assumption that stayed for some time is
+  the item with the highest value in the transcript.
 
-List candidates plainly before judging them. Judging while gathering makes you
-miss things.
+Make a plain list of candidates before you judge them. If you judge while you
+collect, you will miss items.
 
 ## Step 2: Route each candidate — most are not skills
 
-This is the step that does the work. For each candidate, ask what form it
-should take:
+This step does the main work. For each candidate, decide which form it must
+have:
 
 | the knowledge is... | put it in | why |
 |---|---|---|
-| a multi-step workflow with judgement and traps | **a skill** | it needs to load at the right moment and shape behaviour |
-| a fact about the user, their setup or their preferences | **memory** | it applies everywhere, not just when a task triggers |
-| how this specific system works or why it is built this way | **a doc in the repo** | it belongs beside the code and is read by humans too |
-| a deterministic sequence of commands with no judgement | **a script** | code beats prose for anything a machine can just do |
-| reference data — mappings, IDs, measured numbers | **a doc or config** | a skill copy of it will drift from the real source |
-| something a competent agent does well unaided | **nothing** | instructions for the obvious are noise |
+| a workflow with many steps, decisions and traps | **a skill** | it must load at the correct time and control behaviour |
+| a fact about the user, their setup or their preferences | **memory** | it applies to all tasks, not only when a task triggers it |
+| how this system works or why it has this design | **a doc in the repo** | it belongs next to the code, and humans also read it |
+| a fixed sequence of commands with no decisions | **a script** | code is better than prose for work that a machine can do alone |
+| reference data: mappings, IDs, measured numbers | **a doc or config** | a copy in a skill will become different from the real source |
+| a task that a competent agent does well without help | **nothing** | instructions for obvious tasks are noise |
 
-Two routing mistakes to avoid:
+Do not make these two routing mistakes:
 
-**Duplicating something that already exists.** If the fact is in a README, a
-config comment and a memory, a skill copy makes four places to update and three
-chances to be wrong. Point at the source instead.
+**Copying something that already exists.** If the fact is in a README, a
+config comment and a memory, a skill copy makes four places to update. It also
+makes three chances to be wrong. Refer to the source instead.
 
-**Wrapping a script in a skill.** If the whole value is "run these commands in
-this order", write the script. A skill is for when something has to decide.
+**Putting a script inside a skill.** If the only value is "run these commands
+in this order", write the script. Use a skill only when something must make a
+decision.
 
 ## Step 3: Filter hard
 
-Reject a candidate unless you can answer all three:
+Reject a candidate unless you can answer all three questions:
 
-1. **Who triggers it, and in what words?** If you cannot write the sentence a
-   user would type, it will never load. A skill nobody triggers is dead weight.
-2. **What goes wrong without it?** Name the concrete failure — time lost, a
-   wrong turn, an expensive mistake repeated. "It would be nice to document" is
-   not an answer.
-3. **Has it happened more than once, or will it obviously recur?** One
+1. **Who triggers it, and with which words?** Write the sentence that a user
+   types. If you cannot, the skill will never load. A skill that nobody
+   triggers has no value.
+2. **What goes wrong without it?** Name the specific failure: time lost, a
+   wrong turn, or an expensive mistake that occurs again. "It would be nice to
+   document" is not an answer.
+3. **Did it occur more than once, or will it clearly occur again?** One
    occurrence with no reason to expect another is a note, not a skill.
 
 Also reject:
 
-- **Scope that is too broad.** "Backend development" helps nobody. A skill
-  earns its place by being specific enough to carry real traps.
-- **Scope that is too narrow.** A single command with one flag is a line in a
-  README.
-- **Knowledge that will expire soon.** Pinned to a version about to change, or
-  a workaround for a bug being fixed.
+- **Scope that is too wide.** "Backend development" helps nobody. A skill is
+  useful only when it is specific enough to hold real traps.
+- **Scope that is too narrow.** A single command with one flag is one line in
+  a README.
+- **Knowledge that will soon be out of date.** For example: knowledge tied to
+  a version that will change soon, or a workaround for a bug that someone is
+  fixing.
 
-Expect to reject most candidates. Surfacing four and building one is a normal,
-healthy ratio.
+Expect to reject most candidates. Find four and build one: that is a normal
+ratio.
 
 ## Step 4: Propose before building
 
-Show the user the shortlist with the rejects and the reason for each. The
-rejects matter — they show the thinking and let the user overrule you, and they
-often know a candidate will recur when you cannot tell.
+Show the user the shortlist. Also show the rejected candidates and the reason
+for each. The rejects are important. They show your reasoning, and the user can
+overrule you. The user often knows that a candidate will occur again when you
+cannot know.
 
-Say roughly what building each one costs. Then build what they pick. Do not
-speculatively build several skills and present them as a surprise; that spends
-their tokens on a decision that was theirs.
+Give an approximate cost to build each one. Then build the ones that the user
+selects. Do not build several skills before the user selects them and then show
+them as a surprise. That uses the user's tokens on a decision that belongs to
+the user.
 
 ## Step 5: Build it from the transcript, not from memory
 
-When building, go back to what actually happened:
+When you build, use what really occurred:
 
-- **Put the traps in verbatim.** The exact wrong command next to the right one
-  is worth more than a paragraph of advice. Concrete beats general.
-- **Keep the cost attached.** "This wastes an hour" earns compliance that
-  "prefer X" does not.
-- **Explain why, not just what.** An agent that understands the reason handles
-  the case you did not foresee; one following rules fails differently.
-- **Bundle the script you already wrote.** If you built a helper during the
-  session, ship it with the skill rather than describing it. You already paid
+- **Copy the traps exactly.** Put the exact wrong command next to the correct
+  one. This has more value than a paragraph of advice. Specific text is better
+  than general text.
+- **Keep the cost with the trap.** "This wastes an hour" makes agents obey.
+  "Prefer X" does not.
+- **Explain why, not only what.** An agent that knows the reason can handle a
+  case that you did not expect. An agent that only follows rules fails in
+  other ways.
+- **Include the script that you already wrote.** If you made a helper during
+  the session, put it in the skill. Do not only describe it. You already paid
   for it.
-- **Strip project specifics if it is meant to travel.** Decide up front whether
-  this skill is for one repository or for anywhere, because that changes every
-  example in it.
+- **Remove project details if the skill must work in other places.** Decide at
+  the start: is this skill for one repository or for all? That decision
+  changes every example in it.
 
-Use a skill-authoring skill if one is available rather than inventing the
-format.
+If a skill for writing skills is available, use it. Do not make up the format.
 
 ## Step 6: Say what you verified
 
-A freshly written skill is untested. Be precise about which part you checked:
+A new skill is not tested. State exactly which part you checked:
 
-- Its commands run as written — you ran them.
-- Its bundled script works — you ran it against real cases, including
-  failures.
-- Its *guidance* changes an agent's behaviour — almost certainly unverified,
-  since that needs an evaluation with and without the skill.
+- Its commands run as written: you ran them.
+- Its included script works: you ran it on real cases, and on failure cases.
+- Its *guidance* changes the behaviour of an agent: this is almost always not
+  verified. To verify it, you must evaluate agents with the skill and without
+  the skill.
 
-Write that distinction down where the user will see it. "Skill added" implies
-all three, and it is usually only the first.
+Write this difference where the user will see it. "Skill added" tells the user
+that all three are true. Usually only the first is true.
 
 ## Communication style
 
@@ -141,11 +148,11 @@ Apply these rules to all text that this skill produces (the recommendation and e
 
 ## Anti-patterns
 
-- **Harvesting everything.** The reflex to capture each detail produces bloat
-  that buries the few things that mattered.
-- **Writing the skill you wish you had needed.** Capture the session that
-  happened, not an idealised version of it.
-- **Generic advice.** "Test your code", "be careful with migrations" — if it
-  would fit any project, it carries no information.
-- **Skipping the rejects when reporting.** The shortlist without the reasoning
-  looks arbitrary and cannot be corrected.
+- **Collecting everything.** If you record each detail, the skill becomes too
+  large. The few important items are then hard to find.
+- **Writing the skill that you wanted to have.** Record the session that
+  occurred, not a better version of it.
+- **General advice.** For example: "Test your code", "be careful with
+  migrations". If the advice applies to all projects, it gives no information.
+- **Not reporting the rejects.** A shortlist without the reasons looks random.
+  The user cannot correct it.

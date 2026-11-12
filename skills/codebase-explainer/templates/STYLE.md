@@ -28,11 +28,11 @@ Contents
 
 ```bash
 cd <project>-explainer
-python3 build.py                 # build site/ (runs stale diagram scripts first)
-python3 build.py --strict        # also fail on warnings (use before hand-in)
-python3 build.py --force-diagrams
-python3 build.py --preview         # write site/ even if another writer's page has an error
-python3 tools/gen_folder_tree.py   # update the code-map folder tree (src/code/index.html)
+uv run python build.py                 # build site/ (runs stale diagram scripts first)
+uv run python build.py --strict        # also fail on warnings (use before hand-in)
+uv run python build.py --force-diagrams
+uv run python build.py --preview         # write site/ even if another writer's page has an error
+uv run python tools/gen_folder_tree.py   # update the code-map folder tree (src/code/index.html)
 ```
 
 Open `site/index.html` with a double-click. The site works from disk (`file://`).
@@ -552,7 +552,7 @@ Files: `src/glossary/*.json`. One JSON object; keys are term ids.
    page owns it). Add shared visual styles only in `assets/viz/viz.css`, or inject a `<style>` element once
    from your script. Do not edit `assets/site.css`.
 2. Add `scripts: viz/<name>.js` to the page front matter and put `<x-viz id="..." title="..." />` in the
-   page (section 5.9). Run `python3 build.py`.
+   page (section 5.9). Run `uv run python build.py`.
 3. Follow these rules:
    - **Vanilla JS only.** No libraries, no build step, no network (no `fetch`, no CDN). The page must work
      from `file://`.
@@ -600,7 +600,7 @@ Beginner / Intermediate / Advanced. Inside a diagram, the legend defines the mea
    | `legend(x, y, items)`, `callout(...)`, `footnotes(x, y, lines)`, `aside(x, y, lines)` | bottom matter |
    | colours | `BLUE, AMBER, VIOLET, TEAL, EMERALD, PINK` (strong, tint, pale), `NEUTRAL`, `INK, MUTE, LINE, BORDER, ...` |
 
-4. Run it alone to test: `python3 diagrams/<name>.py /tmp/x.svg`. The library prints a warning if
+4. Run it alone to test: `uv run python diagrams/<name>.py /tmp/x.svg`. The library prints a warning if
    something passes the canvas edge.
 5. Embed it: `<x-diagram name="<name>" alt="..." caption="..." />`. The build re-runs a script
    when the script or `svglib.py` changes.
@@ -643,7 +643,7 @@ Warnings (the build still succeeds, `--strict` turns them into errors):
 
 ## 12. Checklist before you hand in
 
-- [ ] `python3 build.py` has 0 errors; your pages have no template warnings.
+- [ ] `uv run python build.py` has 0 errors; your pages have no template warnings.
 - [ ] Every claim about the code has a citation or an excerpt. You opened each cited line yourself.
 - [ ] The page follows the template order and the exact `<h2>` names.
 - [ ] Each new term is defined at first use and linked with `{{term}}`; new glossary ids are in your own file.

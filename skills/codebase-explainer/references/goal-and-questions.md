@@ -22,7 +22,7 @@ the pages and learns step by step. After the basics, the site also works as a re
 
 **Definition of done** (copy into `plan.md`):
 - All planned pages exist, or the user deferred them (they show as "soon" in the menu).
-- `python3 build.py` gives 0 errors (no broken links, citations, anchors or glossary terms).
+- `uv run python build.py` gives 0 errors (no broken links, citations, anchors or glossary terms).
 - Every concept and tour page has a diagram, code excerpts, a deep dive and "Check yourself".
 - Fact checks are done for every batch. The FINAL-PASS TODO list is empty.
 - Each interactive visual works at desktop and phone width, with mouse, keyboard and touch.

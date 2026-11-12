@@ -24,7 +24,7 @@ verified; [W] = not); notes/brief-writer.md §"Accuracy lessons" (the defect typ
 7. Arithmetic in worked examples: recompute.
 Fix defects in place in the batch's files only (pages, diagrams/<batch>_*.py, assets/viz/<visual>.js,
 src/glossary/<batch>.json). Keep the writer's structure and the language rules. Run
-`python3 build.py --preview` until the batch has 0 errors and no language warnings.
+`uv run python build.py --preview` until the batch has 0 errors and no language warnings.
 
 ## No subagents
 Do NOT start subagents or forks. The user allows <N> running agents; you are one of them. Do all the work yourself.

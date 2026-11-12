@@ -52,7 +52,7 @@ What the kit contains:
 Test the kit after you fill in `explainer.json` and copy `diagrams/svglib.py` from the `svg-figures` skill:
 
 ```bash
-python3 tools/gen_folder_tree.py && python3 build.py
+uv run python tools/gen_folder_tree.py && uv run python build.py
 ```
 
 The example pages cite `README.md` of the target repo, so the first build works on any repo that has a
@@ -93,10 +93,10 @@ parent/
 Python 3.11+, standard library only. Run from the explainer folder.
 
 ```bash
-python3 build.py                   # build site/ (runs stale diagram scripts first)
-python3 build.py --strict          # warnings also fail the build (use before hand-in)
-python3 build.py --preview         # write site/ even with errors (one broken page must not block previews)
-python3 build.py --force-diagrams  # run every diagram script again
+uv run python build.py                   # build site/ (runs stale diagram scripts first)
+uv run python build.py --strict          # warnings also fail the build (use before hand-in)
+uv run python build.py --preview         # write site/ even with errors (one broken page must not block previews)
+uv run python build.py --force-diagrams  # run every diagram script again
 ```
 
 What it does:

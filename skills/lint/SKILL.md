@@ -1,6 +1,6 @@
 ---
 name: lint
-description: Runs flake8 and mypy in the workspace Python environment (uv or conda), reports the issues, and fixes them. Use this skill only when the user invokes /lint or asks to lint the workspace.
+description: Runs flake8 and mypy in the workspace Python environment (uv or conda), reports the issues, and fixes them. Starts only with the /lint command.
 disable-model-invocation: true
 ---
 
@@ -21,7 +21,9 @@ When you cannot tell, ask the user.
 ## Scope
 
 - Check only the project's own code. Use the flake8 and mypy configuration of the project (`setup.cfg`, `tox.ini`, `.flake8`, `pyproject.toml`, `mypy.ini`) when it exists.
-- Exclude vendored, generated and third-party code (for example `.venv`, `vendor/`, `third_party/`, `build/`, generated protobuf files). Add `--extend-exclude` entries for them.
+- Exclude vendored, generated and third-party code (for example `.venv`, `vendor/`, `third_party/`, `build/`, generated protobuf files).
+  - flake8: add the folders with `--extend-exclude` (it adds to the project setting).
+  - mypy: a command-line `--exclude` replaces the `exclude` setting of the project config. When the config has an `exclude` setting, do not pass `--exclude`; add the folders to the config only when the user agrees. When the config has no `exclude` setting, pass one `--exclude` regex for all folders, for example `--exclude '(\.venv|vendor|third_party|build)/'`.
 - When the user names files or folders, check only those.
 
 ## Checks
@@ -30,13 +32,13 @@ uv:
 
 - When `pyproject.toml` exists, run `uv sync`.
 - Run `uv run --with flake8 flake8 . --extend-exclude .venv`. Report each style violation.
-- Run `uv run --with mypy mypy . --exclude '\.venv'`. Report each type error.
+- Run `uv run --with mypy mypy .`, with `--exclude` only as the Scope section says. Report each type error.
 
 conda:
 
 - When flake8 or mypy is absent, run `conda install -n <env> flake8 mypy`.
 - Run `conda run -n <env> flake8 . --extend-exclude .venv`. Report each style violation.
-- Run `conda run -n <env> mypy . --exclude '\.venv'`. Report each type error.
+- Run `conda run -n <env> mypy .`, with `--exclude` only as the Scope section says. Report each type error.
 
 ## Communication style
 

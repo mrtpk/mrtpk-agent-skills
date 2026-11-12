@@ -11,9 +11,9 @@ PATTERN for every reference generator (env vars, config fields, CLI flags, API t
 Python 3 standard library only. Reads explainer.json for the repo path and the commit.
 
 Usage:
-  python3 tools/gen_folder_tree.py             # write the page
-  python3 tools/gen_folder_tree.py --check     # only check
-  python3 tools/gen_folder_tree.py --depth 3   # show deeper folders (default 2)
+  uv run python tools/gen_folder_tree.py             # write the page
+  uv run python tools/gen_folder_tree.py --check     # only check
+  uv run python tools/gen_folder_tree.py --depth 3   # show deeper folders (default 2)
 """
 from __future__ import annotations
 
@@ -104,7 +104,7 @@ def main() -> int:
     new = page[:start] + "\n" + body + "\n" + page[page.index(END):]
     if args.check:
         if new != page:
-            print(f"{PAGE.relative_to(ROOT)} is out of date: run python3 tools/gen_folder_tree.py")
+            print(f"{PAGE.relative_to(ROOT)} is out of date: run uv run python tools/gen_folder_tree.py")
             return 1
         print("folder tree is up to date")
         return 0
