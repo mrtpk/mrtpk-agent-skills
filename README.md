@@ -29,6 +29,19 @@ Agent instructions are in [AGENTS.md](AGENTS.md).
 - [`skills/unattended-run`](skills/unattended-run/SKILL.md) — run a long series of experiments while the user is away,
   with logs, findings and short status replies.
 
+## Work skills
+
+Skills for work-analysis tasks, in `skills/work/`. They need MCP servers for YouTrack and Outline. Set the base URLs
+of your instances (`<YOUTRACK_URL>`, `<OUTLINE_URL>`) as each `reference.md` says.
+
+- [`skills/work/youtrack-user-issue-report`](skills/work/youtrack-user-issue-report/SKILL.md) — list every YouTrack
+  issue assigned to a person, with the real workflow state, as a Markdown report.
+- [`skills/work/outline-wiki-author-report`](skills/work/outline-wiki-author-report/SKILL.md) — list every Outline
+  wiki page that a person created, as a grouped Markdown report with dated links.
+- [`skills/work/contributor-work-profile`](skills/work/contributor-work-profile/SKILL.md) — write a work summary of a
+  person from their issues and wiki pages, with an optional impact evaluation and growth plan.
+  Requires: `youtrack-user-issue-report`, `outline-wiki-author-report`.
+
 ## Usage
 
 Copy one skill folder into the agent skills directory. Also copy each skill that it requires (see "Requires" above).
