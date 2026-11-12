@@ -436,6 +436,11 @@ def load_pages() -> dict[str, Page]:
 def run_diagrams(force: bool) -> dict[str, Path]:
     DIAGRAM_OUT.mkdir(parents=True, exist_ok=True)
     lib = DIAGRAMS / "svglib.py"
+    scripts_present = any(p.name != "svglib.py" and not p.name.startswith("_") for p in DIAGRAMS.glob("*.py"))
+    if not lib.exists() and scripts_present:
+        R.error("diagrams", "diagrams/svglib.py is missing. Copy it from the svg-figures skill: "
+                "cp <svg-figures>/tools/svglib.py diagrams/")
+        return {}
     lib_bytes = lib.read_bytes() if lib.exists() else b""
     found: dict[str, Path] = {}
     ran = 0

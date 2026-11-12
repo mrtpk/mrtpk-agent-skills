@@ -1,4 +1,6 @@
-"""Render Markdown files (write-up parts, KB, outline) to standalone HTML files beside them.
+"""Render Markdown files (write-up parts, blog notes, KB, outline) to standalone HTML files beside them.
+
+Shared script: the code-to-kaizen-blog skill uses it too.
 
 Usage: uv run --with markdown python -I md2html.py <file.md> [<file.md> ...]
 """

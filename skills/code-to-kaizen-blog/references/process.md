@@ -51,9 +51,9 @@ Gate: the author approves the outline.
 
 For each part:
 
-1. Write `<slug>.py` from `templates/check_script.py`. Fix the RNG seed. Run it. Save the output.
+1. Write `<slug>.py` from `templates/check_post.py`. Fix the RNG seed. Run it. Save the output.
 2. Write the post from `templates/post.markdown`. Copy each number from the output.
-3. Write the figure scripts from `templates/figure.py`. Build them. Read each PNG with the Read tool. Fix overlaps and clipping.
+3. Write the figure scripts from `svg-figures/templates/figure.py` (`figures.md`). Build them. Read each PNG with the Read tool. Fix overlaps and clipping.
 4. Extract every code block of the post into a temporary file and run it. The output must match the post.
 5. Write `linkedin-post.md` from `templates/linkedin-post.md` (optional).
 6. Do not commit yet. Commit after the review in Phase 6, so that the review fixes stay in one commit per post.

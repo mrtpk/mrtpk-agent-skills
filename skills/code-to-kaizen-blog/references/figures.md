@@ -2,19 +2,19 @@
 
 ## Toolkit
 
-The skill has the figure toolkit in `tools/`. Copy it into the blog repo (for example `tools/diagrams/`) when the repo has no figure tools.
+The figure toolkit is in the `svg-figures` skill. Load that skill before you draw the first figure. It has the API, the style rules and the PNG checks.
 
-- `svglib.py`: the drawing library (`Diagram`, `header`, `panel`, `box`, `arrow`, `legend`, `footnotes`). It is the same library as in the `codebase-explainer` skill.
-- `figkit.py`: `row()` (up to 3 boxes with arrows), `table()`, `code()` (`\t` columns).
-- `build_figures.py`: runs each `<post>/diagrams/*.py`, writes the SVG and a 2x PNG to `<post>/resources/`.
+Find the `svg-figures` skill. Look first in the folder that contains this skill (`../svg-figures/`). Other places are only examples: `.claude/skills/`, `~/.claude/skills/`, `.cursor/skills/`. When it is absent, stop and tell the user to install `svg-figures` beside this skill.
+
+Copy `svg-figures/tools/` into the blog repo (for example `tools/diagrams/`) when the repo has no figure tools. The blog repo can then rebuild the figures without the skill. Copy `svg-figures/templates/figure.py` for each new figure.
 
 Build the figures of one post:
 
 ```
-uv run --with cairosvg --with numpy --with pillow python <tools>/build_figures.py <post folder> [--lib <folder with svglib.py and figkit.py>]
+PYTHONDONTWRITEBYTECODE=1 uv run --with cairosvg --with numpy --with pillow python <blog repo>/tools/diagrams/build_figures.py <post folder>
 ```
 
-Add `--with <package>` for every package that a figure script imports (figures that compute data from the post's script need numpy, and often pillow). `--lib` defaults to the folder of `build_figures.py`. Install the Inter font, so that the PNG matches the SVG.
+Add `--with <package>` for every package that a figure script imports (figures that compute data from the post's script need numpy, and often pillow). Install the Inter font and a mono font, so that the PNG matches the SVG.
 
 When the blog repo has its own `build_figures.py`, use it. It can have other arguments (for example no `--lib`); read its usage first.
 

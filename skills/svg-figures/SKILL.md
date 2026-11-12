@@ -28,7 +28,7 @@ This skill draws figures with `tools/svglib.py`. Each figure is one Python scrip
 
 When one folder holds figures of many parts or sections, name the scripts `NN_figK_<name>.py` (part number, figure number, short name). This prevents name collisions.
 
-When the target repo must rebuild the figures without this skill, copy `tools/` into the repo (for example `tools/diagrams/`) and pass `--lib` to that folder.
+When the target repo must rebuild the figures without this skill, copy `tools/` into the repo (for example `tools/diagrams/`) and pass `--lib` to that folder. Other skills do this: `code-to-kaizen-blog`, `code-to-md-writeup` and `codebase-explainer` depend on this skill and copy its tools. This skill is the only owner of the toolkit; do not keep edited copies in other skills.
 
 ## Build
 

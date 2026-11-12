@@ -1,13 +1,13 @@
 """svglib: a small library that draws technical figures as SVG.
 
-The house style (see ../references/style.md):
+The house style (see references/style.md in the svg-figures skill):
   - canvas width 1100, white background rect, width/height/viewBox match the content
   - colour tokens and font stacks below
   - inline presentation attributes only (no CSS, no <style>, no classes)
   - coordinates formatted to one decimal, all text escaped
   - one arrow marker per colour, created lazily
 
-Usage in a figure script (see ../templates/figure.py):
+Usage in a figure script (see templates/figure.py in the svg-figures skill):
 
     from svglib import Diagram, BLUE, EMERALD, INK, MUTE
     d = Diagram()

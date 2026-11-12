@@ -1,6 +1,6 @@
 # Figure style
 
-The tokens are in `tools/svglib.py`. The `codebase-explainer` skill has a copy of the same drawing code (`templates/diagrams/svglib.py`; only the docstring is different). When you change one copy, change the other copy too.
+The tokens are in `tools/svglib.py`. This skill is the only owner of the toolkit (`svglib.py`, `figkit.py`, `build_figures.py`) and of `templates/figure.py`. Other skills (`code-to-kaizen-blog`, `code-to-md-writeup`, `codebase-explainer`) copy the toolkit into their projects. A project copy is a snapshot: change the toolkit here, not in a project.
 
 ## Canvas
 

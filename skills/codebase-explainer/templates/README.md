@@ -72,7 +72,7 @@ glossary term is wrong.
 |---|---|
 | `explainer.json` | Project name, target repo path and URL, pinned commit, language style |
 | `src/` | Page sources, navigation (`src/nav/`) and glossary (`src/glossary/`) |
-| `diagrams/` | One Python script for each SVG diagram, and the shared helper `svglib.py` |
+| `diagrams/` | One Python script for each SVG diagram, and the shared helper `svglib.py` (a copy from the `svg-figures` skill) |
 | `assets/` | Site CSS and JavaScript, and the interactive visuals (`assets/viz/`) |
 | `tools/` | Generators for reference tables and the folder tree |
 | `notes/facts.md` | Facts that were checked in the code and that all pages share |

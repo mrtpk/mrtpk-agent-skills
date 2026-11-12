@@ -53,7 +53,7 @@ Gate: the owner approves the outline.
 
 For each part:
 
-1. Write `scripts/NN_<slug>.py` from `templates/check_script.py`. Fix one RNG seed per section. Run it. Save the output in `notes/`.
+1. Write `scripts/NN_<slug>.py` from `templates/check_part.py`. Fix one RNG seed per section. Run it. Save the output in `notes/`.
 2. Write `NN-<slug>.md` from `templates/part.md`. Copy each number from the output.
 3. Draw the figures with the svg-figures skill (`figures.md`). Read each PNG. Fix overlaps and clipping.
 4. Extract every code block of the part into a temporary file and run it. The output must match the text.

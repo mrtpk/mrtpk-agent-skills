@@ -54,7 +54,7 @@ Open `site/index.html` with a double-click. The site works from disk (`file://`)
     viz/                 interactive visuals: viz.css (shared viz styles) + one <name>.js per visual (section 10)
     img/                 images for <x-img src="img/..."> (section 5.10)
   diagrams/
-    svglib.py            diagram helper library (owner: foundation)
+    svglib.py            diagram helper library (copied from the svg-figures skill)
     _template.py         copy this to start a diagram (files that start with _ are not run)
     <name>.py            ONE script per diagram, owned by the page writer
   src/

@@ -4,8 +4,8 @@ The figures use the `svg-figures` skill. Load that skill before you draw the fir
 
 ## Find the toolkit
 
-1. Find the svg-figures skill folder: `../svg-figures/` beside this skill, or the skills folder of the agent (for example `~/.claude/skills/svg-figures/` or `.claude/skills/svg-figures/`).
-2. When the skill is not installed, stop and tell the owner. Do not draw figures with another method.
+1. Find the `svg-figures` skill. Look first in the folder that contains this skill (`../svg-figures/`). Other places are only examples: `.claude/skills/`, `~/.claude/skills/`, `.cursor/skills/`. When it is absent, stop and tell the user to install `svg-figures` beside this skill.
+2. Do not draw figures with another method.
 3. Copy `svg-figures/tools/` to `<writeup>/tools/`. The team can then rebuild the figures without the skill.
 
 ## Rules for the write-up

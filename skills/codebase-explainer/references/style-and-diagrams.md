@@ -39,7 +39,7 @@ This is learning material."* A full restyle followed. Start with the final look:
 The full guide is `instructions-svg.md`. Read it. The project rules below **override** it where they differ
 (the starter kit already uses the site rules: `svglib.py` defaults to width 1100).
 
-- **One Python script per diagram** in `diagrams/<name>.py`, built on the shared `diagrams/svglib.py`.
+- **One Python script per diagram** in `diagrams/<name>.py`, built on the shared `diagrams/svglib.py` (copied from the `svg-figures` skill at setup).
   No Mermaid, no hand-drawn SVG, no images when a script can draw it. One look for all diagrams.
 - **Canvas width 1100**: `d = Diagram(width=1100)`. The build warns if the width is not 1100.
   (A 1500 canvas showed text at 7-8 px on a 1280 screen. 1100 shows near 1:1.)

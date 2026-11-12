@@ -22,13 +22,12 @@ You are the supervisor. You read the code, talk with the author, run scripts and
 | `references/knowledge-base.md` | when you write the KB |
 | `references/writing.md` | before you write or edit a post |
 | `references/publishing-safety.md` | before you write a post, and before each commit |
-| `references/figures.md` | before you draw a figure |
+| `references/figures.md` | before you draw a figure; figures need the `svg-figures` skill |
 | `references/review.md` | when you start the fact-check subagent |
 | `references/pitfalls.md` | once, before Phase 3 |
 | `templates/` | copy into the notes folder or the post folder |
-| `tools/` | `svglib.py`, `figkit.py`, `build_figures.py`: the figure toolkit |
 | `scripts/render_review.py` | to render the posts to local HTML for the author |
-| `scripts/md2html.py` | to render the notes (KB, outline) to HTML |
+| `code-to-md-writeup/scripts/md2html.py` | to render the notes (KB, outline) to HTML. It is in the `code-to-md-writeup` skill: look first in the folder that contains this skill (`../code-to-md-writeup/`). When it is absent, tell the user to install it |
 
 ## Where the files go
 

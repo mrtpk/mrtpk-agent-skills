@@ -72,7 +72,10 @@ section 2 with the date.
 
 ### Step 2: Phase 1, foundation and samples
 
-1. Copy the starter kit: `cp -r <this skill>/templates/. <project>-explainer/`. Fill in
+1. Copy the starter kit: `cp -r <this skill>/templates/. <project>-explainer/`. Then copy the diagram
+   library from the `svg-figures` skill: `cp <svg-figures>/tools/svglib.py <project>-explainer/diagrams/`.
+   Find the `svg-figures` skill. Look first in the folder that contains this skill (`../svg-figures/`). Other places are only examples: `.claude/skills/`, `~/.claude/skills/`, `.cursor/skills/`. When it is absent, stop and tell the user to install `svg-figures` beside this skill.
+   Fill in
    `explainer.json`: it is the only file with project values (name, repo path and URL, host, full SHA,
    language style, Prism languages). `git init`; set the author repo-local.
    Fill in the shared briefs `notes/brief-writer.md` and `notes/brief-factcheck.md` (in the kit). Every

@@ -37,7 +37,8 @@ What the kit contains:
 | `explainer.json` | project values | everything |
 | `assets/site.css`, `assets/site.js` | the light article look, search, tooltips, quiz, lightbox | nothing, normally; add shared styles here, not in pages |
 | `assets/viz/viz.css`, `assets/viz/example_stepper.js` | shared visual styles; ONE visual as a pattern | copy the pattern for each new visual |
-| `diagrams/svglib.py`, `_template.py`, `example_flow.py` | diagram library (default width 1100), template, example | add one script per diagram; delete the example later |
+| `diagrams/_template.py`, `example_flow.py` | diagram template and example | add one script per diagram; delete the example later |
+| `diagrams/svglib.py` (not in the kit) | diagram library (default width 1100); copy it from `svg-figures/tools/svglib.py` at setup | nothing; change it in the `svg-figures` skill |
 | `tools/gen_folder_tree.py` | folder tree with file and line counts for `code/index`; pattern for all generators | folder descriptions in `DESCRIPTIONS` |
 | `src/index.html` | home page skeleton, with `<x-version />` | all text; build the system map |
 | `src/learn/example-basics.html`, `src/concepts/example-concept.html`, `src/tours/example-tour.html` | one example page per main type | replace them in Phase 1 |
@@ -48,7 +49,7 @@ What the kit contains:
 | `plan.md`, `progress.md`, `notes/facts.md`, `README.md` | skeletons | fill in |
 | `notes/brief-writer.md`, `notes/brief-factcheck.md` | shared subagent briefs | paths, SHA, reader, scope, model pages, agent limit |
 
-Test the kit after you fill in `explainer.json`:
+Test the kit after you fill in `explainer.json` and copy `diagrams/svglib.py` from the `svg-figures` skill:
 
 ```bash
 python3 tools/gen_folder_tree.py && python3 build.py
@@ -75,7 +76,7 @@ parent/
     assets/                    site.css, site.js, favicon.svg
       viz/                     viz.css + one <name>.js per visual
       img/                     images for <x-img src="img/...">
-    diagrams/                  svglib.py, _template.py, one <name>.py per diagram
+    diagrams/                  svglib.py (copied from svg-figures), _template.py, one <name>.py per diagram
     tools/                     generators (env vars, config tables, API tables)
     src/
       index.html               home page
