@@ -176,7 +176,7 @@ functions in section 9 do.
 
 ### 6.1 Panel (numbered section card)
 ```xml
-<rect x="20" y="90" width="1460" height="162" rx="14" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="20" y="90" width="1060" height="162" rx="14" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
 <circle cx="46" cy="116" r="13" fill="#111827"/>
 <text x="46" y="121" font-size="13" fill="#fff" font-weight="bold" text-anchor="middle">1</text>
 <text x="68" y="121" font-size="17" fill="#111827" font-weight="bold">Panel title as a question or claim</text>

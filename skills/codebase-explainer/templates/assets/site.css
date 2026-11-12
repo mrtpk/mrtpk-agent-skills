@@ -423,7 +423,7 @@ h2:hover .h-anchor, h3:hover .h-anchor, .h-anchor:focus { opacity: 1; }
 .related ul { list-style: none; padding: 0 !important; margin: 0; }
 .related li { margin: 0 0 10px; }
 .related li a { font-weight: 600; }
-/* Long page titles and code names (e.g. code/prepare-tensor-input-v4) must wrap on phones. */
+/* Long page titles and code names (e.g. code/a-very-long-module-name) must wrap on phones. */
 .related li, .prevnext a { overflow-wrap: anywhere; }
 /* Tables (also wide tables inside deep dives) wrap inside their cells and fit the column.
    Words wrap at spaces (hyphenated on phones); only code (long names, paths) may break anywhere.

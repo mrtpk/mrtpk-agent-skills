@@ -12,7 +12,7 @@ Script: `build_report_page.py` in this skill folder. Do not edit it for one repo
 1. Load the `artifact-design` skill if the Artifact tool is present.
 2. Make sure the report has numbered H2 sections (`## 1. Verdict`, `## 2. ...`).
    The script makes the contents rail from them. Section 1 becomes the verdict box.
-3. Write `header.json` in the scratchpad, not in the skill folder:
+3. Write `header.json` in a temporary folder, not in the skill folder:
 
    ```json
    {
@@ -44,8 +44,9 @@ Script: `build_report_page.py` in this skill folder. Do not edit it for one repo
 Apply these rules to all text that this skill produces (the header text and the replies; do not rewrite the report itself). Use another language style only when the user or the style guide of the target repo asks for it.
 
 - Always write in ASD-STE100 (Simplified Technical English): short sentences, active voice, one instruction per sentence, approved words with one meaning, no idioms.
-- Be blunt. Do not patronize. Do not praise, soften, or pad.
-- Reviews must be honest and brutal. State the verdict and the defects first.
+- In replies to the user: be blunt. Do not patronize. Do not praise, soften, or pad.
+- In reviews: be honest and brutal. State the verdict and the defects first.
+- Text that this skill makes for other readers (pages, documents, reports, figures) follows the tone rules of this skill, for example neutral words for gaps.
 - Be brief and to the point.
 - Sentence limits: at most 20 words in an instruction, at most 25 words in a description.
 - Code, file names, identifiers and technical names stay as they are.
@@ -55,4 +56,5 @@ Apply these rules to all text that this skill produces (the header text and the 
 - Light and dark colors as tokens on `:root`. Dark mode by media query and by `data-theme`.
 - Wide tables scroll inside their box. No horizontal page scroll at phone width.
 - The contents rail is sticky on wide screens and a two-column list below 860 px.
-- Fonts from Google Fonts only. No scripts.
+- Fonts from Google Fonts only (Archivo, Source Sans 3, JetBrains Mono). These are report-page fonts; they differ
+  from the figure fonts of `svg-figures` on purpose. No scripts.

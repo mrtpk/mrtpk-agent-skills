@@ -1318,7 +1318,7 @@ def render_page(ctx: Ctx, page: Page, order: list[str]) -> str:
     page_js = ""
     for js in page.listify("scripts"):
         if not js.endswith(".js") or ".." in Path(js).parts or js.startswith("/"):
-            R.error(where, f"scripts: {js!r} must be a .js path inside assets/, for example viz/kv_allocator.js")
+            R.error(where, f"scripts: {js!r} must be a .js path inside assets/, for example viz/example_stepper.js")
         elif not (ASSETS / js).is_file():
             R.error(where, f"scripts: assets/{js} does not exist")
         else:

@@ -4,7 +4,7 @@ Copy a template, fill in the {...} parts, and send it as the subagent prompt.
 
 Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
 
-### 7.6 Subagent prompt templates
+### Subagent prompt templates
 
 Fill in the `{...}` parts. Give every subagent the absolute paths. Tell every subagent to report back:
 what it did, files changed, build result, facts found, open questions.
@@ -17,7 +17,7 @@ Add each new lesson to the briefs, not to single prompts.
 **Rules for every subagent.** Add this block to the end of every prompt (A-G), or make sure the brief has it:
 
 ```
-- Do NOT start subagents or forks. You are one of the {N} agents that the user allows. Do all the work yourself.
+- Do NOT start subagents (also no forks or copies of yourself). You are one of the {N} agents that the user allows. Do all the work yourself.
 - Do NOT change {TARGET_PATH}. Do NOT commit, push or publish: the supervisor commits.
 - Do NOT write on a page that the code has a bug. Re-read the control flow twice (is the line inside or
   after the loop or if? check the caller and the callee) and report it to the supervisor with exact lines.
@@ -80,7 +80,7 @@ Read first, in this order:
 1. {EXPLAINER_PATH}/STYLE.md (all of it; it is binding)
 2. {EXPLAINER_PATH}/instructions-svg.md (STYLE.md §10 overrides it: canvas 1100, min text 11)
 3. {EXPLAINER_PATH}/notes/facts.md (shared verified facts; still open the code and cite it yourself)
-4. Sample pages to copy: {SAMPLE_PAGES, e.g. src/concepts/hardware-platforms.html, src/code/llm-engine.html, src/tours/life-of-a-request.html}
+4. Sample pages to copy: {SAMPLE_PAGES, e.g. src/concepts/<concept>.html, src/code/<module>.html, src/tours/<tour>.html}
 
 Your pages (ids are fixed in src/nav/*.json):
 - {page id}: {one line of scope}
@@ -163,7 +163,9 @@ Report: each TODO with its fix, other fixes, pages changed, build result.
 
 ```
 You check the built site {EXPLAINER_PATH}/site/ in a browser. Do not change page text.
-Use Playwright through npx (scripts in your scratchpad; one output file name per run).
+Use Playwright through Node (`npx`, as tooling.md "Site check (browser)" says; scripts in a temporary folder; one output
+file name per run). This check needs a script (overflow, console, links, clicks), so it uses the Node library, not the
+one-line `uvx playwright screenshot` command that design-plan-presentation uses for screenshots.
 For every page, at 1280 px and 390 px width, with all deep dives opened:
 - page-level horizontal overflow; console errors and page errors;
 - internal links, anchors and glossary term links;
@@ -175,8 +177,8 @@ Report: numbers (pages, links, broken links, anchors, overflow before/after, JS 
 problems that remain (with page and width), and 5-10 screenshot paths for the supervisor.
 ```
 
-To save budget, the supervisor can run the check script itself (tooling.md 6.8) and start this subagent
-only when there are problems to fix. One earlier site did this: 107 pages × 2 widths, clean.
+To save budget, the supervisor can run the check script itself (tooling.md, "Site check (browser)") and start this subagent
+only when there are problems to fix.
 
 #### G. Diagram conversion (only if a diagram rule changes)
 

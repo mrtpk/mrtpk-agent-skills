@@ -27,7 +27,7 @@ src/glossary/<batch>.json). Keep the writer's structure and the language rules. 
 `uv run python build.py --preview` until the batch has 0 errors and no language warnings.
 
 ## No subagents
-Do NOT start subagents or forks. The user allows <N> running agents; you are one of them. Do all the work yourself.
+Do NOT start subagents (also no forks or copies of yourself). The user allows <N> running agents; you are one of them. Do all the work yourself.
 
 ## Claims that the code has a bug
 Do NOT put a "this looks like a bug" claim on a page. Re-read the control flow twice (indentation: is the

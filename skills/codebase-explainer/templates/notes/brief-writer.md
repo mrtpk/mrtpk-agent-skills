@@ -51,7 +51,7 @@ place in the code. Start with these.)
   template or language warnings.
 
 ## No subagents
-Do NOT start subagents or forks. The user allows <N> running agents; you are one of them. Do all the work yourself.
+Do NOT start subagents (also no forks or copies of yourself). The user allows <N> running agents; you are one of them. Do all the work yourself.
 
 ## Claims that the code has a bug
 Do NOT put a "this looks like a bug" claim on a page. Re-read the control flow twice (is the line inside or

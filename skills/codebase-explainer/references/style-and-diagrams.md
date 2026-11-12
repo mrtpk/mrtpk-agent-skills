@@ -4,18 +4,17 @@ Read this before you change the CSS, write a diagram, or review screenshots.
 
 Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
 
-## 4. Look and diagram rules
+## Look and diagram rules
 
-### 4.1 Page look (user feedback; binding)
+### Page look (binding)
 
-The first look was dark and busy: the site followed the OS dark mode, and it had many boxes,
-borders and badges. The feedback was: *"need light background, readable.
-This is learning material."* A full restyle followed. Start with the final look:
+A dark, busy look (OS dark mode, many boxes, borders and badges) reads badly as learning material.
+A late restyle is expensive. Start with this look:
 
 - **Light background always.** Dark mode only through the toggle button. Never follow
   `prefers-color-scheme`. The toggle stores the choice in `localStorage`; a small inline script in
   `<head>` applies it before paint.
-- Model: a long-form magazine article (Sebastian Raschka's Substack).
+- Model: a long-form magazine article.
 - Body: Inter (Google Fonts), **18 px / line height 1.7** (17 px / 1.68 on phones). Text colour dark
   gray `#292929`, headings `#141414`, on white.
 - **Prose column ~720 px** (`--measure`). **Figures up to ~1100 px** (`--wide`). The article is a
@@ -34,7 +33,7 @@ This is learning material."* A full restyle followed. Start with the final look:
 - Diagrams and images sit on a white card, also in dark mode.
 - Mobile: sidebar becomes a drawer below 960 px; 16 px side padding; brand name hidden below 560 px.
 
-### 4.2 Diagram rules
+### Diagram rules
 
 The full guide is `instructions-svg.md`. Read it. The project rules below **override** it where they differ
 (the starter kit already uses the site rules: `svglib.py` defaults to width 1100).

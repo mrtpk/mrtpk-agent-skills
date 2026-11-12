@@ -182,7 +182,7 @@ Stops run in code order. Each stop names the file and function where the reader 
 
 ### 4.3 Code map pages (section `code`)
 
-The model page is `src/code/llm-engine.html`. Copy its structure.
+The model page is the first module page that Phase 1 writes. Copy its structure.
 
 Front matter: `title: <path>: <main thing>`, `nav_title: <short path>`, `level`, `prerequisites`,
 `related`, `summary`.

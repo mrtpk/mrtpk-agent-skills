@@ -4,9 +4,9 @@ Read this when you plan the page list, or before you write or review any page.
 
 Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
 
-## 3. Site organization and page types
+## Site organization and page types
 
-### 3.1 The five parts
+### The five parts
 
 ```
 <project>-explainer/site/
@@ -20,8 +20,8 @@ Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SH
   diagrams/      the SVG files
 ```
 
-One LLM engine explainer had: learn 12, concepts 33 (+1 deferred), tours 6, code 49 (+1 deferred),
-reference 4 + the generated glossary. About 106 pages in total.
+A site of about 100 pages is a typical size, for example: 10 basics pages, 30 concepts, 6 tours, 50 module pages and a few
+reference pages, plus the generated glossary.
 
 **Part 1, Learn the basics.** Domain knowledge that the reader needs before the code. No project
 code, except a short "In {PROJECT}" section at the end with 1-3 cited pointers. For an ML inference
@@ -68,7 +68,7 @@ appear in the tree only. Group module pages by folder.
    browse link, checkout commands, a table of pinned submodule commits, and a note that line numbers
    belong to this commit.
 
-### 3.2 Page anatomy (what the build makes around each page)
+### Page anatomy (what the build makes around each page)
 
 Every built page has, from top to bottom:
 - Top bar: menu button (phones), brand mark and site name, search box ("Search ( / )"), light/dark toggle.
@@ -80,17 +80,17 @@ Every built page has, from top to bottom:
   "about N min read + M min deep dives", and "Open all deep dives".
 - **Version line**: "Code version: {PROJECT} @ `{SHORT_SHA}` · date", linked to the tree at the commit.
 - "Before you read" box from `prerequisites:` (or "You do not need to read other pages first").
-- The page body (templates in 3.3).
+- The page body (see "Page templates" below).
 - "Related pages" with the summary of each page.
 - Previous / Next buttons in sidebar order (pages not written are skipped).
 - Footer: full SHA, commit date and subject, link to `index.html#code-version`, source link, build date.
 - "On this page" table of contents on the right, only at ≥ 1680 px width.
 - Hidden: lightbox for diagrams, glossary tooltip element.
 
-### 3.3 Page templates
+### Page templates
 
 Use the `<h2>` texts exactly, so all pages look the same. Starter files: `src/_templates/concept.html`
-and `src/_templates/tour.html`. The model module page is a real page (for example `src/code/llm-engine.html`).
+and `src/_templates/tour.html`. The model module page is the first module page that Phase 1 writes; `src/code/index.html` is the code-map start.
 
 **Concept page** (`concepts/`) and **basics page** (`learn/`):
 
@@ -150,10 +150,10 @@ How the folders depend on each other, How the numbers were measured.
 A generated table sits between markers, for example
 `<!-- BEGIN GENERATED env-tables --> ... <!-- END GENERATED env-tables -->`.
 
-### 3.4 Interactive visuals
+### Interactive visuals
 
-Make 6-8 visuals for the hardest ideas. Vanilla JS, one file each in `assets/viz/`. One LLM engine explainer had:
-attention toy, KV cache block allocator, scheduler simulator, ZOS (CPU/GPU overlap) timeline,
+Make 6-8 visuals for the hardest ideas. Vanilla JS, one file each in `assets/viz/`. Examples for an LLM inference engine:
+attention toy, KV cache block allocator, scheduler simulator, CPU/GPU overlap timeline,
 MoE router with load balancer, speculative decoding accept/reject, number-format converter,
 "Life of a request" stepper. Good kinds: **simulators** (click "Add request", "Step"),
 **steppers** (Next / a stop number), **converters** (value in, bits out), **toys** (change an input,

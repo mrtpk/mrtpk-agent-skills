@@ -45,8 +45,9 @@ conda:
 Apply these rules to all text that this skill produces (the issue report and the final reply). Use another language style only when the user or the style guide of the target repo asks for it.
 
 - Always write in ASD-STE100 (Simplified Technical English): short sentences, active voice, one instruction per sentence, approved words with one meaning, no idioms.
-- Be blunt. Do not patronize. Do not praise, soften, or pad.
-- Reviews must be honest and brutal. State the verdict and the defects first.
+- In replies to the user: be blunt. Do not patronize. Do not praise, soften, or pad.
+- In reviews: be honest and brutal. State the verdict and the defects first.
+- Text that this skill makes for other readers (pages, documents, reports, figures) follows the tone rules of this skill, for example neutral words for gaps.
 - Be brief and to the point.
 - Sentence limits: at most 20 words in an instruction, at most 25 words in a description.
 - Code, file names, identifiers and technical names stay as they are.

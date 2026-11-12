@@ -3,7 +3,7 @@
 ## Phase 0: Survey
 
 1. Find the code root and everything around it: docs, tests, eval reports, data folders, archives, images, videos, old documents (.docx, .pdf).
-2. Read the entry points, the core modules (the main algorithm, the model, the data pipeline) and the tests. Use an Explore subagent for a large repo. Spot-check 3-5 claims of the subagent in the code.
+2. Read the entry points, the core modules (the main algorithm, the model, the data pipeline) and the tests. Use a search subagent for a large repo. Spot-check 3-5 claims of the subagent in the code.
 3. For each part of the code, find out who wrote it: the team, or a third party (paper authors, a library). Ask when you cannot tell.
 4. Record what is missing or broken: missing files, code that cannot run here, data that is not in the folder, results that no file reproduces.
 5. Look at the media. Extract video frames with ffmpeg (for example 1 frame per second) into `notes/` and read the frames with text. Record each fact with its timestamp.
@@ -32,7 +32,7 @@ Gate: no untagged claim. No `[code]` or `[ref]` claim without a pinned location.
 
 Do this phase when the owner names a reference, or when the design follows a known method.
 
-1. Pin the reference. A repo: clone it at a fixed tag into the scratchpad (`git clone --depth 1 -b <tag> <url>`). A paper: download the arXiv PDF at a fixed version (`<id>v<n>`). A document or video: record the URL and the date you read it.
+1. Pin the reference. A repo: clone it at a fixed tag into a temporary folder (`git clone --depth 1 -b <tag> <url>`). A paper: download the arXiv PDF at a fixed version (`<id>v<n>`). A document or video: record the URL and the date you read it.
 2. Check that the reference describes this method. Read the abstract and the method section. When it does not match, stop and tell the owner. A paper that only cites the method is not the reference.
 3. For each design point, find the reference location (file:line, or section, figure, table, equation). Write it into the KB.
 4. Write small simulations that run both versions on the same inputs. Record the results as `[sim]` with counts.

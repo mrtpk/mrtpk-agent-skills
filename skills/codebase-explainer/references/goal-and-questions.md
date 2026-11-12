@@ -4,7 +4,7 @@ Read this before you talk to the user about a new explainer project.
 
 Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
 
-## 1. Goal and outcome
+## Goal and outcome
 
 **Goal.** Make a static website that teaches what happens in `{PROJECT}`. The reader clicks through
 the pages and learns step by step. After the basics, the site also works as a reference.
@@ -31,7 +31,7 @@ the pages and learns step by step. After the basics, the site also works as a re
 
 ---
 
-## 2. Questions to ask the user first
+## Questions to ask the user first
 
 Ask these questions **before** you build. Write the answers into `plan.md` section "Decisions".
 Do not start Phase 1 before the user approves `plan.md`.
@@ -39,18 +39,18 @@ Do not start Phase 1 before the user approves `plan.md`.
 | # | Question | Why it matters | Suggested default |
 |---|---|---|---|
 | 1 | Who is the reader? What do they know already? | Sets the basics part and the level of each page. | Knows Python (or the main language of the repo). Knows little about the domain (for example ML). |
-| 2 | Depth: only a beginner guide, or also full study detail? | Decides if every page gets a deep dive. | Both. "I use this to study. Beginner-friendly, but I need details as well." |
+| 2 | Depth: only a beginner guide, or also full study detail? | Decides if every page gets a deep dive. | Both: a beginner start and a full deep dive on every page. |
 | 3 | Local files or published? Are CDN libraries OK? | Decides the link rules and the CDN list. | Local for now, publish later. CDN is OK (cdnjs, jsDelivr, unpkg, Google Fonts). |
 | 4 | Site structure: concepts + tours + code map? One page per file? | Decides the page count. | Concepts + guided tours + a code map with one page per important module. Not one page per file. |
-| 5 | Folder for the explainer repo? | Avoid edits to the target repo. | `test-harness/<project>-explainer/`, next to the target repo checkout. |
+| 5 | Folder for the explainer repo? | Avoid edits to the target repo. | `<parent>/<project>-explainer/`, next to the target repo checkout. |
 | 6 | Language style of the site text? | Writing rules (writing-and-accuracy.md). | ASD-STE100 Simplified Technical English. (Option: plain English.) |
 | 7 | Scope: which parts get full pages? What is out of scope? | Avoids surprises late. | Be generous. Vendor submodules: explain only the interface. |
 | 8 | Name of the site? | Title on every page. | "`{PROJECT}` Explained". |
-| 9 | Look? Show the sample look or a reference site. | Avoids a restyle (pitfalls.md). | Light article look like Sebastian Raschka's Substack (`magazine.sebastianraschka.com`). Never auto dark mode. |
+| 9 | Look? Show the sample look or a reference site. | Avoids a restyle (pitfalls.md). | Light long-form article look. Never auto dark mode. |
 | 10 | Which commit to pin? | All line numbers depend on it. | The newest commit on the default branch on the day you start. |
 | 11 | Git: local commits per stage? Push? Which author identity? | Git rules (process.md). | Commit per stage. Push only when asked. Ask for the author name and email; set them repo-local. |
-| 12 | Stop after Phase 1 for a review? | The user checks look and depth early. | Yes. Always stop after Phase 1. (Skip it only when the look is copied from a site that the user already approved.) |
-| 13 | Budget: subagents at the same time? Usage ceiling? Model and effort for subagents? Full fact checks or budget mode? | A ~100-page site uses a large part of a weekly allowance (process.md 7.3a). | 2 at a time; full fact checks; stop and wait at the user's ceiling. |
+| 12 | Stop after Phase 1 for a review? | The user checks look and depth early. | Yes. Stop after Phase 1, unless the user asked for an unattended run ("run unattended"); then write that in `progress.md` as a USER INSTRUCTION. |
+| 13 | Budget: subagents at the same time? Usage ceiling? Model and effort for subagents? Full fact checks or budget mode? | A ~100-page site uses a large part of a usage allowance (process.md, "Budget"). | 2 at a time; full fact checks; stop and wait at the user's ceiling. |
 | 14 | Is there a sibling explainer site? | Avoids pages that repeat its basics. | One-line recap + link to the sibling page; list them in `basics-covered.md`. |
 
 Before you ask, run the codebase survey (subagent-prompts.md, template A). Then you can propose a concrete

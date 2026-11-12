@@ -1,6 +1,6 @@
 ---
 name: extract-skills
-description: Mine the current conversation for reusable knowledge and turn what is worth keeping into skills, memories, docs or scripts. Use this when the user asks what skills could come out of this session, whether anything here is worth reusing or saving, to turn this work or workflow into a skill, or to capture what was learned before the context is lost. Also use it at the end of a long or painful session, when a problem took several wrong turns to solve, or when you notice you have re-derived the same sequence of steps more than once - the knowledge that cost the most to get is the knowledge most likely to be thrown away.
+description: Mine the current conversation for reusable knowledge and turn what is worth keeping into skills, memories, docs or scripts. Use this when the user asks what skills could come out of this session, whether anything here is worth reusing or saving, to turn this work or workflow into a skill, or to capture what was learned before the context is lost. Also use it at the end of a long or painful session, when a problem took several wrong turns to solve, or when you notice you have re-derived the same sequence of steps more than once - the knowledge that cost the most to get is the knowledge most likely to be thrown away. Do not use it to build or edit one skill that the user already named (use a skill-creator skill), or to make skills when nobody asked to keep anything.
 ---
 
 # Extracting reusable skills from a conversation
@@ -140,8 +140,9 @@ that all three are true. Usually only the first is true.
 Apply these rules to all text that this skill produces (the recommendation and every skill, memory or doc that you write). Use another language style only when the user or the style guide of the target repo asks for it.
 
 - Always write in ASD-STE100 (Simplified Technical English): short sentences, active voice, one instruction per sentence, approved words with one meaning, no idioms.
-- Be blunt. Do not patronize. Do not praise, soften, or pad.
-- Reviews must be honest and brutal. State the verdict and the defects first.
+- In replies to the user: be blunt. Do not patronize. Do not praise, soften, or pad.
+- In reviews: be honest and brutal. State the verdict and the defects first.
+- Text that this skill makes for other readers (pages, documents, reports, figures) follows the tone rules of this skill, for example neutral words for gaps.
 - Be brief and to the point.
 - Sentence limits: at most 20 words in an instruction, at most 25 words in a description.
 - Code, file names, identifiers and technical names stay as they are.

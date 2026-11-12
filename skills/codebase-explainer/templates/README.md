@@ -89,5 +89,5 @@ glossary term is wrong.
 - After a batch of pages is written, a separate review compares each claim with the code and corrects errors.
 - <Out-of-scope parts, and why.>
 
-The pages were written with Claude Code and reviewed against the source code.
+The pages were written with an AI coding agent and reviewed against the source code.
 This site is not an official project of the <Project> authors.

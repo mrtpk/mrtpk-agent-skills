@@ -4,9 +4,9 @@ Use these at each gate: plan approval, Phase 1 review, each batch, the final pas
 
 Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
 
-## 12. Checklists
+## Checklists
 
-### 12.1 Before you ask the user to approve the plan
+### Before you ask the user to approve the plan
 - [ ] Survey done; you read its report and spot-checked 3-5 claims in the code.
 - [ ] `plan.md` has decisions, page list per part, page design, visuals, batches, waves, definition of done.
 - [ ] `progress.md` exists with the phase table and "Questions for the user".
@@ -15,7 +15,7 @@ Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SH
 - [ ] The shared briefs (`notes/brief-writer.md`, `notes/brief-factcheck.md`) are filled in and forbid subagents.
 - [ ] The pinned commit (and submodule commits) are written down.
 
-### 12.2 Before the Phase 1 review (stop here)
+### Before the Phase 1 review (stop here)
 - [ ] `explainer.json` filled in (name, repo path, URL, host, full SHA, language style, Prism languages); example pages replaced.
 - [ ] `uv run python build.py` has 0 errors; `--strict` warnings are understood.
 - [ ] Nav files list every planned page; the sidebar shows "soon" for the rest.
@@ -28,7 +28,7 @@ Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SH
 - [ ] `progress.md` updated; Phase 1 committed.
 - [ ] The user has the list of sample pages to open and the open questions.
 
-### 12.3 Per batch
+### Per batch
 - [ ] Writer prompt lists pages, visual, owned files, owned glossary ids, samples to copy.
 - [ ] Writer report has new facts, wrong facts, uncertain claims, open questions.
 - [ ] Build 0 errors for the batch pages; no template warnings. Writer output committed "(fact check pending)".
@@ -40,7 +40,7 @@ Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SH
 - [ ] Supervisor looked at 1-2 pages in a browser (desktop and phone).
 - [ ] `progress.md` batch row updated; committed with a message that names the pages.
 
-### 12.4 Final
+### Final
 - [ ] All batches committed; deferred pages listed in `plan.md` and the README.
 - [ ] FINAL-PASS TODO list all DONE (final consistency pass, template E).
 - [ ] Generators run with `--check`; reference tables current.

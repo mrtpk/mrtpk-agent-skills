@@ -28,7 +28,7 @@ no build step. The only permitted network access is for optional fonts.
 ## Page architecture
 
 - **The hub is the system itself.** The first screen shows the architecture
-  (the machines, the link, the components). Each region is a click target
+  (the services, the connections, the components). Each region is a click target
   that opens an "act". The map and the system are the same picture. Extra
   topics (workload, validation, primer) become header pills.
 - **Numbered nav pills, one style.** Each act opener is the same pill: one
@@ -48,7 +48,7 @@ no build step. The only permitted network access is for optional fonts.
   each dependent label: shapes, byte counts, captions, panel footers, grids.
   Keep the strings for each variant in small JS lookup tables with the variant
   as key. Do not put them inline in conditionals.
-- **Hidden depth.** Put the fine print (wire headers, handshakes, timeouts,
+- **Hidden depth.** Put the fine print (message formats, retries, timeouts,
   failure rules, rejected alternatives) in a modal behind one button. The
   presenter opens it only for questions.
 - **A primer** (background that the audience possibly does not have) is behind
@@ -70,7 +70,8 @@ variables on `:root`. Define them again under `[data-theme="dark"]`. Save the
 choice in `localStorage` inside try/catch.
 
 Fonts from Google Fonts (Inter + JetBrains Mono) are the only permitted network
-dependency. Use system font stacks as fallback. Do not use JS frameworks.
+dependency. These are page fonts, chosen for a projector. They differ from the figure fonts of
+`svg-figures` on purpose; figures that you embed keep the `svg-figures` style. Use system font stacks as fallback. Do not use JS frameworks.
 
 ## Projector scaling
 
@@ -104,10 +105,10 @@ with `inset:0` need no correction. In panes, body text below approximately 13px
   time in the caption ("`[2, 3]` = 2 requests × 3 IDs"). People often read
   shapes as counts.
 - **No cross-reference citations.** Do not show "(decision 7)", "(fact 1)",
-  "(rule 6.2.2)" on screen. Keep the claim and remove the tag.
+  "(rule 4.1)" on screen. Keep the claim and remove the tag.
 - **No us/them wording.** Name the components (the client, the server). Do not
-  call a team "us", "ours", or "them". The other half of the system can belong
-  to the audience.
+  call a team "us", "ours", or "them". People in the audience can own a part
+  of the system.
 - **Keep boxes short.** Each box has two to four lines. If a pane needs a
   paragraph, put the paragraph behind a click.
 - Write page prose in ASD-STE100 (section "Communication style").
@@ -117,8 +118,9 @@ with `inset:0` need no correction. In panes, body text below approximately 13px
 Apply these rules to all text that this skill produces (page prose, captions and replies). Use another language style only when the user or the style guide of the target repo asks for it.
 
 - Always write in ASD-STE100 (Simplified Technical English): short sentences, active voice, one instruction per sentence, approved words with one meaning, no idioms.
-- Be blunt. Do not patronize. Do not praise, soften, or pad.
-- Reviews must be honest and brutal. State the verdict and the defects first.
+- In replies to the user: be blunt. Do not patronize. Do not praise, soften, or pad.
+- In reviews: be honest and brutal. State the verdict and the defects first.
+- Text that this skill makes for other readers (pages, documents, reports, figures) follows the tone rules of this skill, for example neutral words for gaps.
 - Be brief and to the point.
 - Sentence limits: at most 20 words in an instruction, at most 25 words in a description.
 - Code, file names, identifiers and technical names stay as they are.

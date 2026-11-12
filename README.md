@@ -7,7 +7,7 @@ Agent instructions are in [AGENTS.md](AGENTS.md).
 ## Skills
 
 - [`skills/codebase-explainer`](skills/codebase-explainer/SKILL.md) — plan and build a static HTML study
-  site that teaches an open-source codebase, with cited claims, diagrams, guided tours and a fact-check pass.
+  site that teaches a codebase, with cited claims, diagrams, guided tours and a fact-check pass.
   Requires: `svg-figures`.
 - [`skills/code-to-kaizen-blog`](skills/code-to-kaizen-blog/SKILL.md) — read a codebase, keep an internal knowledge
   base with file:line citations, and write a technical blog series with check scripts, svglib figures and a fact-check pass.
@@ -22,7 +22,7 @@ Agent instructions are in [AGENTS.md](AGENTS.md).
 - [`skills/extract-skills`](skills/extract-skills/SKILL.md) — find reusable knowledge in a conversation, and turn it into
   skills, memories, docs or scripts.
 - [`skills/report-to-page`](skills/report-to-page/SKILL.md) — turn a Markdown study report into one HTML page, and publish
-  it as an Artifact.
+  it as an Artifact when the Artifact tool is present. Without it, it writes a standalone HTML file.
 - [`skills/self-review`](skills/self-review/SKILL.md) — check your own work against evidence before you say that it is done.
 - [`skills/svg-figures`](skills/svg-figures/SKILL.md) — draw technical figures as one Python script per figure, build SVG
   and PNG, and check each PNG.
@@ -53,6 +53,13 @@ Or ask the agent to look at this repo and then install the skills.
 
 The agent invokes the skill by the `name` in `SKILL.md`.
 `explore` and `lint` start only with their slash commands (`/explore`, `/lint`). The agent does not start them by itself.
+
+`svg-figures`, `report-to-page`, `code-to-md-writeup`, `codebase-explainer` and `code-to-kaizen-blog` run Python scripts
+with [uv](https://docs.astral.sh/uv/). Install uv first.
+
+Some skills have an `evals/` folder. `trigger_evals.json` lists requests that must start the skill and requests that
+must not. Use it to test the skill description after a change. `case.yaml`, `prompt.md` and `graders/` describe one
+test task with grading rules, for a skill evaluation tool.
 
 ## Rules
 

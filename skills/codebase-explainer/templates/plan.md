@@ -87,7 +87,7 @@ See STYLE.md §6-7. Every claim about the code cites `file:line` at the pinned c
 
 ## 8. How the supervisor works
 
-Supervisor + subagents. At most ~6-7 subagents at the same time. Writer → separate fact checker → commit
+Supervisor + subagents. At most <N> subagents at the same time. Writer → separate fact checker → commit
 per batch. `progress.md` is updated after every event. The target repo is never changed. No push without
 a user request. Open questions go to `progress.md` "Questions for the user".
 

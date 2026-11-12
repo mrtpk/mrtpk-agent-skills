@@ -4,7 +4,7 @@ Read this when the target repo is not an ML project, not Python, or not on GitHu
 
 Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
 
-## 11. Adapting to other kinds of projects
+## Adapting to other kinds of projects
 
 The process, tooling, look and rules stay the same. These parts change:
 
@@ -28,8 +28,8 @@ For a **non-Python target repo**:
 For a **non-GitHub host**: change `github_url()` (GitLab: `{base}/-/blob/{sha}/{path}#L{a}-{b}`;
 Gitea: `{base}/src/commit/{sha}/{path}#L{a}-L{b}`) and the "GitHub ↗" label.
 
-For a **repo with no comments in another language**: the `<x-tr>` tag stays unused. For comments in a
-language other than Chinese, change the label in `build.py`.
+For a **repo with no comments in another language**: the `<x-tr>` tag stays unused. For comments in another
+language, set `comment_language` in `explainer.json`.
 
 For a **domain the reader already knows**: make the basics part short (3-5 pages) or merge it into the
 first concept pages. Keep at least one page that explains the main data model.

@@ -4,9 +4,9 @@ Read this when you set up the explainer repo, or when the build gives an error y
 
 Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
 
-## 6. Tooling
+## Tooling
 
-### 6.1 The starter kit (`templates/`)
+### The starter kit (`templates/`)
 
 The skill folder has a generic starter kit in `templates/`. Copy all of it (with the hidden
 `.gitignore`) into the new explainer folder:
@@ -33,7 +33,7 @@ What the kit contains:
 
 | Path | What it is | What you change |
 |---|---|---|
-| `build.py` | the generator (section 6.3) | nothing, normally |
+| `build.py` | the generator (see "`build.py` features") | nothing, normally |
 | `explainer.json` | project values | everything |
 | `assets/site.css`, `assets/site.js` | the light article look, search, tooltips, quiz, lightbox | nothing, normally; add shared styles here, not in pages |
 | `assets/viz/viz.css`, `assets/viz/example_stepper.js` | shared visual styles; ONE visual as a pattern | copy the pattern for each new visual |
@@ -58,7 +58,7 @@ uv run python tools/gen_folder_tree.py && uv run python build.py
 The example pages cite `README.md` of the target repo, so the first build works on any repo that has a
 `README.md` with at least 3 lines. Expected result: 0 errors and a few warnings for links to planned pages.
 
-### 6.2 Folder layout
+### Folder layout
 
 ```
 parent/
@@ -88,7 +88,7 @@ parent/
     site/                      generated site (do not edit)
 ```
 
-### 6.3 `build.py` features
+### `build.py` features
 
 Python 3.11+, standard library only. Run from the explainer folder.
 
@@ -136,17 +136,17 @@ What it does:
 - **Reading time** for the main text and for the deep dives, separately.
 - Exit code 1 on errors (also with `--preview`, after it writes the site).
 
-### 6.4 Front matter
+### Front matter
 
 ```html
 ---
-title: Hardware platforms: NVIDIA and Ascend
-nav_title: NVIDIA and Ascend
+title: Request scheduling
+nav_title: Scheduling
 level: Intermediate
-prerequisites: learn/gpus-kernels, learn/parallelism
-related: concepts/tilelang-kernels, code/platform
+prerequisites: learn/example-basics
+related: concepts/example-concept, code/index
 summary: One or two sentences. Used by search, related-page cards and <meta description>.
-scripts: viz/kv_allocator.js
+scripts: viz/example_stepper.js
 ---
 ```
 
@@ -156,7 +156,7 @@ Keys: `title` (required), `summary` (required), `level` (learn/concepts/tours), 
 The page id is the path without `.html` (`src/concepts/scheduler.html` → `concepts/scheduler`).
 Do not write an `<h1>`. Use `<h2>` and `<h3>`; the build adds ids and the table of contents.
 
-### 6.5 Custom tag reference
+### Custom tag reference
 
 Attribute values use double quotes. Self-closing tags end with `/>`. Plain HTML works everywhere.
 Inline tags are not expanded inside `<pre>` and excerpts. Write `\{{` for a literal `{{`.
@@ -165,10 +165,10 @@ Inline tags are not expanded inside `<pre>` and excerpts. Write `\{{` for a lite
 |---|---|---|
 | Code excerpt | `<x-code file="pkg/x.py" lines="55-83" highlight="57-58,63" caption="..." title="..." lang="cpp" />` | exact lines from the checkout, line numbers, highlights, GitHub link, copy button |
 | Translated comment | `<x-code ...><x-tr line="24">English text.</x-tr></x-code>` | "Translated comments" list under the code |
-| Citation | `{{cite pkg/x.py:223}}`, `{{cite pkg/x.py:222-227}}`, `{{cite pkg/x.py:222 \| get_platform()}}`, `{{cite pkg/dir/}}`, `{{cite .gitmodules}}` | link to GitHub at `SHA`; checked |
-| Glossary term | `{{term nccl}}`, `{{term kernel \| kernels}}` | dotted underline + tooltip; checked |
+| Citation | `{{cite pkg/x.py:223}}`, `{{cite pkg/x.py:222-227}}`, `{{cite pkg/x.py:222 \| main()}}`, `{{cite pkg/dir/}}`, `{{cite .gitmodules}}` | link to GitHub at `SHA`; checked |
+| Glossary term | `{{term scheduler}}`, `{{term kernel \| kernels}}` | dotted underline + tooltip; checked |
 | Internal link | `{{link concepts/scheduler}}`, `{{link concepts/x \| text}}`, `{{link concepts/x#anchor}}` | relative link with the page title; checked; grey "coming soon" if not written |
-| Diagram | `<x-diagram name="platform_select" alt="..." caption="Figure: ..." />` | inline SVG on a white card; click = lightbox; "Open full size" |
+| Diagram | `<x-diagram name="example_flow" alt="..." caption="Figure: ..." />` | inline SVG on a white card; click = lightbox; "Open full size" |
 | Sentence | `<x-sentence>...</x-sentence>` | "In one sentence" block |
 | Note | `<x-note title="...">...</x-note>` | blue callout |
 | Simplified | `<x-simplified>...</x-simplified>` | dashed gray callout |
@@ -181,7 +181,7 @@ Inline tags are not expanded inside `<pre>` and excerpts. Write `\{{` for a lite
 | Project value | `{{project name}}`, `{{project short_sha}}` (also `sha`, `site`, `repo_url`, `date`, `day`, `subject`) | text from `explainer.json` and git; not inside `<pre>` |
 | Code version | `<x-version />` (home page only) | commit table, checkout commands, submodule pins, line-number note |
 
-### 6.6 Nav and glossary files
+### Nav and glossary files
 
 `src/nav/concepts.json`:
 ```json
@@ -192,7 +192,7 @@ Inline tags are not expanded inside `<pre>` and excerpts. Write `\{{` for a lite
   "order": 2,
   "groups": [
     {"title": "Engine", "pages": [
-      {"id": "concepts/engine-step-loop", "title": "Offline API and the step loop"}
+      {"id": "concepts/main-loop", "title": "The main loop"}
     ]}
   ]
 }
@@ -205,12 +205,12 @@ pages that do not exist yet, and nobody edits another writer's nav file.
 ```json
 {
   "_about": "Owner: batch B3a. Search all glossary files before you add a term.",
-  "nccl": {
-    "term": "NCCL",
+  "scheduler": {
+    "term": "scheduler",
     "short": "One or two sentences, under 220 characters. This is the tooltip.",
-    "long": "Optional HTML. Inline tags work: {{cite pkg/platform.py:58}}.",
-    "aliases": ["nccl backend"],
-    "page": "concepts/hardware-platforms"
+    "long": "Optional HTML. Inline tags work: {{cite pkg/engine.py:15}}.",
+    "aliases": ["request scheduler"],
+    "page": "concepts/example-concept"
   }
 }
 ```
@@ -220,10 +220,10 @@ error. When two batches run in parallel, they can both add the same term: the se
 time. Fix: before a wave starts, give each term to one batch in the writer prompt, and tell writers to
 search all glossary files before they add a term.
 
-### 6.7 Reference generators
+### Reference generators
 
 Generate every reference table that the code can give. The kit includes `tools/gen_folder_tree.py`
-(the `code/index` tree); copy its pattern. An earlier project also had `tools/gen_env_vars.py`
+(the `code/index` tree); copy its pattern. A typical second generator is `tools/gen_env_vars.py`
 (all env vars, parsed with `ast`), which works like this:
 - Parse the source with `ast` (Python) or a regex (C/C++ `getenv`, other languages).
   Get name, group, line, type and default.
@@ -238,11 +238,11 @@ Other generators to consider: config dataclass fields and defaults; CLI flags (`
 API from stubs (`.pyi`) or headers; registry tables (model architectures, plugins); folder tree counts
 for `code/index` (files and lines per folder; say on the page how you counted).
 
-### 6.8 Site check (browser)
+### Site check (browser)
 
 Use Playwright (`npm install playwright-core` in a scratch folder, plus a Chromium build). If Chromium
 fails with a missing shared library (for example `libnspr4.so` on WSL), extract the library packages into
-a scratch folder and set `LD_LIBRARY_PATH`. Keep the check scripts in the scratchpad, and give each run
+a scratch folder and set `LD_LIBRARY_PATH`. Keep the check scripts in a temporary folder, and give each run
 its own output file name (a shared fixed file name raced between parallel runs).
 For every page, at 1280 px and 390 px width, with all deep dives open:
 - horizontal page overflow (`document.documentElement.scrollWidth > window.innerWidth`);

@@ -1,6 +1,6 @@
 ---
 name: svg-figures
-description: Draw static technical figures (architecture boxes and arrows, data flows, step sequences, comparison tables, annotated code cards) as one Python script per figure in one house style, then build an SVG and a 2x PNG and check each PNG for overlap and clipping. Use this skill when the user wants a figure file for a Markdown document, a design note, a write-up, a README or a report, asks to "draw a diagram as SVG/PNG", or asks for figures "in the house style". Do not use it for charts of data series (line, bar, scatter: use a plotting library), for diagrams inside an HTML explainer site (codebase-explainer has its own), for slides (design-plan-presentation), or for Mermaid diagrams.
+description: Draw static technical figures (architecture boxes and arrows, data flows, step sequences, comparison tables, annotated code cards) as one Python script per figure in one house style, then build an SVG and a 2x PNG and check each PNG for overlap and clipping. Use this skill when the user wants a figure file for a Markdown document, a design note, a write-up, a README or a report, asks to "draw a diagram as SVG/PNG", or asks for figures "in the house style". Do not use it for charts of data series (line, bar, scatter: use a plotting library), for diagrams inside an HTML explainer site (codebase-explainer copies `svglib.py` from this skill but has its own diagram style guide), for slides (design-plan-presentation), or for Mermaid diagrams.
 ---
 
 # SVG figures
@@ -91,8 +91,9 @@ Colours are role tuples `(strong, tint, pale)`: `BLUE`, `AMBER`, `VIOLET`, `TEAL
 Apply these rules to all text that this skill produces (figure titles, panel questions, labels, footnotes, alt text and captions). Use another language style only when the user or the style guide of the target repo asks for it.
 
 - Always write in ASD-STE100 (Simplified Technical English): short sentences, active voice, one instruction per sentence, approved words with one meaning, no idioms.
-- Be blunt. Do not patronize. Do not praise, soften, or pad.
-- Reviews must be honest and brutal. State the verdict and the defects first.
+- In replies to the user: be blunt. Do not patronize. Do not praise, soften, or pad.
+- In reviews: be honest and brutal. State the verdict and the defects first.
+- Text that this skill makes for other readers (pages, documents, reports, figures) follows the tone rules of this skill, for example neutral words for gaps.
 - Be brief and to the point.
 - Sentence limits: at most 20 words in an instruction, at most 25 words in a description.
 - Code, file names, identifiers and technical names stay as they are.

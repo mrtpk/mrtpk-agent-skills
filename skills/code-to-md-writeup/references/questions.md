@@ -18,7 +18,7 @@ Ask these before you build. Give a proposed default for each. Ask in groups of a
 9. Public mode: which names must not appear? (Product, hardware, internal project, customer and organisation names, internal paths.) May the organisation be named? Are there confidentiality rules?
 10. May the write-up give result numbers (accuracy, speed)? (Default: only numbers that a script in the write-up makes, plus numbers from a named reference.)
 11. Licences of third-party data and code. May the write-up show images or statistics from them? (Default: no statistics from third-party data in public mode.)
-12. Do images or video frames show people, plates or private places? (Default: do not use such frames in public mode.)
+12. Do images or video frames show people or private places? (Default: do not use such frames in public mode.)
 13. Tone about gaps? (Default: neutral. "Gap" and "refinement", with the measured effect.)
 
 ## Form

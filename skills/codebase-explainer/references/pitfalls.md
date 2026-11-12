@@ -1,15 +1,15 @@
 # Pitfalls and lessons
 
-Read this once before Phase 1. These are real problems of earlier explainer projects.
+Read this once before Phase 1. These are common problems.
 
 Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
 
-## 10. Pitfalls and lessons
+## Pitfalls and lessons
 
 **Process**
-- The survey is a guide, not a source. It named an empty `__init__.py` as a dispatcher. Writers must
+- The survey is a guide, not a source. It can name an empty `__init__.py` as a dispatcher. Writers must
   open every file they cite.
-- Fact checking is not optional: about 7 % of claims were wrong after writing. The writer cannot find its
+- Fact checking is not optional: a part of the claims is wrong after writing. The writer cannot find its
   own errors well; use a separate agent.
 - Errors repeat across pages. A fact fixed in one batch can still be wrong in pages from earlier
   batches. Record it as a FINAL-PASS TODO with the page list, and sweep at the end.
@@ -18,8 +18,8 @@ Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SH
 - Diagram readability: a 1500 canvas in a ~950 px column gives 7-8 px text. Use 1100 from the start.
 - Put every planned page in the nav files in Phase 1. Then links to future pages work and give only
   warnings, and parallel writers do not edit shared files.
-- Keep page-local `<style>` blocks out of pages; put shared styles in `site.css`. (One earlier site kept
-  local styles in two index pages; the TODO to move them was never done.)
+- Keep page-local `<style>` blocks out of pages; put shared styles in `site.css`. (A TODO to move
+  them later is easily forgotten.)
 - Keep "Next step" in `progress.md` current. A stale line misleads a new session.
 
 **Tooling**
@@ -31,9 +31,9 @@ Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SH
   did not rebuild after a script edit.
 - Glossary duplicate ids across parallel batches → merge-time error. Assign term ownership per batch.
 - A `.json` search index does not load from `file://` → write it as a `.js` file that sets a global.
-- Bool and int parsing in the target code can surprise (one engine: `=off` turns a feature ON; an empty
-  int raises). Generated reference tables catch these; hand-written ones do not.
-- Docs and examples can disagree with code defaults (one README said 32; the code default was 0).
+- Bool and int parsing in the target code can surprise (for example, a value such as `=off` can turn a feature on, and an empty
+  int can raise an error). Generated reference tables catch these; hand-written ones do not.
+- Docs and examples can disagree with code defaults (a README can give a default that the code does not use).
   Always cite the code for defaults.
 - Headless browsers may lack CJK fonts; Chinese shows as boxes only in screenshots.
 
@@ -47,25 +47,25 @@ Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SH
   the page, keep it as "soon".
 - Ask concrete questions with a proposed default. Users answer those faster.
 
-**Lessons from the second explainer project**
-- Cost was the main problem. Usage limits stopped the build more than once, including the weekly limit.
-  Agree on a budget and a subagent limit before the full build (process.md 7.3a).
-- Subagents started their own forks. Forbid it in every brief from the start.
-- A fact checker can be wrong too. A false "bug" note (an indentation misread) reached 3 pages. The
+**Cost and accuracy**
+- Cost is the main risk. Usage limits can stop the build more than once.
+  Agree on a budget and a subagent limit before the full build (process.md, "Budget").
+- Subagents can start their own subagents. Forbid it in every brief from the start.
+- A fact checker can be wrong too. A false "bug" note (for example an indentation misread) can reach many pages. The
   supervisor verifies bug claims; pages stay neutral.
-- The docs were older than the code in many places (54 differences in the FAQ table). Write from the code;
+- The docs can be older than the code in many places. Write from the code;
   use docs only as hints.
-- Defaults set in a config class were changed later in argument parsing. Writers cited the class field. Put
+- Defaults set in a config class can change later in argument parsing. Writers then cite the class field. Put
   such traps in the shared briefs as "accuracy lessons" after the first fact check.
-- Facts changed more than once (a hook count went 2 → 4 → 5; "TP = 1" became "TP = PP = DP = 1"). The
-  status tags in `notes/facts.md` and the FINAL-PASS TODO list kept the pages consistent.
-- A cut-off left unchecked work, which the user committed. Commit after the writer, and again after the
+- Facts can change more than once (for example a count that is corrected more than once). The
+  status tags in `notes/facts.md` and the FINAL-PASS TODO list keep the pages consistent.
+- A cut-off can leave unchecked work that gets committed. Commit after the writer, and again after the
   fact check, so each commit says what was checked.
-- A browser setup in `/tmp` was gone after a restart. Keep the setup commands in `progress.md`.
+- A browser setup in `/tmp` is gone after a restart. Keep the setup commands in `progress.md`.
 - A literal `{{cite}}` inside `<code>` on a page broke the build. Escape tag syntax that is text.
 - A scheduled resume job and a new agent definition are tied to the session (SKILL.md, "Keep the project
   resumable").
-- A sibling site saved many pages: basics it already teaches got a one-line recap and a link.
+- A sibling site can save pages: basics that it already teaches get a one-line recap and a link.
 
 **Known limits of the starter kit**
 

@@ -35,7 +35,7 @@ progress and commit. You do not write the pages yourself.
 1. Get a local checkout of the target repo. Do not change it. Note the full HEAD commit id: this is the pin.
 2. Start a survey subagent with template A (`references/subagent-prompts.md`). It reports the folder map,
    the main data flow, the architecture, about 30 concepts and about 20 central files.
-3. Spot-check 3-5 survey claims in the code. Surveys are wrong sometimes (one survey named an
+3. Spot-check 3-5 survey claims in the code. Surveys are wrong sometimes (for example, a survey can name an
    empty `__init__.py` as the dispatcher). Treat the survey as a guide, not a source.
 
 ### Step 1: Ask the user, write the plan, get approval
@@ -57,9 +57,9 @@ these questions, each with a proposed default (details in `references/goal-and-q
 11. Git: commit per stage? Push? Which author name and email?
 12. Stop after Phase 1 for a review? (Suggested: yes. If the user says "run unattended", skip the stop and
     write that in `progress.md` as a USER INSTRUCTION.)
-13. Budget: how many subagents at the same time? A usage ceiling (for example "stay under 50 % of the weekly
-    limit")? Which model and effort for subagents? Full fact check of every batch, or budget mode
-    (`references/process.md` 7.3a)? (Suggested: 2 at a time; full fact checks.)
+13. Budget: how many subagents at the same time? A usage ceiling (for example "stay under 50 % of the
+    usage limit")? Which model and effort for subagents? Full fact check of every batch, or budget mode
+    (`references/process.md`, "Budget")? (Suggested: 2 at a time; full fact checks.)
 14. Is there a sibling explainer site? Basics that it already teaches get a one-line recap and a link, not a
     new page. Write the list in `basics-covered.md`.
 
@@ -108,8 +108,8 @@ A late restyle is expensive: settle the look here.
      the batch as "B3a fact-checked: N defects fixed".
 3. Start a fact check as soon as its writer finishes. Do not wait for the whole wave.
 
-Why a separate fact checker: a writer does not find its own errors well. In the first site each batch had 16-43
-defects after writing, in the second site 16-73. Most were wrong line numbers, wrong defaults and over-general claims.
+Why a separate fact checker: a writer does not find its own errors well. Expect many defects per batch after
+writing. Most are wrong line numbers, wrong defaults and over-general claims.
 
 ### Step 4: Final pass
 
@@ -117,7 +117,7 @@ defects after writing, in the second site 16-73. Most were wrong line numbers, w
    run every generator with `--check`.
 2. Site check (template F): every page at 1280 and 390 px, deep dives open; no page overflow,
    no JS errors, no broken links or anchors, every visual works. A supervisor script is cheaper than a
-   subagent (`references/tooling.md` 6.8); use a subagent only for fixes.
+   subagent (`references/tooling.md`, "Site check (browser)"); use a subagent only for fixes.
 3. Write `README.md` from the template. Mark `progress.md` as done. Commit.
 
 **Stop point 3.** Push or publish only when the user asks.
@@ -127,8 +127,9 @@ defects after writing, in the second site 16-73. Most were wrong line numbers, w
 Apply these rules to all text that this skill produces (site pages, notes, briefs and replies). Use another language style only when the user or the style guide of the target repo asks for it.
 
 - Always write in ASD-STE100 (Simplified Technical English): short sentences, active voice, one instruction per sentence, approved words with one meaning, no idioms.
-- Be blunt. Do not patronize. Do not praise, soften, or pad.
-- Reviews must be honest and brutal. State the verdict and the defects first.
+- In replies to the user: be blunt. Do not patronize. Do not praise, soften, or pad.
+- In reviews: be honest and brutal. State the verdict and the defects first.
+- Text that this skill makes for other readers (pages, documents, reports, figures) follows the tone rules of this skill, for example neutral words for gaps.
 - Be brief and to the point.
 - Sentence limits: at most 20 words in an instruction, at most 25 words in a description.
 - Code, file names, identifiers and technical names stay as they are.
@@ -143,19 +144,18 @@ Apply these rules to all text that this skill produces (site pages, notes, brief
 - **Every page has two depths:** a beginner start (one sentence, the idea, a diagram) and a full deep
   dive (shapes and types, layouts, algorithm steps, edge cases, env vars, a worked example with numbers).
 - **Look:** light background always; dark only by the toggle; Inter 18 px / 1.7; prose column about
-  720 px; figures up to 1100 px; few boxes and badges. A dark, busy first version was rejected
-  ("This is learning material").
+  720 px; figures up to 1100 px; few boxes and badges. A dark, busy look reads badly as learning material.
 - **Diagrams:** one Python script per diagram with `svglib.py`; canvas width 1100; no text below 11;
   at most 3 boxes across and 3 panels; split big diagrams; captions start with "Figure: ".
 - **Generate reference tables** from the code (env vars, config, CLI flags, folder tree). Hand-copied
   tables go wrong.
-- **Subagents never start subagents.** Put this rule in every brief and every prompt. Once a fact
-  checker started 3 forks by itself, and the user's agent limit and budget were broken.
+- **Subagents never start subagents.** Put this rule in every brief and every prompt. A subagent that
+  starts its own subagents breaks the user's agent limit and budget.
 - **No "bug" claims on pages.** Pages say what the code does, in neutral words. A writer or fact checker
-  reports a suspected bug to the supervisor with exact lines; the supervisor re-reads the control flow. Once
-  a fact checker misread an indentation level, and a false bug note reached 3 pages.
+  reports a suspected bug to the supervisor with exact lines; the supervisor re-reads the control flow. A fact
+  checker can misread the code (for example an indentation level), and a false bug note can reach many pages.
 - **Trace each default to where it is finally set** (argument parsing, post-init hooks, platform code), not
-  only to the config class field. This was the most common value defect in the second site.
+  only to the config class field. This is a common value defect.
 - **`notes/facts.md` is the single source for shared facts**, with status tags: [W] from a writer, [FC]
   confirmed by a fact checker, [S] checked by the supervisor. When a fact changes, add a FINAL-PASS TODO
   with the pages that repeat it.
@@ -174,7 +174,7 @@ Apply these rules to all text that this skill produces (site pages, notes, brief
   with "resume: these files exist and are partial; finish them". Old subagents cannot be resumed after a
   session ends.
 - A scheduled resume job (cron) exists only in its session; set it up again in a new session, and only if
-  the user still wants unattended work. A new agent definition (`.claude/agents/*.md`) loads only at session
+  the user still wants unattended work. A new agent definition (in Claude Code: `.claude/agents/*.md`) loads only at session
   start: test it with one reply that uses no tools before real work.
 - The supervisor cannot read the usage meter. If the user sets a usage ceiling, run one subagent at a time
   and pause after each one so the user can check the usage.
