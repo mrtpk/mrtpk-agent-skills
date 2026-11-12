@@ -2,14 +2,14 @@
 
 Read this before you change the CSS, write a diagram, or review screenshots.
 
-Part of the `codebase-explainer` skill. The single-file version of this playbook is `project-instructions.md` in the DeepInfer explainer repo. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
+Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
 
 ## 4. Look and diagram rules
 
 ### 4.1 Page look (user feedback; binding)
 
 The first look was dark and busy: the site followed the OS dark mode, and it had many boxes,
-borders and badges. The user said: *"I hate the color scheme... need light background, readable.
+borders and badges. The feedback was: *"need light background, readable.
 This is learning material."* A full restyle followed. Start with the final look:
 
 - **Light background always.** Dark mode only through the toggle button. Never follow

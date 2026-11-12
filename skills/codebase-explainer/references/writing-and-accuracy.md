@@ -2,15 +2,15 @@
 
 Read this before you write or fact-check text. Give it to every writer and fact checker.
 
-Part of the `codebase-explainer` skill. The single-file version of this playbook is `project-instructions.md` in the DeepInfer explainer repo. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
+Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
 
 ## 5. Writing and accuracy rules
 
 ### 5.1 Language style (configurable)
 
 The site language is a project choice (goal-and-questions.md, question 6; `language_style` in
-`explainer.json`). **Suggested default: ASD-STE100.** The DeepInfer user chose it.
-If the user picks plain English, keep rules 3, 6, 7, 8 and 10 below and drop the word limits.
+`explainer.json`). **Suggested default: ASD-STE100** (`ste`), the common default of these skills. With plain English, keep
+rules 3, 6, 7, 8 and 10 below and drop the word limits.
 
 ASD-STE100 rules for site text (code, file names and technical names stay as they are):
 1. Approved, simple words. One word for one meaning.
@@ -30,7 +30,7 @@ approximately → about; numerous → many; via → through; due to → because 
 "seamless", "powerful", "harness" and say the fact.
 
 **Fixed vocabulary.** Write a table in `STYLE.md` of the project's words: one word per thing, and the
-words not to use for it. DeepInfer example: request (what a user sends) / sequence (the engine object);
+words not to use for it. LLM engine example: request (what a user sends) / sequence (the engine object);
 step (one engine iteration), not tick or round; rank (one process) / device (one GPU or NPU);
 block (KV cache block), not page or chunk; kernel (device program), not op.
 
@@ -45,13 +45,13 @@ better than an abstract sentence.
 1. **Every claim about the code has a source**: `{{cite path:line}}` or an `<x-code>` excerpt.
    No source, no claim.
 2. **Read the code yourself.** Surveys, notes and `facts.md` are a guide only.
-   (The DeepInfer survey named an empty `__init__.py` as the kernel dispatcher. The real one was `ops.py`.)
+   (One survey named an empty `__init__.py` as the kernel dispatcher. The real one was `ops.py`.)
 3. Cite the **narrowest** line range that proves the claim.
 4. Mark every simplification with `<x-simplified>` and say what the full truth is.
 5. **Open questions are written as open questions.** When the code does not answer a question, say so on
    the page (and in the FAQ "Known open questions"). Do not guess. "It probably ..." is not allowed.
 6. When code and docs disagree, describe the code and mention the difference. Collect these in the FAQ.
-   When a code comment is wrong, say so (DeepInfer: a comment said "shortest", the code picks the most
+   When a code comment is wrong, say so (example: a comment said "shortest", the code picks the most
    output tokens).
 7. Derived claims (for example "the first prefill runs in step 71") must say "earliest possible" or show
    the derivation. Mark them for a hard fact check.
@@ -65,13 +65,13 @@ better than an abstract sentence.
 12. Line numbers are for the pinned commit. The build fails when the checkout is at another commit.
 13. **Defaults: trace the value to where it is finally set.** A config class field is often only the first
     value. Argument parsing, post-init hooks, usage context, hardware size or platform code can change it.
-    (vLLM: chunked prefill, prefix caching and batch-size limits all have their real default in
+    (LLM serving example: chunked prefill, prefix caching and batch-size limits all have their real default in
     `arg_utils.py`, not in the config class.)
 14. **"Always", "every", "all", "never"** only when you checked every path. Otherwise write "only when ...".
 15. **No bug claims on pages.** Say what the code does, in neutral words. Report a suspected bug to the
-    supervisor with exact lines. (vLLM: a checker misread an indentation level and called correct code a bug.)
+    supervisor with exact lines. (example: a checker misread an indentation level and called correct code a bug.)
 16. **Counts and call order** ("runs 5 times", "called before X") need a check of every call site.
-    (vLLM: the count of one plugin hook was corrected from 2 to 4 to 5 over three fact checks.)
+    (example: the count of one plugin hook was corrected from 2 to 4 to 5 over three fact checks.)
 17. A recap of a sibling site (one line + link) must be true to that page. The fact checker opens it.
 
 ### 5.3 Quizzes, notes and warnings

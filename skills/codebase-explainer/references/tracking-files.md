@@ -2,7 +2,7 @@
 
 Read this when you start the project and whenever you update a tracking file.
 
-Part of the `codebase-explainer` skill. The single-file version of this playbook is `project-instructions.md` in the DeepInfer explainer repo. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
+Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
 
 ## 8. Tracking files
 
@@ -107,7 +107,7 @@ Rules:
   by the supervisor. Writers trust only [FC] and [S], and still cite the code themselves.
 - Only the supervisor (or a fact checker, on the supervisor's order) edits it.
 - Add a dated section after each writer and each fact check, from their reports.
-- When two sources conflict, write both, the resolution and the reason (DeepInfer example: the docs say
+- When two sources conflict, write both, the resolution and the reason (example: the docs say
   "post-process N−1 while the device runs N"; the code post-processes N in the call that launches N+1.
   Same overlap, shifted numbering; pages use the code's numbering).
 - When a fact changes after pages were written, add a FINAL-PASS TODO line that names the affected pages.

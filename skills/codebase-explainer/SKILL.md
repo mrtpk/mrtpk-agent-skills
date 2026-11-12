@@ -1,15 +1,15 @@
 ---
 name: codebase-explainer
-description: Plan and build a static HTML study site ("<Project> Explained") that teaches an open-source codebase to a beginner and also gives full detail for study. The site has basics pages, concept pages, guided tours through real code, a code map, generated reference tables, SVG diagrams, interactive visuals, quizzes and a glossary. Every claim cites file:line at a pinned commit, and a separate fact-checker agent checks each batch. Use this skill whenever the user wants an explainer site, a learning site, a study guide, a walkthrough, a guided tour, onboarding docs or "explain this repo" material for a codebase or a GitHub/GitLab repository, even when they do not say "site" or "skill". Do not use it for API reference docs that a doc generator makes, or for a single README.
+description: Plan and build a static HTML study site ("<Project> Explained") that teaches an open-source codebase to a beginner and also gives full detail for study. The site has basics pages, concept pages, guided tours through real code, a code map, generated reference tables, SVG diagrams, interactive visuals, quizzes and a glossary. Every claim cites file:line at a pinned commit, and a separate fact-checker agent checks each batch. Use this skill whenever the user wants an explainer site, a learning site, a study guide, a walkthrough, a guided tour, onboarding docs or "explain this repo" material for a codebase or a GitHub/GitLab repository, even when they do not say "site" or "skill". Do not use it for API reference docs that a doc generator makes, for a single README, for a Markdown write-up, technical report or design notes (code-to-md-writeup), or for a slide-like presentation (design-plan-presentation).
 ---
 
 # Codebase explainer
 
 This skill makes a static website that teaches one open-source codebase. The reader starts with no
-knowledge of the code. Each page starts simple, then gives a full "Deep dive". The model project is
-*DeepInfer Explained* (106 pages, 91 diagrams, 8 interactive visuals, 321 glossary terms; fact checkers
-corrected about 7 % of about 7,000 claims). The second project, *vLLM Explained* (107 pages, 82 diagrams),
-used this skill as it is and added the cost, resume and safety rules in this file and in `references/pitfalls.md`.
+knowledge of the code. Each page starts simple, then gives a full "Deep dive". The skill comes from two
+real explainer sites for LLM inference engines (about 106 pages, 90 diagrams, 8 interactive visuals and
+320 glossary terms each; fact checkers corrected about 7 % of about 7,000 claims). The second site added
+the cost, resume and safety rules in this file and in `references/pitfalls.md`.
 
 You act as the **supervisor**. You plan, ask the user, delegate long work to subagents, review, track
 progress and commit. You do not write the pages yourself.
@@ -38,7 +38,7 @@ progress and commit. You do not write the pages yourself.
 1. Get a local checkout of the target repo. Do not change it. Note the full HEAD commit id: this is the pin.
 2. Start a survey subagent with template A (`references/subagent-prompts.md`). It reports the folder map,
    the main data flow, the architecture, about 30 concepts and about 20 central files.
-3. Spot-check 3-5 survey claims in the code. Surveys are wrong sometimes (the DeepInfer survey named an
+3. Spot-check 3-5 survey claims in the code. Surveys are wrong sometimes (one survey named an
    empty `__init__.py` as the dispatcher). Treat the survey as a guide, not a source.
 
 ### Step 1: Ask the user, write the plan, get approval
@@ -51,8 +51,9 @@ these questions, each with a proposed default (details in `references/goal-and-q
 3. Local files or published? Are CDN libraries OK?
 4. Structure: basics + concepts + tours + code map + reference? One page per file? (Suggested: one page per important module only.)
 5. Which folder for the explainer repo?
-6. Language style of the site text? (Suggested: ASD-STE100 Simplified Technical English. This is a
-   choice: set `language_style` to `ste` or `plain` in `explainer.json`.)
+6. Language style of the site text? (Suggested: ASD-STE100 Simplified Technical English, the common
+   default of these skills. Plain English is an option: set `language_style` to `ste` or `plain` in
+   `explainer.json`.)
 7. Scope: what gets full pages, what is out of scope (vendored code, submodules)?
 8. Site name? (Suggested: "<Project> Explained".)
 9. Look? (Suggested: a light article look, like a long-form magazine article; dark only by a toggle.)
@@ -108,8 +109,8 @@ A late restyle is expensive: settle the look here.
      the batch as "B3a fact-checked: N defects fixed".
 3. Start a fact check as soon as its writer finishes. Do not wait for the whole wave.
 
-Why a separate fact checker: a writer does not find its own errors well. In DeepInfer each batch had 16-43
-defects after writing, in vLLM 16-73. Most were wrong line numbers, wrong defaults and over-general claims.
+Why a separate fact checker: a writer does not find its own errors well. In the first site each batch had 16-43
+defects after writing, in the second site 16-73. Most were wrong line numbers, wrong defaults and over-general claims.
 
 ### Step 4: Final pass
 
@@ -122,6 +123,17 @@ defects after writing, in vLLM 16-73. Most were wrong line numbers, wrong defaul
 
 **Stop point 3.** Push or publish only when the user asks.
 
+## Communication style
+
+Apply these rules to all text that this skill produces (site pages, notes, briefs and replies). Use another language style only when the user or the style guide of the target repo asks for it.
+
+- Always write in ASD-STE100 (Simplified Technical English): short sentences, active voice, one instruction per sentence, approved words with one meaning, no idioms.
+- Be blunt. Do not patronize. Do not praise, soften, or pad.
+- Reviews must be honest and brutal. State the verdict and the defects first.
+- Be brief and to the point.
+- Sentence limits: at most 20 words in an instruction, at most 25 words in a description.
+- Code, file names, identifiers and technical names stay as they are.
+
 ## Rules that matter most
 
 - **Every claim about the code has a citation** (`{{cite path:line}}` or `<x-code>`) at the pinned commit.
@@ -132,19 +144,19 @@ defects after writing, in vLLM 16-73. Most were wrong line numbers, wrong defaul
 - **Every page has two depths:** a beginner start (one sentence, the idea, a diagram) and a full deep
   dive (shapes and types, layouts, algorithm steps, edge cases, env vars, a worked example with numbers).
 - **Look:** light background always; dark only by the toggle; Inter 18 px / 1.7; prose column about
-  720 px; figures up to 1100 px; few boxes and badges. The DeepInfer user strongly disliked a dark, busy
-  first version ("This is learning material").
+  720 px; figures up to 1100 px; few boxes and badges. A dark, busy first version was rejected
+  ("This is learning material").
 - **Diagrams:** one Python script per diagram with `svglib.py`; canvas width 1100; no text below 11;
   at most 3 boxes across and 3 panels; split big diagrams; captions start with "Figure: ".
 - **Generate reference tables** from the code (env vars, config, CLI flags, folder tree). Hand-copied
   tables go wrong.
-- **Subagents never start subagents.** Put this rule in every brief and every prompt. In vLLM a fact
+- **Subagents never start subagents.** Put this rule in every brief and every prompt. Once a fact
   checker started 3 forks by itself, and the user's agent limit and budget were broken.
 - **No "bug" claims on pages.** Pages say what the code does, in neutral words. A writer or fact checker
-  reports a suspected bug to the supervisor with exact lines; the supervisor re-reads the control flow. In
-  vLLM a fact checker misread an indentation level, and a false bug note reached 3 pages.
+  reports a suspected bug to the supervisor with exact lines; the supervisor re-reads the control flow. Once
+  a fact checker misread an indentation level, and a false bug note reached 3 pages.
 - **Trace each default to where it is finally set** (argument parsing, post-init hooks, platform code), not
-  only to the config class field. This was the most common value defect in vLLM.
+  only to the config class field. This was the most common value defect in the second site.
 - **`notes/facts.md` is the single source for shared facts**, with status tags: [W] from a writer, [FC]
   confirmed by a fact checker, [S] checked by the supervisor. When a fact changes, add a FINAL-PASS TODO
   with the pages that repeat it.
@@ -176,11 +188,12 @@ defects after writing, in vLLM 16-73. Most were wrong line numbers, wrong defaul
 ## Starter kit quick reference
 
 ```bash
-python3 tools/gen_folder_tree.py   # fill the code-map tree (src/code/index.html)
-python3 build.py                   # build site/ (0 errors needed)
-python3 build.py --strict          # warnings also fail
-python3 build.py --preview         # write site/ even with errors
-python3 build.py --force-diagrams  # re-run all diagram scripts
+# The kit uses only the Python standard library. Run it with the workspace runner (uv by default).
+uv run python tools/gen_folder_tree.py   # fill the code-map tree (src/code/index.html)
+uv run python build.py                   # build site/ (0 errors needed)
+uv run python build.py --strict          # warnings also fail
+uv run python build.py --preview         # write site/ even with errors
+uv run python build.py --force-diagrams  # re-run all diagram scripts
 ```
 
 Page tags: `<x-sentence>`, `<x-code file lines highlight caption>`, `<x-tr line>`, `{{cite}}`,

@@ -2,7 +2,7 @@
 
 Read this before Phase 0 and again before the full build.
 
-Part of the `codebase-explainer` skill. The single-file version of this playbook is `project-instructions.md` in the DeepInfer explainer repo. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
+Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
 
 ## 7. Process
 
@@ -23,7 +23,7 @@ Part of the `codebase-explainer` skill. The single-file version of this playbook
 Phase 1 samples must cover each page type once: basics, concept, tour, module, reference, home.
 Writers in Phase 2 copy these samples. Good samples make good batches.
 
-In DeepInfer, the plan had a separate research phase (fact sheets before writing). Phase 1 showed that a
+In the first site, the plan had a separate research phase (fact sheets before writing). Phase 1 showed that a
 writer who reads the code for its own batch gives good pages. So the full build dropped the research
 phase, and kept a separate fact check per batch. Do the same.
 
@@ -53,8 +53,8 @@ The main session is the supervisor. It does **not** write pages.
 - Name batches B1, B2, B3a, B3b ... Use the batch name as the prefix for its diagram scripts
   (`b3a_sched_decide.py`) and as its glossary file (`b3a.json`).
 - Put the batch table in `plan.md` (pages and visual per batch) and the wave list.
-- **Waves.** Run at most the number of subagents that the user allowed (DeepInfer: 6-7; vLLM: 4, then 2
-  after a usage limit, then 1 under a usage ceiling). Wave 1 = batches with no dependency (basics,
+- **Waves.** Run at most the number of subagents that the user allowed (first site: 6-7; second site: 4,
+  then 2 after a usage limit, then 1 under a usage ceiling). Wave 1 = batches with no dependency (basics,
   core engine, model core, the hardest feature). Wave 2 = batches that build on wave 1. Wave 3 = scale,
   platform, start-up tour, reference. Then F.
 - **Order of priority** if time is short: Basics → Tour 1 → core concepts → code map → reference.
@@ -62,11 +62,11 @@ The main session is the supervisor. It does **not** write pages.
   "(fact check pending)" → **separate** fact-check subagent (fixes in place) → build 0 errors →
   supervisor reviews → commit "fact-checked".
   Start the fact check as soon as the writer finishes. Do not wait for the wave.
-- Fact checks are not optional. In DeepInfer, the fact checkers found and fixed about 480 defects in
+- Fact checks are not optional. In the first site, the fact checkers found and fixed about 480 defects in
   about 7,000 claims (about 7 %; 16 to 43 per batch). Most were citations (wrong lines), then wrong
   defaults, wrong call order, over-general claims, and claims that only the docs supported.
 - The fact checker is **never** the agent that wrote the batch.
-- vLLM Explained had more defects: 30-40 % of the Phase 1 sample claims needed a fix, and later batches
+- The second site had more defects: 30-40 % of the Phase 1 sample claims needed a fix, and later batches
   had 16-73 defects each. The fact checkers' main finds were defaults that a config class sets but that
   argument parsing changes later, "always" where the code has a condition, and off-by-one line ranges.
   Put each repeated defect type in the shared briefs as an "accuracy lesson" as soon as you see it.
@@ -74,7 +74,7 @@ The main session is the supervisor. It does **not** write pages.
 ### 7.3a Budget
 
 A full fact check costs about as much as the writing. A site of about 100 pages uses a large part of a
-weekly usage allowance. vLLM Explained hit usage limits more than once, including the weekly limit.
+weekly usage allowance. The second site hit usage limits more than once, including the weekly limit.
 Agree on a budget with the user before the full build (goal-and-questions.md, question 13).
 
 - **Shared briefs.** Put the stable rules in `notes/brief-writer.md` and `notes/brief-factcheck.md`. A
@@ -115,7 +115,7 @@ Agree on a budget with the user before the full build (goal-and-questions.md, qu
   (diagram scripts, facts) and write in `plan.md` "Deferred pages" what exists. Continue the other pages.
 - If the user gives an instruction about usage (for example "let the running agents finish, then build,
   commit, push and pause"), write it in `progress.md` as a USER INSTRUCTION with the date.
-- A usage cut-off can leave uncommitted, unchecked work. If the user commits it (vLLM: "not fact checked.
+- A usage cut-off can leave uncommitted, unchecked work. If the user commits it (for example "not fact checked.
   limited by usage"), list the unchecked batches in RESUME NOTES and check them before the final pass.
 - Unattended resume: a scheduled job (cron) that reads `progress.md` every hour works, but it exists only
   in its session and stops at the end of the session. Delete it when the user wants manual control.
@@ -131,7 +131,7 @@ Agree on a budget with the user before the full build (goal-and-questions.md, qu
 - **Commit per stage**, so the user can review each stage: plan; Phase 1a; 1b; 1c; each batch after its
   fact check ("B3a: engine step loop, request lifecycle, scheduler + 3 module pages (fact-checked)");
   diagram pass; tooling fixes; progress-only updates; final pass.
-- Commit `site/` too if the user wants to publish from the repo or view it on GitHub (DeepInfer did).
+- Commit `site/` too if the user wants to publish from the repo or view it on GitHub (one earlier site did).
   Do not commit `build/`, `screenshots/`, `.site-tmp-*`, `.site-old-*`.
 - **Push only when the user asks.** Never push by default.
 - **Never rewrite pushed history.** Before the first push, a rewrite is possible if the user asks (for

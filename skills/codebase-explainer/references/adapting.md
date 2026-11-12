@@ -2,13 +2,13 @@
 
 Read this when the target repo is not an ML project, not Python, or not on GitHub.
 
-Part of the `codebase-explainer` skill. The single-file version of this playbook is `project-instructions.md` in the DeepInfer explainer repo. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
+Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
 
 ## 11. Adapting to other kinds of projects
 
 The process, tooling, look and rules stay the same. These parts change:
 
-| Part | ML inference engine (DeepInfer) | Web framework / backend service | Compiler / language tool | Database / storage engine | CLI tool / library |
+| Part | ML inference engine | Web framework / backend service | Compiler / language tool | Database / storage engine | CLI tool / library |
 |---|---|---|---|---|---|
 | Basics pages | LLM, tokens, attention, KV cache, sampling, GPUs, parallelism, number formats | HTTP, routing, middleware, ORM, async I/O, sessions, caching | lexing, parsing, AST, IR, passes, codegen, linking | pages, B-trees/LSM, WAL, transactions, MVCC, replication | the problem domain, the main data model, the main algorithm |
 | Tour 1 | Life of a request (`generate()` → tokens) | Life of a request (socket → handler → response) | Life of a source file (text → binary) | Life of a query / a write | Life of one command (argv → output) |

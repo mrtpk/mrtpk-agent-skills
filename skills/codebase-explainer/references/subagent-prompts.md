@@ -2,7 +2,7 @@
 
 Copy a template, fill in the {...} parts, and send it as the subagent prompt.
 
-Part of the `codebase-explainer` skill. The single-file version of this playbook is `project-instructions.md` in the DeepInfer explainer repo. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
+Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
 
 ### 7.6 Subagent prompt templates
 
@@ -176,7 +176,7 @@ problems that remain (with page and width), and 5-10 screenshot paths for the su
 ```
 
 To save budget, the supervisor can run the check script itself (tooling.md 6.8) and start this subagent
-only when there are problems to fix. vLLM Explained did this: 107 pages × 2 widths, clean.
+only when there are problems to fix. One earlier site did this: 107 pages × 2 widths, clean.
 
 #### G. Diagram conversion (only if a diagram rule changes)
 

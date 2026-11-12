@@ -2,7 +2,7 @@
 
 Read this when you set up the explainer repo, or when the build gives an error you do not understand.
 
-Part of the `codebase-explainer` skill. The single-file version of this playbook is `project-instructions.md` in the DeepInfer explainer repo. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
+Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SHORT_SHA}`, `{REPO_URL}`, `{SITE_NAME}`.
 
 ## 6. Tooling
 
@@ -222,7 +222,7 @@ search all glossary files before they add a term.
 ### 6.7 Reference generators
 
 Generate every reference table that the code can give. The kit includes `tools/gen_folder_tree.py`
-(the `code/index` tree); copy its pattern. The DeepInfer project also had `tools/gen_env_vars.py`
+(the `code/index` tree); copy its pattern. An earlier project also had `tools/gen_env_vars.py`
 (all env vars, parsed with `ast`), which works like this:
 - Parse the source with `ast` (Python) or a regex (C/C++ `getenv`, other languages).
   Get name, group, line, type and default.

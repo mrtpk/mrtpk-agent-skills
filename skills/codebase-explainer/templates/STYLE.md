@@ -14,7 +14,7 @@ Contents
 3. Page source format (front matter)
 4. Page templates (concept, basics, tour, code map, reference)
 5. Tag reference (copy-paste syntax)
-6. Writing rules (ASD-STE100)
+6. Writing rules
 7. Accuracy rules
 8. Glossary
 9. Navigation
@@ -401,9 +401,9 @@ Only for the home page section `#code-version`. The build writes the commit tabl
 the table of pinned git submodules (read with `git ls-tree` and `.gitmodules`) and a note that line
 numbers belong to this commit.
 
-## 6. Writing rules (ASD-STE100)
+## 6. Writing rules
 
-All site text uses ASD-STE100 Simplified Technical English. Code, file names, identifiers and
+With `language_style` = `ste`, all site text uses ASD-STE100 Simplified Technical English. Code, file names, identifiers and
 technical names stay as they are.
 
 > Language style is a project choice (`language_style` in `explainer.json`: `ste` or `plain`).

@@ -1,0 +1,11 @@
+[
+  {"query": "Write a technical write-up in Markdown of how our scheduler repo works, with the numbers checked.", "should_trigger": true},
+  {"query": "The team that built the ranking service is leaving. Write design notes from the code before we forget how it works.", "should_trigger": true},
+  {"query": "Do a deep dive on the quantization module and compare it with the reference implementation in the paper. Markdown, a few parts.", "should_trigger": true},
+  {"query": "I need a technical report of this repo for the wiki, with figures and links to the code at a fixed commit.", "should_trigger": true},
+  {"query": "Build a learning site with guided tours and quizzes that explains this repository to beginners.", "should_trigger": false},
+  {"query": "Write an accurate HTTP API reference for the service running on localhost:8080.", "should_trigger": false},
+  {"query": "Turn the design plan into an interactive presentation for tomorrow.", "should_trigger": false},
+  {"query": "Write a README with install and usage instructions for this package.", "should_trigger": false},
+  {"query": "Publish the study report in docs/report.md as a page.", "should_trigger": false}
+]

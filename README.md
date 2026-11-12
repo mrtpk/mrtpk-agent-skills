@@ -8,10 +8,24 @@ Agent instructions are in [AGENTS.md](AGENTS.md).
 
 - [`skills/codebase-explainer`](skills/codebase-explainer/SKILL.md) — plan and build a static HTML study
   site that teaches an open-source codebase, with cited claims, diagrams, guided tours and a fact-check pass.
-- [`skills/code-to-blog-series`](skills/code-to-blog-series/SKILL.md) — read a codebase, keep an internal knowledge
+- [`skills/code-to-kaizen-blog`](skills/code-to-kaizen-blog/SKILL.md) — read a codebase, keep an internal knowledge
   base with file:line citations, and write a technical blog series with check scripts, svglib figures and a fact-check pass.
+- [`skills/code-to-md-writeup`](skills/code-to-md-writeup/SKILL.md) — read a codebase, keep an internal knowledge base
+  with file:line citations, and write a Markdown technical write-up (internal or public) with check scripts, figures and a
+  fact-check pass. Uses the `svg-figures` skill for figures.
 - [`skills/explore`](skills/explore/SKILL.md) — work as a partner on an unclear idea, and stop at a rough skeleton.
 - [`skills/lint`](skills/lint/SKILL.md) — run flake8 and mypy in the workspace environment (uv or conda), then fix the reported issues.
+- [`skills/design-plan-presentation`](skills/design-plan-presentation/SKILL.md) — build a click-to-reveal HTML
+  presentation from a design document or plan, and serve it locally.
+- [`skills/extract-skills`](skills/extract-skills/SKILL.md) — find reusable knowledge in a conversation, and turn it into
+  skills, memories, docs or scripts.
+- [`skills/report-to-page`](skills/report-to-page/SKILL.md) — turn a Markdown study report into one HTML page, and publish
+  it as an Artifact.
+- [`skills/self-review`](skills/self-review/SKILL.md) — check your own work against evidence before you say that it is done.
+- [`skills/svg-figures`](skills/svg-figures/SKILL.md) — draw technical figures as one Python script per figure, build SVG
+  and PNG, and check each PNG.
+- [`skills/unattended-run`](skills/unattended-run/SKILL.md) — run a long series of experiments while the user is away,
+  with logs, findings and short status replies.
 
 ## Usage
 

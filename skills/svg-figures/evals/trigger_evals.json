@@ -1,0 +1,11 @@
+[
+  {"query": "Draw the request flow of our ingest service as an SVG figure for docs/architecture.md: client, gateway, queue, worker.", "should_trigger": true},
+  {"query": "I need a PNG diagram for the README that shows the three stages of the build pipeline with arrows.", "should_trigger": true},
+  {"query": "Make a figure in the house style that compares the old cache layout with the new one, as a small table.", "should_trigger": true},
+  {"query": "Add a figure to section 3 of the design note that shows the retry state machine.", "should_trigger": true},
+  {"query": "Plot the training loss curves from runs/*.csv as a line chart.", "should_trigger": false},
+  {"query": "Build an HTML site that explains this repository to new people, with diagrams and quizzes.", "should_trigger": false},
+  {"query": "Turn this design doc into a click-to-reveal presentation for the team meeting.", "should_trigger": false},
+  {"query": "Publish this Markdown report as a page with the key figures in a verdict box.", "should_trigger": false},
+  {"query": "Write a Mermaid sequence diagram in the PR description.", "should_trigger": false}
+]

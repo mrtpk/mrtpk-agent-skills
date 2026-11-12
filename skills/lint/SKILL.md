@@ -10,13 +10,19 @@ Run the checks in the workspace environment.
 
 ## Environment
 
-Find the environment manager. Use the order in the virtual-env rule:
+Find the environment manager. Check in this order:
 
 1. `uv.lock`, or `pyproject.toml` with `.venv`: uv.
 2. `environment.yml`, or a conda environment that the user named: conda.
 3. Neither: uv.
 
 When you cannot tell, ask the user.
+
+## Scope
+
+- Check only the project's own code. Use the flake8 and mypy configuration of the project (`setup.cfg`, `tox.ini`, `.flake8`, `pyproject.toml`, `mypy.ini`) when it exists.
+- Exclude vendored, generated and third-party code (for example `.venv`, `vendor/`, `third_party/`, `build/`, generated protobuf files). Add `--extend-exclude` entries for them.
+- When the user names files or folders, check only those.
 
 ## Checks
 
@@ -32,8 +38,21 @@ conda:
 - Run `conda run -n <env> flake8 . --extend-exclude .venv`. Report each style violation.
 - Run `conda run -n <env> mypy . --exclude '\.venv'`. Report each type error.
 
+## Communication style
+
+Apply these rules to all text that this skill produces (the issue report and the final reply). Use another language style only when the user or the style guide of the target repo asks for it.
+
+- Always write in ASD-STE100 (Simplified Technical English): short sentences, active voice, one instruction per sentence, approved words with one meaning, no idioms.
+- Be blunt. Do not patronize. Do not praise, soften, or pad.
+- Reviews must be honest and brutal. State the verdict and the defects first.
+- Be brief and to the point.
+- Sentence limits: at most 20 words in an instruction, at most 25 words in a description.
+- Code, file names, identifiers and technical names stay as they are.
+
 ## Fixes
 
-Fix every reported issue. Run both commands again.
+Fix every reported issue in the project's own code. Run both commands again.
 
-Repeat the fixes and both commands until both commands pass with no issues.
+- Stop after 3 rounds of fixes. Report the issues that remain.
+- When the first run reports more than 50 issues, or a fix needs a change of behavior, a new dependency or a change of the lint configuration, report the issues and ask the user before you fix them.
+- Do not hide issues with `# noqa` or `# type: ignore` unless the user agrees. Say which ones you added.

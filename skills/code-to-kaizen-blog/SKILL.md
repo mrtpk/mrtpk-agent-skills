@@ -1,6 +1,6 @@
 ---
-name: code-to-blog-series
-description: Read a codebase (old or current), build an internal knowledge base with file:line citations, compare the design with a pinned reference implementation, and write a publishable technical blog series in the author's voice (first person, small check scripts, svglib figures as PNG, Jekyll posts). Every number in the posts comes from a script that the agent runs. Use this skill when the user wants to preserve, document or write up a project, wants "a blog about this code", "a technical write-up of this repo", "notes before I forget this project", or a technical blog series from a codebase. Do not use it for API docs, a README, or an explainer website (use codebase-explainer for that).
+name: code-to-kaizen-blog
+description: Read a codebase (old or current), build an internal knowledge base with file:line citations, compare the design with a pinned reference implementation, and write a publishable technical blog series for the kaizen blog in the author's voice (first person, small check scripts, svglib figures as PNG, Jekyll posts). Every number in the posts comes from a script that the agent runs. Use this skill only when the user wants blog posts for the kaizen blog (or another Jekyll blog in the author's voice) from a codebase: "a blog series about this code", "blog posts from this project". Do not use it for a Markdown technical write-up, design notes or a technical report (use code-to-md-writeup), API docs, a README, or an explainer website (use codebase-explainer).
 ---
 
 # Code to blog series
