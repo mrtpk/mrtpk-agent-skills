@@ -14,9 +14,6 @@ Posts do not use ASD-STE100. The replies to the author, the notes and the knowle
   edit make a small language model better at calling tools?"
 - Do not open with "Lately" or "I have been". Do not open two posts in a row with the same words.
 - A series: open each part with its own problem, not with the series name.
-- LinkedIn companion: the first line states the result or the surprise, before the "see more" cut. One
-  idea, few numbers, every term explained. End with the series part and 2-3 hashtags. The first comment
-  links to the published post on thomaspaul.dev, not to GitHub.
 - Lead-ins: "Before diving in, let's look at ...", "Let's say ...", "Let's look at the code.", "It means that ...".
 - Define a term in one sentence, then show a small concrete example with real numbers.
 - A question as a section opener is fine ("Why column first?").
@@ -30,5 +27,9 @@ A long topic becomes a series. Each title starts with the series name ("Parallel
 
 ## 6. LinkedIn companion (optional)
 
-`linkedin-post.md`: 5-8 short paragraphs in the same voice, the figures as a carousel in order,
-and the kaizen folder link in the first comment.
+`linkedin-post.md`: 5-8 short paragraphs in the same voice, the figures as a carousel in order.
+
+- The first line states the result or the surprise, before the "see more" cut.
+- One idea, few numbers, every term explained.
+- End with the series part and 2-3 hashtags.
+- The first comment links to the published post on thomaspaul.dev, not to GitHub.
