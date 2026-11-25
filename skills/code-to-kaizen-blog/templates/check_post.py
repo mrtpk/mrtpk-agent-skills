@@ -1,4 +1,4 @@
-"""<Series> - Part <N>: <topic>.
+"""<Series> - <topic>.
 
 Every number in the post comes from the output of this script.
 Run: uv run --with numpy python <slug>.py

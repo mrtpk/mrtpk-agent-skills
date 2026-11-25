@@ -67,7 +67,7 @@ Details and gates: `references/process.md`.
 
 ## Communication style
 
-These rules apply to the replies, the notes and the KB. The posts follow the blog voice in `references/writing.md`, not ASD-STE100.
+These rules apply to the replies, the notes and the KB. The posts follow the blog voice in `references/voice.md` and `references/writing.md`, not ASD-STE100.
 
 - Always write in ASD-STE100 (Simplified Technical English): short sentences, active voice, one instruction per sentence, approved words with one meaning, no idioms.
 - In replies to the user: be blunt. Do not patronize. Do not praise, soften, or pad.

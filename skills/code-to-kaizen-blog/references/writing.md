@@ -1,20 +1,21 @@
 # Writing the posts
 
-The posts use the blog's voice, not ASD-STE100. When the blog repo has a style guide (for example `STYLE.md`), it is the source of truth, also for the title and date format. When the style guide and an existing series in the repo disagree, follow the existing series and tell the author. Otherwise use this file.
+The posts use the blog's voice, not ASD-STE100. When the blog repo has a style guide (for example `STYLE.md`), it is the source of truth, also for the title and date format. When the style guide and an existing series in the repo disagree, follow the style guide and tell the author. Otherwise use this file and `voice.md`.
 
 ## Voice
 
+The voice rules are in `voice.md` (a copy of the kaizen `STYLE.md` voice, synced from `brand-kit`). Read it before you write. The short form:
+
 - First person, conversational, short paragraphs.
-- Open: "Lately, I have been ... and this note is about ...".
-- Lead-ins: "Before diving in, let's look at ...", "Let's say ...", "Let's look at the code.", "It means that ...".
-- Define a term in one sentence. Then give a small example with real numbers.
-- A question can open a section ("Why this constant?").
+- Open with the problem, a question or a concrete fact, in one sentence. Then: "This note is about ...".
+- Never open with "Lately" or "I have been". Do not open two posts in a row with the same words.
+- In a series, each part opens with its own problem, not with the series name.
 - Close with "So, in short: ..." in one or two sentences.
 - No hype words: robust, seamless, powerful, leverage, game-changer.
 
 ## Structure of one part
 
-1. Opening line and a link to the previous part.
+1. Opening line (the problem of this part), then "This note is about ..." and a link to the previous part.
 2. "Before diving in": the minimum background.
 3. The idea, with the formula and one worked example.
 4. "Let's look at the code.": a short check that prints `<what>. Is pass?`. A deliberate counter-example may print `False`, with a comment that says so.
@@ -31,8 +32,8 @@ The posts use the blog's voice, not ASD-STE100. When the blog repo has a style g
 ```
 ---
 layout: post
-title:  "<Series> - Part <N>: <topic>"
-date:   <yyyy-mm-dd> 00:00:00 +0000
+title:  "<Series> - <topic>"
+date:   <yyyy-mm-dd> 00:00:00 +0530
 categories: <space separated>
 mathjax: true
 ---

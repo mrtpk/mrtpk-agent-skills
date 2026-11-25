@@ -1,13 +1,17 @@
-# LinkedIn post: <Series> - Part <N>
+# LinkedIn post: <Series> - <topic>
 
-<Hook: one sentence with the question of the part.>
+<First line: the result or the surprise, before the "see more" cut.>
 
-<2-5 short paragraphs in the post's voice, with one or two numbers from the script.>
+<5-8 short paragraphs in the post's voice. One idea, few numbers, every term explained.>
 
 <So, in short: one sentence.>
 
-Carousel (in order):
+<The series part, for example "Part 2 of <Series>.">
+
+#<hashtag> #<hashtag>
+
+Carousel (the figures, in order):
 1. resources/fig1_<name>.png
 2. resources/fig2_<name>.png
 
-First comment: the post link and the folder link https://github.com/<user>/<repo>/tree/master/learnings/<folder>
+First comment: the link to the published post on thomaspaul.dev, not to GitHub.

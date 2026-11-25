@@ -1,14 +1,14 @@
 ---
 layout: post
-title:  "<Series> - Part <N>: <topic>"
-date:   <yyyy-mm-dd> 00:00:00 +0000
+title:  "<Series> - <topic>"
+date:   <yyyy-mm-dd> 00:00:00 +0530
 categories: <space separated>
 mathjax: true
 ---
 
-Lately, I have been <activity>, and this note is about <topic>.
+<The problem, a question or a concrete fact, in one sentence.> This note is about <topic>.
 
-In [part <N-1>][prev], <one-line recap>. This part is about <question>.
+In [the previous part][prev], <one-line recap>.
 
 ## Before diving in, <the background>
 <Define the term in one sentence. Then a small example with real numbers.>

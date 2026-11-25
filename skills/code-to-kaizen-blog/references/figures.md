@@ -20,11 +20,14 @@ When the blog repo has its own `build_figures.py`, use it. It can have other arg
 
 ## Rules
 
+The blog repo `STYLE.md` (section "Figures") wins over this list. The colours come from `svg-figures` (`brand-kit`).
+
+
 - One Python script per figure. No Mermaid. No hand-written SVG.
 - Canvas width 1100. No text smaller than 11. Mono 12-13 for numbers and identifiers.
 - At most 3 panels, at most 3 boxes side by side. Split a bigger figure.
 - Each panel title is a question. Its subtitle is the answer.
-- Header subtitle starts with the series name and the part: "<Series> · part 4 · <scope>".
+- Header: the title says what the figure explains. The subtitle starts with the series name: "<Series> · part 4 · <scope>".
 - One colour has one meaning. 3-5 accents. All colours are in the legend. Gray for the rest.
 - Arrows do not cross boxes or labels. Dashed arrows for secondary paths.
 - Real values from the part's script. The figure script docstring names the script and the section.
