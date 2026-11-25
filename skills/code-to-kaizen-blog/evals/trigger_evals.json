@@ -1,0 +1,13 @@
+[
+  {"query": "Turn the int8 quantization code in this repo into a blog series for my kaizen blog, with small check scripts and figures.", "should_trigger": true},
+  {"query": "Write Jekyll blog posts in my voice about how this LiDAR road-detection project works, one post per idea.", "should_trigger": true},
+  {"query": "I want a 4-part technical blog series from this old project's code, first person, every number from a script.", "should_trigger": true},
+  {"query": "Write the next post of my kaizen series about the tensor-parallel code in this repo, plus the LinkedIn companion post.", "should_trigger": true},
+  {"query": "Make blog posts for thomaspaul.dev that explain how the scheduler in this codebase works, compared with the upstream implementation.", "should_trigger": true},
+  {"query": "Write a Markdown technical write-up of this codebase for the team, with file:line citations.", "should_trigger": false},
+  {"query": "Build a static study site that teaches a beginner this repository, with guided tours.", "should_trigger": false},
+  {"query": "Draw one SVG figure that shows the retry state machine in this service.", "should_trigger": false},
+  {"query": "Publish reports/ablation.md as an HTML page with a verdict box.", "should_trigger": false},
+  {"query": "Make a click-to-reveal presentation of the cache design doc for tomorrow's meeting.", "should_trigger": false},
+  {"query": "Write a blog post about my trip to Kyoto for my personal blog.", "should_trigger": false}
+]

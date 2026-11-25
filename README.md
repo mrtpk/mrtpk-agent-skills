@@ -78,7 +78,7 @@ section, because a skill folder is copied alone. Skills that do no reviews leave
 change to `AGENTS.md`, update each copy, then run `python3 tools/check_style.py`. It reports each missing or extra
 rule, also in the nested `skills/work/*` skills.
 
-Most skills have an `evals/` folder (not `code-to-kaizen-blog` and not the `work/*` skills). `trigger_evals.json`
+Each skill that the agent can start by itself has an `evals/` folder. `trigger_evals.json`
 lists requests that must start the skill and requests that must not. `explore` has none, because only its slash
 command starts it. `evals/<case>/` (`case.yaml`, `prompt.md`, `graders/`) is one behaviour case for
 `claude plugin eval`. The `evaluate-skills` skill explains both, and its `scripts/trigger_eval.py` runs the trigger evals.

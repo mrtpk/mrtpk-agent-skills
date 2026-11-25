@@ -21,7 +21,7 @@ agent without it. Text quality alone proves nothing. Measure the difference.
 |---|---|---|
 | 1. Review | Is it well made? | Read the skill. Score the criteria below. No runs. |
 | 2. Tools | Do its parts work? | Run each bundled script and template on real input and on failure input. |
-| 3. Trigger | Does it start at the right time? | `python3 <this skill>/scripts/trigger_eval.py <skills dir> --runs 3` |
+| 3. Trigger | Does it start at the right time? | `python3 <this skill>/scripts/trigger_eval.py <skills dir> --runs 3` (finds skills one folder down too, for example `skills/work/*`) |
 | 4. Behaviour | Does it make the result better? | `claude plugin eval <skill folder>`, with and without the skill. |
 
 Levels 1 and 2 find broken and weak skills cheaply. Only level 4 shows value. A text-only skill can be tested only

@@ -1,0 +1,12 @@
+[
+  {"query": "Summarize what Ana shipped this year from her YouTrack issues and wiki pages.", "should_trigger": true},
+  {"query": "What did Ravi contribute at the company? Write a narrative work summary.", "should_trigger": true},
+  {"query": "Is Priya working at senior or staff level? Evaluate her impact from her issues and docs.", "should_trigger": true},
+  {"query": "Write a growth plan for jdoe based on the work in his issues and wiki pages.", "should_trigger": true},
+  {"query": "Assess my impact over the last two years for my promotion case, from my tickets and wiki pages.", "should_trigger": true},
+  {"query": "Just list the YouTrack issues assigned to Ana with their states.", "should_trigger": false},
+  {"query": "Only list the Outline pages that Ravi created, with links.", "should_trigger": false},
+  {"query": "Which of my YouTrack issues are blocked right now?", "should_trigger": false},
+  {"query": "Write my resume from the text in notes/career.md.", "should_trigger": false},
+  {"query": "Review the code in this pull request for bugs.", "should_trigger": false}
+]

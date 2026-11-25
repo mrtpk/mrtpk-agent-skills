@@ -144,9 +144,18 @@ def main() -> int:
     args = ap.parse_args()
 
     skills, cases = [], []
-    for skill_md in sorted(args.skills_dir.glob("*/SKILL.md")):
+    found: set[str] = set()
+    # Skills at the top level and one level down (for example skills/work/<skill>).
+    skill_mds = sorted(set(args.skills_dir.glob("*/SKILL.md")) | set(args.skills_dir.glob("*/*/SKILL.md")))
+    folders = [m.parent.name for m in skill_mds]
+    dupes = sorted({f for f in folders if folders.count(f) > 1})
+    if dupes:
+        print(f"ERROR: two skill folders have the same name: {', '.join(dupes)}")
+        return 2
+    for skill_md in skill_mds:
         fm = front_matter(skill_md)
         name = fm.get("name", skill_md.parent.name)
+        found.add(name)
         if fm.get("disable-model-invocation", "").lower() == "true":
             print(f"skip {name}: disable-model-invocation")
             continue
@@ -159,6 +168,8 @@ def main() -> int:
             cases += [(name, q) for q in json.loads(ev.read_text(encoding="utf-8"))]
         else:
             print(f"skip {name}: no evals/trigger_evals.json")
+    for name in sorted(set(args.skill or []) - found):
+        print(f"WARN --skill {name}: no skill with this name in {args.skills_dir}")
     total = len(cases) * args.runs
     print(f"{len(skills)} skills loaded, {len(cases)} queries x {args.runs} runs = {total} claude runs")
     if args.dry_run or not cases:

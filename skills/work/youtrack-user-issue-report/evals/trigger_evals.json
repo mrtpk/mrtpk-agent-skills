@@ -1,0 +1,12 @@
+[
+  {"query": "List all YouTrack issues assigned to Priya with their current state, as a Markdown file.", "should_trigger": true},
+  {"query": "Which of my YouTrack issues are still open, in progress or blocked? Write it to a report.", "should_trigger": true},
+  {"query": "Give me every issue assigned to user jdoe in YouTrack, with the real workflow state and a count per state.", "should_trigger": true},
+  {"query": "Make a markdown list of the tickets assigned to me in YouTrack, with a link to each issue.", "should_trigger": true},
+  {"query": "List every Outline wiki page that Priya created.", "should_trigger": false},
+  {"query": "Summarize what Ana shipped this year from her issues and wiki pages.", "should_trigger": false},
+  {"query": "Is Ravi ready for a staff engineer level, based on his work?", "should_trigger": false},
+  {"query": "Write a work summary of my contributions for my performance review.", "should_trigger": false},
+  {"query": "Create a YouTrack issue for the login bug.", "should_trigger": false},
+  {"query": "List the open merge requests in our GitLab project.", "should_trigger": false}
+]

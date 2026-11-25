@@ -1,0 +1,11 @@
+[
+  {"query": "List all Outline wiki pages authored by Priya, grouped, with dates and links.", "should_trigger": true},
+  {"query": "Which wiki documents did I create in Outline? Put them in a markdown report.", "should_trigger": true},
+  {"query": "Find every Outline doc that user jdoe wrote and give me a dated list.", "should_trigger": true},
+  {"query": "Make a report of the pages that Ravi wrote in our Outline wiki, grouped by collection.", "should_trigger": true},
+  {"query": "List the YouTrack issues assigned to Priya with their state.", "should_trigger": false},
+  {"query": "What did Priya contribute this year? Use her issues and wiki pages.", "should_trigger": false},
+  {"query": "Assess Ravi's impact and write a growth plan for him.", "should_trigger": false},
+  {"query": "Write a new Outline wiki page that documents our deploy process.", "should_trigger": false},
+  {"query": "Search the wiki for pages about the caching layer.", "should_trigger": false}
+]
