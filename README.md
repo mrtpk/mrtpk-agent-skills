@@ -32,6 +32,13 @@ Agent instructions are in [AGENTS.md](AGENTS.md).
 - [`skills/unattended-run`](skills/unattended-run/SKILL.md) — run a long series of experiments while the user is away,
   with logs, findings and short status replies.
 
+## Brand kit
+
+[`brand-kit/`](brand-kit/README.md) is the one source of the brand: colours, fonts, the tp logo and the writing
+voice (ASD-STE100 for technical documents, the blog voice for posts). Each skill that uses the brand holds a synced
+copy, so that a skill folder stays installable alone. After a change in `brand-kit/`, run
+`python3 brand-kit/tools/sync_brand.py`. Run it with `--check` before a commit.
+
 ## Work skills
 
 Skills for work-analysis tasks, in `skills/work/`. They need MCP servers for YouTrack and Outline. Set the base URLs

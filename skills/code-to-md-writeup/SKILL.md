@@ -30,12 +30,15 @@ You are the supervisor. You read the code, talk with the owner, run scripts and 
 | `references/sources.md` | when the sources are not only code, or when they disagree |
 | `references/knowledge-base.md` | when you write the KB |
 | `references/writing.md` | before you write or edit a part |
+| `references/voice.md` | before you write text for readers: the language and tone rules (synced from `brand-kit`) |
 | `references/figures.md` | before you draw a figure |
 | `references/publishing-safety.md` | public mode only: before you write, and before each commit |
 | `references/review.md` | when you start the fact-check subagent |
 | `references/pitfalls.md` | once, before Phase 3 |
 | `templates/` | KB, outline, check script, part, index |
 | `scripts/md2html.py` | to render Markdown to local HTML for the owner's review |
+
+Brand tokens and the voice file come from `brand-kit/` in the skills repo (`brand-kit/README.md`). Do not edit the lines between `BEGIN brand-kit:` and `END brand-kit:` markers, or `references/voice.md`. Change `brand-kit/`, then run `python3 brand-kit/tools/sync_brand.py`.
 
 ## Output layout
 

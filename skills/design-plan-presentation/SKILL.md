@@ -76,9 +76,12 @@ default theme is light, with a dark toggle. Define all colors as CSS
 variables on `:root`. Define them again under `[data-theme="dark"]`. Save the
 choice in `localStorage` inside try/catch.
 
-Fonts from Google Fonts (Inter + JetBrains Mono) are the only permitted network
-dependency. These are page fonts, chosen for a projector. They differ from the figure fonts of
-`svg-figures` on purpose; figures that you embed keep the `svg-figures` style. Use system font stacks as fallback. Do not use JS frameworks.
+Inter from Google Fonts is the only permitted network dependency. The mono font is the system stack.
+Colours, fonts and the tp favicon come from the brand-kit regions of `templates/presentation.html`: the page
+palette of the explainer sites, with the figure role colours for `--c1`..`--c3`. Do not use JS frameworks.
+Read `references/voice.md` before you write slide text (language and tone, synced from `brand-kit`).
+
+Brand tokens and the voice file come from `brand-kit/` in the skills repo (`brand-kit/README.md`). Do not edit the lines between `BEGIN brand-kit:` and `END brand-kit:` markers, or `references/voice.md`. Change `brand-kit/`, then run `python3 brand-kit/tools/sync_brand.py`.
 
 ## Projector scaling
 

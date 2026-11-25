@@ -6,6 +6,9 @@ description: Turn a long Markdown study or experiment report into one HTML page 
 # Markdown report to a page
 
 Script: `build_report_page.py` in this skill folder. Do not edit it for one report. Give the report data through `header.json`.
+Read `references/voice.md` before you write the header text (language and tone, synced from `brand-kit`).
+
+Brand tokens and the voice file come from `brand-kit/` in the skills repo (`brand-kit/README.md`). Do not edit the lines between `BEGIN brand-kit:` and `END brand-kit:` markers, or `references/voice.md`. Change `brand-kit/`, then run `python3 brand-kit/tools/sync_brand.py`.
 
 ## Steps
 
@@ -62,5 +65,5 @@ Apply these rules to all text that this skill produces (the header text and the 
 - Light and dark colors as tokens on `:root`. Dark mode by media query and by `data-theme`.
 - Wide tables scroll inside their box. No horizontal page scroll at phone width.
 - The contents rail is sticky on wide screens and a two-column list below 860 px.
-- Fonts from Google Fonts only (Archivo, Source Sans 3, JetBrains Mono). These are report-page fonts; they differ
-  from the figure fonts of `svg-figures` on purpose. No scripts.
+- Colours and fonts from the brand kit: the page palette of the explainer sites, Inter from Google Fonts, the
+  system mono stack. "Kept" and "not kept" use the figure emerald and red. The tp logo is the favicon. No scripts.

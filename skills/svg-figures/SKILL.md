@@ -12,6 +12,7 @@ This skill draws figures with `tools/svglib.py`. Each figure is one Python scrip
 | Path | Read it when |
 |---|---|
 | `references/style.md` | before you draw the first figure; it has all the style rules |
+| `references/voice.md` | before you write text for readers: the language and tone rules (synced from `brand-kit`) |
 | `templates/figure.py` | copy it for each new figure |
 | `tools/svglib.py` | the drawing library; read the API table below first, read the code only for details |
 | `tools/figkit.py` | layout helpers: `row()`, `table()`, `code()` |
@@ -33,6 +34,11 @@ When the target repo must rebuild the figures without this skill, copy `tools/` 
 **Existing copy (drift check).** When the target folder already has a copy, compare each copied file with
 the file in this skill: `diff -q <copy> <skill>/tools/<file>`. When a file differs, do not overwrite it.
 Tell the user which files differ, and ask: keep the copy, or replace it. A copy can have local edits.
+A copy made before the brand kit has no `brand-kit:` marker lines in `svglib.py`. When only the marker lines
+differ, the colour values are the same; replace the copy. A codebase explainer rebuilds all its diagrams once
+after the replacement, because its build hashes `svglib.py`.
+
+Brand tokens and the voice file come from `brand-kit/` in the skills repo (`brand-kit/README.md`). Do not edit the lines between `BEGIN brand-kit:` and `END brand-kit:` markers, or `references/voice.md`. Change `brand-kit/`, then run `python3 brand-kit/tools/sync_brand.py`.
 
 ## Build
 

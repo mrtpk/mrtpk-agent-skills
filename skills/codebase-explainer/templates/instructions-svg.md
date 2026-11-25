@@ -32,6 +32,9 @@ that doesn't carry meaning.
 
 ## 2. Color template
 
+The one source of these values is `brand-kit/tokens.json` (`figure`). `brand-kit/tools/sync_brand.py --check`
+reports each value in this file that differs from it.
+
 ### 2.1 Neutrals
 
 | Token        | Hex       | Use                                                         |
@@ -56,10 +59,10 @@ Each accent has a **strong** value (stroke, arrows, label text, solid header ban
 |---------|-----------|-----------|----------------------|---------------------------|
 | Blue    | `#2563eb` | `#eff6ff` | `#f8fbff`            | primary flow / main path  |
 | Amber   | `#d97706` | `#fffbeb` | `#fffdf6`            | transfer, always-on, warn |
-| Violet  | `#7c3aed` | `#f5f3ff` | —                    | parameters, control logic |
-| Teal    | `#0d9488` | `#f0fdfa` (strong tint `#ccfbf1`) | —        | the thing being explained |
+| Violet  | `#7c3aed` | `#f5f3ff` | `#faf8ff`            | parameters, control logic |
+| Teal    | `#0d9488` | `#f0fdfa` (strong tint `#ccfbf1`) | `#f7fefc` | the thing being explained |
 | Emerald | `#059669` | `#ecfdf5` | `#f6fdf9`            | second location / output  |
-| Pink    | `#db2777` | `#fdf2f8` | —                    | contrast / alternate path |
+| Pink    | `#db2777` | `#fdf2f8` | `#fef8fb`            | contrast / alternate path |
 
 The "feel" column is a suggestion, not a rule. Bind meaning per diagram and state it in the legend.
 

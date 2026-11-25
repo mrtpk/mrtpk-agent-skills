@@ -1,0 +1,24 @@
+{
+  "_about": "Colour literals outside brand-kit regions that are not brand tokens. Each entry: file -> {colour: reason}.",
+  "codebase-explainer/templates/assets/site.css": {
+    "#b4b4b4": "terminal block rule line, light",
+    "#6f6b66": "terminal block rule line, dark",
+    "#6a737d": "syntax highlighting (GitHub light/dark code tokens); not a brand colour",
+    "#cf222e": "syntax highlighting (GitHub light/dark code tokens); not a brand colour",
+    "#0a3069": "syntax highlighting (GitHub light/dark code tokens); not a brand colour",
+    "#0550ae": "syntax highlighting (GitHub light/dark code tokens); not a brand colour",
+    "#8250df": "syntax highlighting (GitHub light/dark code tokens); not a brand colour",
+    "#953800": "syntax highlighting (GitHub light/dark code tokens); not a brand colour",
+    "#3b4048": "syntax highlighting (GitHub light/dark code tokens); not a brand colour",
+    "#9a968f": "syntax highlighting (GitHub light/dark code tokens); not a brand colour",
+    "#a5c8f0": "syntax highlighting (GitHub light/dark code tokens); not a brand colour",
+    "#8fc1ff": "syntax highlighting (GitHub light/dark code tokens); not a brand colour",
+    "#c9b2f5": "syntax highlighting (GitHub light/dark code tokens); not a brand colour",
+    "#e7b26f": "syntax highlighting (GitHub light/dark code tokens); not a brand colour",
+    "#d6d2cc": "syntax highlighting (GitHub light/dark code tokens); not a brand colour",
+    "#fff1c2": "search-result highlight (<mark>)"
+  },
+  "codebase-explainer/templates/instructions-svg.md": {
+    "#000": "rule text: never use pure black"
+  }
+}
