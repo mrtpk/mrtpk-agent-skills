@@ -1,0 +1,31 @@
+# Checks for this skills repo: communication-style copies, brand-kit drift, flake8 and mypy.
+name: checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+      - name: Communication style in every SKILL.md
+        run: uv run --no-project python tools/check_style.py
+      - name: Brand kit regions, copies and colour literals
+        run: uv run --no-project python brand-kit/tools/sync_brand.py --check
+      - name: flake8
+        run: uv run --no-project --with flake8 flake8 . --extend-exclude .venv,ref
+      - name: mypy
+        run: uv run --no-project --with mypy mypy . --exclude '\.venv|^ref/'

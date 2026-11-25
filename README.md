@@ -39,6 +39,9 @@ voice (ASD-STE100 for technical documents, the blog voice for posts). Each skill
 copy, so that a skill folder stays installable alone. After a change in `brand-kit/`, run
 `python3 brand-kit/tools/sync_brand.py`. Run it with `--check` before a commit.
 
+The GitHub workflow `.github/workflows/checks.yml` runs `tools/check_style.py`, `sync_brand.py --check`,
+flake8 and mypy on each push to `main` and on each pull request.
+
 ## Work skills
 
 Skills for work-analysis tasks, in `skills/work/`. They need MCP servers for YouTrack and Outline. Set the base URLs
