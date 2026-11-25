@@ -1,0 +1,42 @@
+# Local development. The production image is the default Dockerfile target (`runtime`).
+#
+#   docker compose build
+#   docker compose run --rm app my-project greet Ada
+#   docker compose run --rm app pytest
+#   docker compose run --rm app ruff check .
+#   docker compose run --rm app mypy
+#   docker compose run --rm app bash
+#   mkdir -p output && docker compose --profile prod run --rm prod greet Ada   # production image
+#
+# The repository is mounted at /app, so code changes apply without a rebuild.
+# Rebuild after a change to pyproject.toml or uv.lock.
+# Create ./output before the prod run; otherwise Docker creates it as root on Linux.
+# Files are created as your host user. If your UID or GID is not 1000, set UID and GID in .env.
+
+services:
+  app:
+    build:
+      context: .
+      target: dev
+    image: my-project:dev
+    user: "${UID:-1000}:${GID:-1000}"
+    volumes:
+      - .:/app
+    environment:
+      MY_PROJECT_OUTPUT_DIR: /app/output
+      MY_PROJECT_LOG_LEVEL: DEBUG
+    env_file:
+      - path: .env
+        required: false
+
+  prod:
+    profiles: [prod]
+    build:
+      context: .
+      target: runtime
+    image: my-project:latest
+    volumes:
+      - ./output:/data/output
+    env_file:
+      - path: .env
+        required: false

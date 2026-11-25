@@ -1,0 +1,10 @@
+[
+  {"query": "What skills could come out of this session?", "should_trigger": true},
+  {"query": "Is anything we did today worth saving for next time?", "should_trigger": true},
+  {"query": "Turn this debugging workflow into something reusable before the context is gone.", "should_trigger": true},
+  {"query": "That took forever. Capture what we learned so the next session doesn't repeat it.", "should_trigger": true},
+  {"query": "Edit the svg-figures skill: add a sequence-diagram helper.", "should_trigger": false},
+  {"query": "Create a new skill named deploy-staging with these steps.", "should_trigger": false},
+  {"query": "Remember that I prefer uv over pip.", "should_trigger": false},
+  {"query": "Summarize this conversation in five bullets.", "should_trigger": false}
+]

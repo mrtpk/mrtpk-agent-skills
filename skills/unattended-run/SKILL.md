@@ -7,23 +7,48 @@ description: Run a long series of experiments (training, evaluation, benchmarks,
 
 ## Before the user leaves
 
-Get these from the user. Do not invent them.
+At the start of a new series, ask for each item below that the user did not give. Ask all of them in one message. Do not start a job before the user answers. Do not invent the answers.
+
+- When the user is already gone, do the read-only preparation (read the scripts and configs, check the paths). Write the open questions in `progress-log.md`. Do not record an assumed user answer as a decision.
+- When you have no shell and no background-task tool, say so in your first reply. Do not give the jobs to a subagent instead.
+
+The items:
 
 - The goal and the stop rule (a score, a time, a count of runs).
 - The permissions (GPU or other shared hardware, downloads, installs, deletes, restarts of jobs or servers).
-- Any limit. Do not add a limit of your own. If a protocol has a limit, show it and ask.
+- The stall time: how long a log can stay unchanged before you treat the job as hung. Default to 30 minutes and tell the user.
+- The disk limit: the free space at which you stop and record the problem. Default to 10 % free and tell the user.
+- Any other limit. Do not add a limit of your own beyond these two. If a protocol has a limit, show it and ask.
 - What to do when a job fails or hangs: restart it, skip it, or stop the series.
 
 ## During the run
 
-- Run every long command in one tmux session (or the background-task feature of the agent). Write each job's output to a log file.
-- Write a `.done` marker file when a job ends. Wait for it with a blocking wait, not with short sleeps: a background-task notification, a monitor tool, or one loop such as `until [ -f job.done ]; do sleep 60; done`.
-- Check that a long job's log grows. A hung job with an idle server is common. Restart it only when the user gave permission for restarts. Else record the problem and follow the user's rule for failures.
+- Run every long command in one tmux session (or the background-task feature of the agent). Write each job's output to its own log file.
+- Do not say that a job runs until you see its process and its log growth.
+- Make Python output unbuffered (`python -u` or `PYTHONUNBUFFERED=1`). Buffered output makes a healthy job look hung.
+- Start each job with a wrapper. The wrapper writes the exit code to a marker on success and on failure. Use one marker name per job:
+
+  ```bash
+  rm -f jobs/run3.done
+  ( set -o pipefail; <command> > jobs/run3.log 2>&1; echo $? > jobs/run3.done ) &
+  echo $! > jobs/run3.pid
+  ```
+
+- Wait with a blocking wait, not with short sleeps: a background-task notification, a monitor tool, or one loop. The loop also stops when the process is gone with no marker (a killed shell or tmux session writes no marker):
+
+  ```bash
+  until [ -f jobs/run3.done ] || ! kill -0 "$(cat jobs/run3.pid)" 2>/dev/null; do sleep 60; done
+  sleep 1; cat jobs/run3.done 2>/dev/null || echo crashed
+  ```
+
+- Read the exit code in the marker. Do not treat "marker exists" as success. Code `0` is success. Another code, or `crashed`, is a failure: follow the user's rule for failures.
+- Check that a long job's log grows. When the log does not change for the stall time, treat the job as hung. A hung job with an idle server is common. Restart it only when the user gave permission for restarts. Else record the problem and follow the user's rule for failures.
+- Check the free disk space before each job. At the disk limit, stop and record the problem.
 - Get each time from `date`. Never estimate a time in a log.
 - Keep three files in the run folder that the user names (default: the folder of the experiment series). Append to them:
   - `progress-log.md`: time, action, result. One line per event.
-  - `findings.md`: numbered findings (G1, G2, ...), each with the numbers and the source file.
-  - `decisions.md`: numbered decisions with the reason and the rejected options.
+  - `findings.md`: numbered findings (F1, F2, ...), each with the numbers and the source file.
+  - `decisions.md`: numbered decisions (D1, D2, ...) with the reason and the rejected options.
 - Record a negative result as a finding. Record each result that is not kept, and why.
 - Do not change folders that the user marked read only.
 - Before you choose between two close results, check the noise (seeds). Run one more seed if needed.
@@ -45,7 +70,6 @@ Apply these rules to all text that this skill produces (logs, findings, decision
 
 - Always write in ASD-STE100 (Simplified Technical English): short sentences, active voice, one instruction per sentence, approved words with one meaning, no idioms.
 - In replies to the user: be blunt. Do not patronize. Do not praise, soften, or pad.
-- In reviews: be honest and brutal. State the verdict and the defects first.
 - Text that this skill makes for other readers (pages, documents, reports, figures) follows the tone rules of this skill, for example neutral words for gaps.
 - Be brief and to the point.
 - Sentence limits: at most 20 words in an instruction, at most 25 words in a description.

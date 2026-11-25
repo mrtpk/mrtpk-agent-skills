@@ -15,15 +15,18 @@ Agent instructions are in [AGENTS.md](AGENTS.md).
 - [`skills/code-to-md-writeup`](skills/code-to-md-writeup/SKILL.md) — read a codebase, keep an internal knowledge base
   with file:line citations, and write a Markdown technical write-up (internal or public) with check scripts, figures and a
   fact-check pass. Requires: `svg-figures`.
+- [`skills/evaluate-skills`](skills/evaluate-skills/SKILL.md) — decide with evidence whether skills are worth their
+  context: review, tool tests, trigger evals and behaviour evals with and without the skill, then a score and a verdict.
 - [`skills/explore`](skills/explore/SKILL.md) — work as a partner on an unclear idea, and stop at a rough skeleton.
-- [`skills/lint`](skills/lint/SKILL.md) — run flake8 and mypy in the workspace environment (uv or conda), then fix the reported issues.
 - [`skills/design-plan-presentation`](skills/design-plan-presentation/SKILL.md) — build a click-to-reveal HTML
-  presentation from a design document or plan, and serve it locally. Uses the style of `svg-figures` when it is installed.
+  presentation from a design document or plan, and serve it locally. Starts from `templates/presentation.html`. Uses
+  the style of `svg-figures` when it is installed.
 - [`skills/extract-skills`](skills/extract-skills/SKILL.md) — find reusable knowledge in a conversation, and turn it into
   skills, memories, docs or scripts.
+- [`skills/new-python-project`](skills/new-python-project/SKILL.md) — create a new Python project from the bundled
+  template: uv, src layout, ruff, strict mypy, pytest, pre-commit, Docker, Docker Compose and GitHub Actions.
 - [`skills/report-to-page`](skills/report-to-page/SKILL.md) — turn a Markdown study report into one HTML page, and publish
   it as an Artifact when the Artifact tool is present. Without it, it writes a standalone HTML file.
-- [`skills/self-review`](skills/self-review/SKILL.md) — check your own work against evidence before you say that it is done.
 - [`skills/svg-figures`](skills/svg-figures/SKILL.md) — draw technical figures as one Python script per figure, build SVG
   and PNG, and check each PNG.
 - [`skills/unattended-run`](skills/unattended-run/SKILL.md) — run a long series of experiments while the user is away,
@@ -45,21 +48,30 @@ of your instances (`<YOUTRACK_URL>`, `<OUTLINE_URL>`) as each `reference.md` say
 ## Usage
 
 Copy one skill folder into the agent skills directory. Also copy each skill that it requires (see "Requires" above).
-The skills find each other as sibling folders. `svg-figures` is the only owner of the figure toolkit; other skills copy it into their projects.
+The skills find each other as sibling folders.
 
 Use `.cursor/skills/` or `.claude/skills/` in the project. Use the global skills directory for every project.
 
 Or ask the agent to look at this repo and then install the skills.
 
 The agent invokes the skill by the `name` in `SKILL.md`.
-`explore` and `lint` start only with their slash commands (`/explore`, `/lint`). The agent does not start them by itself.
+`explore` starts only with its slash command (`/explore`). The agent does not start it by itself.
 
 `svg-figures`, `report-to-page`, `code-to-md-writeup`, `codebase-explainer` and `code-to-kaizen-blog` run Python scripts
-with [uv](https://docs.astral.sh/uv/). Install uv first.
+with [uv](https://docs.astral.sh/uv/). Install uv first. `new-python-project` needs uv 0.13 or later and git.
 
-Some skills have an `evals/` folder. `trigger_evals.json` lists requests that must start the skill and requests that
-must not. Use it to test the skill description after a change. `case.yaml`, `prompt.md` and `graders/` describe one
-test task with grading rules, for a skill evaluation tool.
+`svg-figures` is the only owner of the figure toolkit (`svglib.py`, `figkit.py`, `build_figures.py`). Other skills
+copy it into their projects. Change the toolkit only in `svg-figures`.
+
+`AGENTS.md` is the single source of the communication rules. Each skill has a copy in its "Communication style"
+section, because a skill folder is copied alone. Skills that do no reviews leave out the "In reviews" line. After a
+change to `AGENTS.md`, update each copy, then run `python3 tools/check_style.py`. It reports each missing or extra
+rule, also in the nested `skills/work/*` skills.
+
+Most skills have an `evals/` folder (not `code-to-kaizen-blog` and not the `work/*` skills). `trigger_evals.json`
+lists requests that must start the skill and requests that must not. `explore` has none, because only its slash
+command starts it. `evals/<case>/` (`case.yaml`, `prompt.md`, `graders/`) is one behaviour case for
+`claude plugin eval`. The `evaluate-skills` skill explains both, and its `scripts/trigger_eval.py` runs the trigger evals.
 
 ## Rules
 

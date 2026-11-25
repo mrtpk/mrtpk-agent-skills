@@ -12,13 +12,20 @@ no build step. The only permitted network access is for optional fonts.
 
 ## Process
 
-1. **Fix the requirements first.** Read the design document. Then agree these
-   items with the user:
-   the hub nodes (one for each takeaway), the content on screen and the
-   content behind a click, the prior knowledge of the audience (is a primer
-   necessary?), the theme, the serving port, and the content to leave out.
-   Ask the user. Do not build before you fix these items.
-2. **Build** one file, for example `assets/presentation/<name>.html`.
+1. **Fix the requirements first.** Read the design document. Then ask the user
+   about all six items in one message. Give a proposed default for each item:
+   1. the hub nodes (one for each takeaway),
+   2. the content on screen and the content behind a click,
+   3. the prior knowledge of the audience (is a primer necessary?),
+   4. the theme (light, dark, or both with a toggle),
+   5. the serving port,
+   6. the content to leave out.
+
+   Do not build before the user answers. Do not write a file before the answers.
+2. **Build** one file, for example `assets/presentation/<name>.html`. Start from
+   `templates/presentation.html` in this skill folder. It has the hub, the nav pills, an act with
+   stages, the variant toggle, the modals, the deep links and the theme toggle. Replace each
+   UPPERCASE placeholder. Keep the structure.
 3. **Verify with screenshots** (section "Verify"). Do not say that a layout is
    done before you look at it.
 4. **Iterate on feedback.** When the user corrects one pane, make the
@@ -119,7 +126,6 @@ Apply these rules to all text that this skill produces (page prose, captions and
 
 - Always write in ASD-STE100 (Simplified Technical English): short sentences, active voice, one instruction per sentence, approved words with one meaning, no idioms.
 - In replies to the user: be blunt. Do not patronize. Do not praise, soften, or pad.
-- In reviews: be honest and brutal. State the verdict and the defects first.
 - Text that this skill makes for other readers (pages, documents, reports, figures) follows the tone rules of this skill, for example neutral words for gaps.
 - Be brief and to the point.
 - Sentence limits: at most 20 words in an instruction, at most 25 words in a description.

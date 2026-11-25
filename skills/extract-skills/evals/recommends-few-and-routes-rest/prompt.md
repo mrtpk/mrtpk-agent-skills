@@ -1,7 +1,8 @@
 ---
-max_turns: 40
+runs: 5
+max_turns: 15
 timeout_seconds: 900
-allowed_tools: [Read, Glob, Grep, Skill, Write, Edit, Bash]
+allowed_tools: [Read, Glob, Grep, Skill, Write, Edit]
 ---
 
 Below is the commit history of a project we just built (every commit message, with bodies). Look through it and tell me what is worth capturing for reuse, and in what form. Don't build anything yet - I want your recommendation and your reasoning first.

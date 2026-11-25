@@ -1,0 +1,12 @@
+[
+  {"query": "Evaluate the skills in skills/ and tell me which ones are worth keeping.", "should_trigger": true},
+  {"query": "Score each of our agent skills out of 10, with evidence.", "should_trigger": true},
+  {"query": "Write behaviour evals for the report-to-page skill and run them with and without the skill.", "should_trigger": true},
+  {"query": "Does the svg-figures skill start for the right requests? Test its trigger.", "should_trigger": true},
+  {"query": "Is the unattended-run skill actually worth its context? Measure it.", "should_trigger": true},
+  {"query": "Create a new skill named deploy-staging with these steps.", "should_trigger": false},
+  {"query": "Improve the description of the svg-figures skill so it triggers better.", "should_trigger": false},
+  {"query": "What skills could come out of this session?", "should_trigger": false},
+  {"query": "Review the diff in this branch for bugs.", "should_trigger": false},
+  {"query": "Run the unit tests and show me the failures.", "should_trigger": false}
+]

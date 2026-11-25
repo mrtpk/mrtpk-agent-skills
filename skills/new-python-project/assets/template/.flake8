@@ -1,0 +1,6 @@
+# flake8 cannot read pyproject.toml. Keep these values equal to [tool.ruff] in pyproject.toml.
+# Ruff is the main linter; this file only lets plain flake8 runs agree with ruff.
+[flake8]
+max-line-length = 100
+extend-ignore = E203,E701
+exclude = .git,.venv,.uv-cache,.mypy_cache,.pytest_cache,.ruff_cache,__pycache__,build,dist

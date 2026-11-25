@@ -5,3 +5,5 @@ screenshots/
 .site-tmp-*/
 .site-old-*/
 .venv/
+.mypy_cache/
+evals/results/

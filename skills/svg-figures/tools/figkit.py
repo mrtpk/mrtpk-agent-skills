@@ -51,5 +51,6 @@ def code(d, x, y, w, lines, size=12.5, pitch=19, color_fn=None, tabs=(0, 160, 26
         col = color_fn(i, s) if color_fn else INK
         indent = (len(s) - len(s.lstrip(" "))) * cw
         for k, part in enumerate(s.lstrip(" ").split("\t")):
-            d.text(x + 16 + indent + tabs[k], y + 28 + i * pitch, part, size, col, mono=True)
+            # The indent moves only the first column; tab columns stay at their fixed x.
+            d.text(x + 16 + (indent if k == 0 else 0) + tabs[k], y + 28 + i * pitch, part, size, col, mono=True)
     return h

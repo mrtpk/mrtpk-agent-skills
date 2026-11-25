@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: flaky-ci-idea
+expected_outcome: |
+  The agent acts as a partner: it reflects the idea, asks at most two questions, writes no code, and tells the user where its notes go.

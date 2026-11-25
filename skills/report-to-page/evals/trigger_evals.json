@@ -1,0 +1,11 @@
+[
+  {"query": "Publish reports/ablation.md as a page I can share with the team.", "should_trigger": true},
+  {"query": "Turn this Markdown study report into one HTML page with a verdict box and the key numbers.", "should_trigger": true},
+  {"query": "Show the experiment report in notes/sweep-results.md as a nice static page.", "should_trigger": true},
+  {"query": "Make the benchmark write-up readable as a web page with a table of contents.", "should_trigger": true},
+  {"query": "Write a technical report about this codebase in Markdown.", "should_trigger": false},
+  {"query": "Build a click-to-reveal presentation of the design plan for the meeting.", "should_trigger": false},
+  {"query": "Make a dashboard that shows live GPU usage from Prometheus.", "should_trigger": false},
+  {"query": "Build a study site that teaches this repository.", "should_trigger": false},
+  {"query": "Convert report.md to a .docx file.", "should_trigger": false}
+]

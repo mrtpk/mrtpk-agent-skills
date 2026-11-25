@@ -1,0 +1,28 @@
+# Environments and caches
+.venv/
+.uv-cache/
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# Build output
+build/
+dist/
+*.egg-info/
+
+# Test and coverage reports
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+report.xml
+
+# Runtime output (see MY_PROJECT_OUTPUT_DIR)
+output/
+
+# Local settings
+.env
+.idea/
+.vscode/

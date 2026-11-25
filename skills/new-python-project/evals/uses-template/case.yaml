@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: uses-template
+expected_outcome: |
+  The agent loads the skill and runs scripts/new_project.sh. It does not write the project files by hand.
+  The new project has src/acme_tool, uv.lock, Dockerfile, compose.yaml and .github/workflows/ci.yml, and no
+  requirements.txt or setup.py. pyproject.toml has the given description and author, not the placeholders.
+  The agent does not commit, because the user did not ask for a commit.

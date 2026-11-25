@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: sweep-before-leaving
+expected_outcome: |
+  Before the run, the agent asks for the goal or stop rule, the permissions, the failure rule, and the stall time or disk limit. It does not invent limits.
+context:
+  scaffold_script: setup.sh

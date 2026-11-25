@@ -4,4 +4,4 @@ focus: trace
 weight: 1
 ---
 
-The recommendation proposes a small number of skills rather than one per topic found
+The recommendation proposes at most 3 skills.

@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: ablation-report
+expected_outcome: |
+  The agent writes header.json with at most four figures, each taken from the report, and makes a copy of the report with numbered H2 sections. The original report does not change.
+context:
+  scaffold_script: setup.sh

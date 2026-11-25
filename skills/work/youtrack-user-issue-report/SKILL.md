@@ -92,6 +92,10 @@ keep only Open/Blocked, or split by state into separate tables/files). Filter fr
 the already-written report file rather than re-querying, and keep the by-state /
 totals accurate whenever rows are added or removed.
 
+## Tone
+
+Reports and evaluations about a person use factual, neutral words.
+
 ## Communication style
 
 Apply these rules to all text that this skill produces (the report and the replies). Use another language style only when the user or the style guide of the target repo asks for it.
@@ -99,7 +103,7 @@ Apply these rules to all text that this skill produces (the report and the repli
 - Always write in ASD-STE100 (Simplified Technical English): short sentences, active voice, one instruction per sentence, approved words with one meaning, no idioms.
 - In replies to the user: be blunt. Do not patronize. Do not praise, soften, or pad.
 - In reviews: be honest and brutal. State the verdict and the defects first.
-- Reports and evaluations about a person use factual, neutral words.
+- Text that this skill makes for other readers (pages, documents, reports, figures) follows the tone rules of this skill, for example neutral words for gaps.
 - Be brief and to the point.
 - Sentence limits: at most 20 words in an instruction, at most 25 words in a description.
 - Code, file names, identifiers and technical names stay as they are.

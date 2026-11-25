@@ -30,6 +30,10 @@ When one folder holds figures of many parts or sections, name the scripts `NN_fi
 
 When the target repo must rebuild the figures without this skill, copy `tools/` into the repo (for example `tools/diagrams/`) and pass `--lib` to that folder. Other skills do this: `code-to-kaizen-blog`, `code-to-md-writeup` and `codebase-explainer` depend on this skill and copy its tools. This skill is the only owner of the toolkit; do not keep edited copies in other skills.
 
+**Existing copy (drift check).** When the target folder already has a copy, compare each copied file with
+the file in this skill: `diff -q <copy> <skill>/tools/<file>`. When a file differs, do not overwrite it.
+Tell the user which files differ, and ask: keep the copy, or replace it. A copy can have local edits.
+
 ## Build
 
 ```
@@ -38,7 +42,7 @@ PYTHONDONTWRITEBYTECODE=1 uv run --with cairosvg python <skill>/tools/build_figu
 
 - Add `--with <package>` for each package that a figure script imports (for example numpy).
 - `--lib` defaults to the folder of `build_figures.py`.
-- Install the Inter font and one font of the mono stack (Menlo, Consolas or SFMono). The PNG renderer uses only installed fonts. Without them, the PNG shows mono text in a sans font.
+- Install the Inter font. The PNG renderer uses only installed fonts. For each font stack, the build uses the first installed font, or the generic `monospace` / `sans-serif` font (also when `fc-list` is absent). The SVG keeps the full stack. The build prints `WARN fonts` when no sans font of the stack is installed; text widths then differ from the layout estimates.
 - When the repo has its own `build_figures.py`, use it. Read its usage first.
 - A `WARN` line means that content passes the canvas edge. Fix it.
 
@@ -92,7 +96,6 @@ Apply these rules to all text that this skill produces (figure titles, panel que
 
 - Always write in ASD-STE100 (Simplified Technical English): short sentences, active voice, one instruction per sentence, approved words with one meaning, no idioms.
 - In replies to the user: be blunt. Do not patronize. Do not praise, soften, or pad.
-- In reviews: be honest and brutal. State the verdict and the defects first.
 - Text that this skill makes for other readers (pages, documents, reports, figures) follows the tone rules of this skill, for example neutral words for gaps.
 - Be brief and to the point.
 - Sentence limits: at most 20 words in an instruction, at most 25 words in a description.

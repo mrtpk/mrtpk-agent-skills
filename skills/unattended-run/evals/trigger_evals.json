@@ -1,0 +1,11 @@
+[
+  {"query": "Run the learning-rate sweep in configs/sweep.yaml. I'll be back in 6 hours.", "should_trigger": true},
+  {"query": "Continue the experiments while I'm away; stop when eval accuracy passes 0.82.", "should_trigger": true},
+  {"query": "how is it?", "should_trigger": true},
+  {"query": "Progress on the benchmark series?", "should_trigger": true},
+  {"query": "Keep running the evaluation jobs overnight and log what you find.", "should_trigger": true},
+  {"query": "Build the explainer site unattended, do not ask me questions.", "should_trigger": false},
+  {"query": "Run the unit tests once.", "should_trigger": false},
+  {"query": "Schedule a cloud agent to check the deploy every morning.", "should_trigger": false},
+  {"query": "Plot the results of yesterday's sweep.", "should_trigger": false}
+]

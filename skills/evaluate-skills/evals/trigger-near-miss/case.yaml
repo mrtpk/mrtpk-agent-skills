@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: trigger-near-miss
+expected_outcome: |
+  The agent writes trigger evals for one skill. Most negative queries are near misses that belong to the sibling
+  skills, and every query is self-contained.
+context:
+  scaffold_script: setup.sh

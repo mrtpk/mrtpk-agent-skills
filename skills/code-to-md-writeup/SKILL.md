@@ -76,12 +76,12 @@ Apply these rules to all text that this skill produces (the write-up, the KB, th
 ## Hard rules
 
 - Measured numbers come from a script output. Do not type a measured number by hand. A number from a cited paper or reference is allowed when the text names the source. A number that the owner gives is allowed when the KB tags it `[owner]` and the owner approves the sentence.
-- Every code block in the write-up runs. Extract and run each block before the review.
+- Every complete code block in the write-up runs. Extract and run each one before the review. Exempt: an excerpt of the project code whose caption says "Excerpt" and gives the file:line at the pinned commit, and a block that holds only a formula.
 - Each check script uses one fixed RNG seed per section. Re-check every number after a script change.
 - Every claim in the KB has a tag. Every `[code]` and `[ref]` claim has a pinned location.
 - Every claim about a third-party library cites a pinned file:line in the KB.
 - Do not invent a motive, an anecdote, a date or a result.
-- Save the owner's decisions in `notes/questions.md` as you get them, and in persistent memory when the agent has one.
+- Save the owner's decisions in `notes/questions.md` as you get them. Do not put project facts or decisions in persistent memory. Save there only an owner preference that applies to all write-ups, for example a language style.
 - Internal mode: record the repository URL and the commit hash before Phase 2. All citation links use that commit.
 - Public mode: apply `references/publishing-safety.md` to every published file. The KB stays out of the published folder.
 - Use the workspace Python environment (uv by default): `uv run --with numpy python <script>.py`.

@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: worth-keeping
+expected_outcome: |
+  The agent reviews the skill, does not call it valuable without a with/without result, proposes a behaviour eval
+  that compares runs with and without the skill, and states the run count and cost before any batch.
+context:
+  scaffold_script: setup.sh

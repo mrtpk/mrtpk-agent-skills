@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DESIGN NAME</title>
+<!--
+  Starter for the design-plan-presentation skill. Copy this file, then replace every UPPERCASE placeholder.
+  Parts: hub (the system map) -> acts (full-screen overlays) -> stages (core act) -> modals (fine print, primer).
+  Deep links: #<act-id>/<stage>/<variant>, for example #flow/2/B. Theme override: ?theme=dark.
+  Keep: no frameworks, no build step. Fonts are the only network access.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root {
+  --bg: #ffffff; --panel: #f6f7f9; --ink: #1a1d23; --mute: #5f6672; --line: #d5d9e0;
+  --accent: #6d28d9; --accent-ink: #ffffff;          /* nav pills only; no content role uses it */
+  --c1: #2563eb; --c1-t: #eaf1ff;                     /* role 1, e.g. client */
+  --c2: #d97706; --c2-t: #fff6e5;                     /* role 2, e.g. server */
+  --c3: #059669; --c3-t: #e8f8f1;                     /* role 3, e.g. storage */
+  --sans: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", Menlo, Consolas, monospace;
+  --zoom: 1.18;
+}
+:root[data-theme="dark"] {
+  --bg: #14161b; --panel: #1d2027; --ink: #e8eaee; --mute: #9aa1ad; --line: #343945;
+  --accent: #a78bfa; --accent-ink: #14161b;
+  --c1: #60a5fa; --c1-t: #1b2a44; --c2: #fbbf24; --c2-t: #3a2c10; --c3: #34d399; --c3-t: #12352a;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; }
+body { zoom: var(--zoom); background: var(--bg); color: var(--ink); font: 15px/1.5 var(--sans); }
+#app { height: calc(100vh / var(--zoom)); display: flex; flex-direction: column; }   /* vh ignores zoom */
+.mono { font-family: var(--mono); }
+
+/* header and pills */
+header { display: flex; align-items: center; gap: 10px; padding: 14px 24px; border-bottom: 1px solid var(--line); }
+header h1 { font-size: 20px; margin: 0 16px 0 0; }
+.pill { display: inline-flex; align-items: center; gap: 8px; border: 0; border-radius: 999px; cursor: pointer;
+  padding: 5px 14px 5px 5px; background: var(--accent); color: var(--accent-ink); font: 600 14px var(--sans); }
+.pill .n { width: 22px; height: 22px; border-radius: 50%; background: var(--accent-ink); color: var(--accent);
+  display: grid; place-items: center; font-size: 12px; }
+.pill.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); padding: 5px 14px; }
+.spacer { flex: 1; }
+
+/* hub: the system map is the menu */
+#hub { flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; padding: 48px; align-items: center; }
+.region { border: 2px solid var(--rc); background: var(--rt); border-radius: 12px; padding: 20px; cursor: pointer;
+  position: relative; transition: transform .15s; }
+.region:hover { transform: translateY(-2px); }
+.region h2 { margin: 0 0 6px; font-size: 18px; color: var(--rc); }
+.region p { margin: 0; color: var(--mute); }
+.region .badge { position: absolute; top: -12px; left: -12px; }
+.region + .region::before { content: "→"; position: absolute; left: -38px; top: 50%; transform: translateY(-50%);
+  color: var(--mute); font-size: 24px; }
+.badge { width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: var(--accent-ink);
+  display: grid; place-items: center; font: 700 13px var(--sans); }
+.r1 { --rc: var(--c1); --rt: var(--c1-t); } .r2 { --rc: var(--c2); --rt: var(--c2-t); } .r3 { --rc: var(--c3); --rt: var(--c3-t); }
+
+/* acts: full-screen overlays (inset:0 needs no zoom fix) */
+.act { position: fixed; inset: 0; background: var(--bg); display: none; flex-direction: column; z-index: 10; }
+.act.open { display: flex; animation: fade .2s; }
+.act > .head { display: flex; align-items: center; gap: 12px; padding: 14px 24px; border-bottom: 1px solid var(--line); }
+.act > .head h2 { margin: 0; font-size: 20px; }
+.act > .head .sub { color: var(--mute); }
+.act > .body { flex: 1; min-height: 0; overflow: auto; padding: 24px; display: flex; flex-direction: column; }
+@keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* core act: lanes and flying payload frames */
+.stage-row { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; }
+.flight { position: relative; flex: 1; min-height: 0; }                         /* flex:1 or it collapses */
+.lane { position: absolute; top: 0; bottom: 0; width: 26%; border: 2px dashed var(--rc); border-radius: 10px; background: var(--rt); }
+.lane b { display: block; padding: 8px 12px; color: var(--rc); }
+.lane.l1 { left: 2%; } .lane.l2 { left: 37%; } .lane.l3 { left: 72%; }
+.frame { position: absolute; top: 40%; width: 22%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--bg); font: 12px/1.5 var(--mono); opacity: 0; transition: left .6s ease, opacity .4s; }
+.frame .tag { font-weight: 600; }
+.frame .size { color: var(--mute); }
+.frame.show { opacity: 1; }
+.caption { margin-top: 16px; padding: 12px 16px; border-left: 4px solid var(--accent); background: var(--panel); min-height: 3.2em; }
+.dots { display: flex; gap: 6px; }
+.dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.dots i.on { background: var(--accent); }
+button.nav { font: 600 14px var(--sans); padding: 6px 14px; border-radius: 8px; border: 1px solid var(--line);
+  background: var(--panel); color: var(--ink); cursor: pointer; }
+.variant button.sel { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+/* modals: fine print and primer */
+.modal { position: fixed; inset: 0; background: rgb(0 0 0 / .45); display: none; place-items: center; z-index: 20; }
+.modal.open { display: grid; animation: fade .2s; }
+.modal .card { width: min(820px, 92vw); max-height: 80%; overflow: auto; background: var(--bg); border-radius: 12px; padding: 24px 28px; }
+.modal h3 { margin-top: 0; }
+.modal .card { position: relative; }
+.modal .close { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--panel); color: var(--ink); font-size: 18px; cursor: pointer; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>DESIGN NAME</h1>
+    <button class="pill" data-open="flow"><span class="n">1</span>WORKED EXAMPLE</button>
+    <button class="pill" data-open="validation"><span class="n">2</span>VALIDATION</button>
+    <span class="spacer"></span>
+    <button class="pill ghost" data-modal="primer" title="Background">?</button>
+    <button class="pill ghost" id="theme" title="Theme">◐</button>
+  </header>
+
+  <main id="hub">
+    <div class="region r1" data-open="flow"><span class="badge">1</span><h2>CLIENT</h2><p>ONE LINE: WHAT IT DOES.</p></div>
+    <div class="region r2" data-open="flow"><span class="badge">1</span><h2>SERVER</h2><p>ONE LINE: WHAT IT DOES.</p></div>
+    <div class="region r3" data-open="validation"><span class="badge">2</span><h2>STORAGE</h2><p>ONE LINE: WHAT IT DOES.</p></div>
+  </main>
+</div>
+
+<!-- Act 1: the worked example, one stage at a time -->
+<section class="act" id="act-flow">
+  <div class="head">
+    <span class="badge">1</span><h2>WORKED EXAMPLE</h2><span class="sub">ONE-LINE SUBTITLE</span>
+    <span class="spacer"></span>
+    <span class="variant"><button class="nav" data-variant="A">Option A</button> <button class="nav" data-variant="B">Option B</button></span>
+    <button class="nav" data-modal="fine">Fine print</button>
+    <span class="sub">Esc · back</span>
+  </div>
+  <div class="body">
+    <div class="stage-row">
+      <button class="nav" id="prev">← Prev</button><button class="nav" id="next">Next →</button>
+      <span class="dots" id="dots"></span>
+    </div>
+    <div class="flight">
+      <div class="lane l1 r1"><b>CLIENT</b></div>
+      <div class="lane l2 r2"><b>SERVER</b></div>
+      <div class="lane l3 r3"><b>STORAGE</b></div>
+      <div class="frame" id="f-req"></div>
+      <div class="frame" id="f-res"></div>
+    </div>
+    <div class="caption" id="caption"></div>
+  </div>
+</section>
+
+<!-- Act 2: placeholder act -->
+<section class="act" id="act-validation">
+  <div class="head"><span class="badge">2</span><h2>VALIDATION</h2><span class="sub">ONE-LINE SUBTITLE</span>
+    <span class="spacer"></span><span class="sub">Esc · back</span></div>
+  <div class="body"><p>BOXES OF TWO TO FOUR LINES. PUT PARAGRAPHS BEHIND A CLICK.</p></div>
+</section>
+
+<div class="modal" id="modal-fine"><div class="card">
+  <button class="close" data-close aria-label="Close">×</button>
+  <h3>Fine print</h3><p>MESSAGE FORMATS, RETRIES, TIMEOUTS, FAILURE RULES, REJECTED ALTERNATIVES.</p>
+</div></div>
+<div class="modal" id="modal-primer"><div class="card">
+  <button class="close" data-close aria-label="Close">×</button>
+  <h3>Background</h3><p>TWENTY SECONDS OF CONTENT ON ONE SCREEN.</p>
+</div></div>
+
+<script>
+// ---- Data: one lookup table per variant. Do not put variant strings inline in conditionals.
+const FRAMES = {
+  A: { req: ["REQUEST", "user_ids [2, 3] int64", "1.2 KB"], res: ["RESPONSE", "rows [2, 3, 64] float32", "1.5 KB"] },
+  B: { req: ["REQUEST", "user_ids [6] int64", "0.9 KB"],    res: ["RESPONSE", "rows [6, 64] float32", "1.5 KB"] },
+};
+// Each stage: where each frame is (left in %, or null = hidden) and the caption per variant.
+const STAGES = [
+  { req: null, res: null, cap: { A: "STAGE 0: THE STARTING STATE.", B: "STAGE 0: THE STARTING STATE." } },
+  { req: 4,    res: null, cap: { A: "THE CLIENT BUILDS A REQUEST. [2, 3] = 2 REQUESTS × 3 IDS.", B: "THE CLIENT BUILDS ONE FLAT REQUEST." } },
+  { req: 39,   res: null, cap: { A: "THE SERVER GETS THE REQUEST.", B: "THE SERVER GETS THE REQUEST." } },
+  { req: null, res: 74,   cap: { A: "STORAGE RETURNS THE ROWS.", B: "STORAGE RETURNS THE ROWS." } },
+  { req: null, res: 4,    cap: { A: "THE CLIENT GETS THE RESPONSE.", B: "THE CLIENT GETS THE RESPONSE." } },
+];
+
+// ---- State
+const state = { act: null, stage: 0, variant: "A" };
+const $ = (s) => document.querySelector(s);
+
+function frameHTML(f) {  // one value per line: tag, fields, size
+  return `<div class="tag">${f[0]}</div>` + f.slice(1, -1).map((x) => `<div>${x}</div>`).join("") +
+         `<div class="size">${f[f.length - 1]}</div>`;
+}
+function renderStage() {
+  const s = STAGES[state.stage], v = state.variant;
+  for (const key of ["req", "res"]) {
+    const el = $("#f-" + key);
+    el.innerHTML = frameHTML(FRAMES[v][key]);
+    el.classList.toggle("show", s[key] !== null);
+    if (s[key] !== null) el.style.left = s[key] + "%";
+  }
+  $("#caption").textContent = s.cap[v];
+  $("#dots").innerHTML = STAGES.map((_, i) => `<i class="${i === state.stage ? "on" : ""}"></i>`).join("");
+  document.querySelectorAll("[data-variant]").forEach((b) => b.classList.toggle("sel", b.dataset.variant === v));
+  $("#prev").disabled = state.stage === 0;
+  $("#next").disabled = state.stage === STAGES.length - 1;
+}
+function writeHash() {
+  const h = state.act ? (state.act === "flow" ? `#flow/${state.stage}/${state.variant}` : `#${state.act}`) : "";
+  history.replaceState(null, "", location.pathname + location.search + h);
+}
+function openAct(id) {
+  document.querySelectorAll(".act").forEach((a) => a.classList.remove("open"));
+  state.act = id;
+  if (id) { $("#act-" + id).classList.add("open"); if (id === "flow") renderStage(); }
+  writeHash();
+}
+function step(d) {
+  state.stage = Math.max(0, Math.min(STAGES.length - 1, state.stage + d));
+  renderStage(); writeHash();
+}
+function setVariant(v) { state.variant = v; state.stage = 0; renderStage(); writeHash(); }  // toggle goes back to stage 0
+function openModal(id) { $("#modal-" + id).classList.add("open"); }
+function topModal() { return document.querySelector(".modal.open"); }
+
+// ---- Theme: light default, ?theme=dark overrides, choice saved in localStorage inside try/catch
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  try { localStorage.setItem("theme", t); } catch (e) { /* storage blocked */ }
+}
+(function initTheme() {
+  const q = new URLSearchParams(location.search).get("theme");
+  let saved = null;
+  try { saved = localStorage.getItem("theme"); } catch (e) { /* storage blocked */ }
+  document.documentElement.dataset.theme = q || saved || "light";
+})();
+
+// ---- Events
+document.addEventListener("click", (e) => {
+  const t = e.target.closest("[data-open],[data-modal],[data-variant]");
+  if (e.target.classList.contains("modal")) { e.target.classList.remove("open"); return; }
+  if (e.target.closest("[data-close]")) { e.target.closest(".modal").classList.remove("open"); return; }
+  if (!t) return;
+  if (t.dataset.open) openAct(t.dataset.open);
+  else if (t.dataset.modal) openModal(t.dataset.modal);
+  else if (t.dataset.variant) setVariant(t.dataset.variant);
+});
+$("#prev").onclick = () => step(-1);
+$("#next").onclick = () => step(1);
+$("#theme").onclick = () => setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") { const m = topModal(); if (m) m.classList.remove("open"); else openAct(null); }  // modal first, then act
+  if (state.act === "flow" && !topModal()) {
+    if (e.key === "ArrowRight") step(1);
+    if (e.key === "ArrowLeft") step(-1);
+  }
+});
+
+// ---- Deep link: #act-id/stage/variant
+(function initHash() {
+  const [act, stage, variant] = location.hash.slice(1).split("/");
+  if (variant && FRAMES[variant]) state.variant = variant;
+  if (stage) state.stage = Math.max(0, Math.min(STAGES.length - 1, parseInt(stage, 10) || 0));
+  if (act && document.getElementById("act-" + act)) openAct(act);
+})();
+</script>
+</body>
+</html>

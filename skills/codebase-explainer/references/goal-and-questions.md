@@ -38,16 +38,16 @@ Do not start Phase 1 before the user approves `plan.md`.
 
 | # | Question | Why it matters | Suggested default |
 |---|---|---|---|
-| 1 | Who is the reader? What do they know already? | Sets the basics part and the level of each page. | Knows Python (or the main language of the repo). Knows little about the domain (for example ML). |
-| 2 | Depth: only a beginner guide, or also full study detail? | Decides if every page gets a deep dive. | Both: a beginner start and a full deep dive on every page. |
-| 3 | Local files or published? Are CDN libraries OK? | Decides the link rules and the CDN list. | Local for now, publish later. CDN is OK (cdnjs, jsDelivr, unpkg, Google Fonts). |
-| 4 | Site structure: concepts + tours + code map? One page per file? | Decides the page count. | Concepts + guided tours + a code map with one page per important module. Not one page per file. |
-| 5 | Folder for the explainer repo? | Avoid edits to the target repo. | `<parent>/<project>-explainer/`, next to the target repo checkout. |
-| 6 | Language style of the site text? | Writing rules (writing-and-accuracy.md). | ASD-STE100 Simplified Technical English. (Option: plain English.) |
-| 7 | Scope: which parts get full pages? What is out of scope? | Avoids surprises late. | Be generous. Vendor submodules: explain only the interface. |
-| 8 | Name of the site? | Title on every page. | "`{PROJECT}` Explained". |
-| 9 | Look? Show the sample look or a reference site. | Avoids a restyle (pitfalls.md). | Light long-form article look. Never auto dark mode. |
-| 10 | Which commit to pin? | All line numbers depend on it. | The newest commit on the default branch on the day you start. |
+| 1 | Which commit to pin? | All line numbers depend on it. | The HEAD commit id of the checkout. Name it in your first reply. |
+| 2 | Who is the reader? What do they know already? | Sets the basics part and the level of each page. | Knows Python (or the main language of the repo). Knows little about the domain (for example ML). |
+| 3 | Depth: only a beginner guide, or also full study detail? | Decides if every page gets a deep dive. | Both: a beginner start and a full deep dive on every page. |
+| 4 | Local files or published? Are CDN libraries OK? | Decides the link rules and the CDN list. | Local for now, publish later. CDN is OK (cdnjs, jsDelivr, unpkg, Google Fonts). |
+| 5 | Site structure: concepts + tours + code map? One page per file? | Decides the page count. | Concepts + guided tours + a code map with one page per important module. Not one page per file. |
+| 6 | Folder for the explainer repo? | Avoid edits to the target repo. | `<parent>/<project>-explainer/`, next to the target repo checkout. |
+| 7 | Language style of the site text? | Writing rules (writing-and-accuracy.md). | ASD-STE100 Simplified Technical English. (Option: plain English.) |
+| 8 | Scope: which parts get full pages? What is out of scope? | Avoids surprises late. | Be generous. Vendor submodules: explain only the interface. |
+| 9 | Name of the site? | Title on every page. | "`{PROJECT}` Explained". |
+| 10 | Look? Show the sample look or a reference site. | Avoids a restyle (pitfalls.md). | Light long-form article look. Never auto dark mode. |
 | 11 | Git: local commits per stage? Push? Which author identity? | Git rules (process.md). | Commit per stage. Push only when asked. Ask for the author name and email; set them repo-local. |
 | 12 | Stop after Phase 1 for a review? | The user checks look and depth early. | Yes. Stop after Phase 1, unless the user asked for an unattended run ("run unattended"); then write that in `progress.md` as a USER INSTRUCTION. |
 | 13 | Budget: subagents at the same time? Usage ceiling? Model and effort for subagents? Full fact checks or budget mode? | A ~100-page site uses a large part of a usage allowance (process.md, "Budget"). | 2 at a time; full fact checks; stop and wait at the user's ceiling. |

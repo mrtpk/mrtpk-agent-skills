@@ -18,7 +18,7 @@ Inputs:
 
 Check:
 1. Each number in the write-up matches the script output.
-2. Each code block runs and prints what the text says.
+2. Each complete code block runs and prints what the text says. Excerpts (caption "Excerpt" with file:line) and formula blocks are exempt.
 3. Each claim about the design matches the KB. Internal mode: each citation link points to the pinned commit, and the cited lines support the claim.
 4. Each claim about the reference matches the pinned reference. A number quoted from a paper names the paper and matches it exactly.
 5. Overclaims: causes, motives or "requires" statements without evidence.

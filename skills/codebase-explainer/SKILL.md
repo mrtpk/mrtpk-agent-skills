@@ -11,6 +11,14 @@ knowledge of the code. Each page starts simple, then gives a full "Deep dive".
 You act as the **supervisor**. You plan, ask the user, delegate long work to subagents, review, track
 progress and commit. You do not write the pages yourself.
 
+## Hard rules
+
+1. **Pin the commit first.** Your first reply to the user names the full commit id that you propose as the pin.
+   Without a shell, read `.git/HEAD` and the ref file that it names (or `.git/packed-refs`).
+   When you cannot find the id, ask the user for it.
+2. **Questions before files.** Ask the Step 1 questions before you write any file.
+3. **No page before approval.** Write no HTML before the user approves `plan.md`.
+
 ## Files in this skill
 
 | Path | Read it when |
@@ -32,7 +40,8 @@ progress and commit. You do not write the pages yourself.
 
 ### Step 0: Survey the codebase
 
-1. Get a local checkout of the target repo. Do not change it. Note the full HEAD commit id: this is the pin.
+1. Get a local checkout of the target repo. Do not change it. Note the full HEAD commit id: this is the pin
+   (hard rule 1).
 2. Start a survey subagent with template A (`references/subagent-prompts.md`). It reports the folder map,
    the main data flow, the architecture, about 30 concepts and about 20 central files.
 3. Spot-check 3-5 survey claims in the code. Surveys are wrong sometimes (for example, a survey can name an
@@ -40,20 +49,21 @@ progress and commit. You do not write the pages yourself.
 
 ### Step 1: Ask the user, write the plan, get approval
 
-Write a draft `plan.md` and `progress.md` from `templates/` with a concrete page list. Then ask the user
-these questions, each with a proposed default (details in `references/goal-and-questions.md`):
+Ask the user these questions in one message, each with a proposed default (details in
+`references/goal-and-questions.md`). After the answers, write `plan.md` and `progress.md` from `templates/`
+with a concrete page list.
 
-1. Who is the reader, and what do they know already?
-2. Only a beginner guide, or also full study detail? (Suggested: both; a deep dive on every page.)
-3. Local files or published? Are CDN libraries OK?
-4. Structure: basics + concepts + tours + code map + reference? One page per file? (Suggested: one page per important module only.)
-5. Which folder for the explainer repo?
-6. Language style of the site text? (Suggested: ASD-STE100 Simplified Technical English. Plain English
+1. Which commit to pin? (Suggested: the HEAD commit id that you found.)
+2. Who is the reader, and what do they know already?
+3. Only a beginner guide, or also full study detail? (Suggested: both; a deep dive on every page.)
+4. Local files or published? Are CDN libraries OK?
+5. Structure: basics + concepts + tours + code map + reference? One page per file? (Suggested: one page per important module only.)
+6. Which folder for the explainer repo?
+7. Language style of the site text? (Suggested: ASD-STE100 Simplified Technical English. Plain English
    is an option: set `language_style` to `ste` or `plain` in `explainer.json`.)
-7. Scope: what gets full pages, what is out of scope (vendored code, submodules)?
-8. Site name? (Suggested: "<Project> Explained".)
-9. Look? (Suggested: a light article look, like a long-form magazine article; dark only by a toggle.)
-10. Which commit to pin?
+8. Scope: what gets full pages, what is out of scope (vendored code, submodules)?
+9. Site name? (Suggested: "<Project> Explained".)
+10. Look? (Suggested: a light article look, like a long-form magazine article; dark only by a toggle.)
 11. Git: commit per stage? Push? Which author name and email?
 12. Stop after Phase 1 for a review? (Suggested: yes. If the user says "run unattended", skip the stop and
     write that in `progress.md` as a USER INSTRUCTION.)
@@ -71,6 +81,7 @@ section 2 with the date.
 1. Copy the starter kit: `cp -r <this skill>/templates/. <project>-explainer/`. Then copy the diagram
    library from the `svg-figures` skill: `cp <svg-figures>/tools/svglib.py <project>-explainer/diagrams/`.
    Find the `svg-figures` skill. Look first in the folder that contains this skill (`../svg-figures/`). Other places are only examples: `.claude/skills/`, `~/.claude/skills/`, `.cursor/skills/`. When it is absent, stop and tell the user to install `svg-figures` beside this skill.
+   When `diagrams/svglib.py` already exists, do the drift check in `svg-figures/SKILL.md` first.
    Fill in
    `explainer.json`: it is the only file with project values (name, repo path and URL, host, full SHA,
    language style, Prism languages). `git init`; set the author repo-local.

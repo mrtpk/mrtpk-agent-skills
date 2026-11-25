@@ -9,10 +9,17 @@ For each `<folder>/diagrams/<name>.py` (files that start with "_" are helpers an
 
 Add `--with <package>` for each package that a diagram script imports.
 The diagram scripts import `svglib` and `figkit` from --lib (default: the folder of this file).
+
+Fonts: cairosvg uses only the FIRST family of a font-family stack. An unknown first family (for example
+`ui-monospace`) falls back to the default sans font, so mono text renders in sans. Before the PNG step, each
+stack is replaced by its first installed family (from fc-list), or by its last, generic item (`monospace`,
+`sans-serif`). The SVG file does not change.
 """
 
 import argparse
 import os
+import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -20,6 +27,38 @@ from pathlib import Path
 import cairosvg
 
 SCALE = 2
+FONT_ATTR = re.compile(r'font-family="([^"]*)"')
+
+
+def installed_families() -> set[str] | None:
+    """Lower-case family names from fc-list, or None when fc-list is absent."""
+    if not shutil.which("fc-list"):
+        return None
+    out = subprocess.run(["fc-list", ":", "family"], capture_output=True, text=True).stdout
+    return {name.strip().lower() for name in re.split(r"[,\n]", out) if name.strip()}
+
+
+class FontResolver:
+    def __init__(self) -> None:
+        self.installed = installed_families()
+        self.cache: dict[str, str] = {}
+        self.warned: set[str] = set()
+
+    def resolve(self, stack: str) -> str:
+        if stack not in self.cache:
+            names = [n.strip().strip("'\"") for n in stack.split(",") if n.strip()]
+            generic = names[-1] if names else stack
+            pick = generic
+            if self.installed is not None:
+                pick = next((n for n in names[:-1] if n.lower() in self.installed), generic)
+            if pick == generic and generic == "sans-serif" and stack not in self.warned:
+                self.warned.add(stack)
+                print(f"WARN fonts: no font of '{stack}' is installed; the PNG uses the default sans font")
+            self.cache[stack] = pick
+        return self.cache[stack]
+
+    def rewrite(self, svg_text: str) -> str:
+        return FONT_ATTR.sub(lambda m: f'font-family="{self.resolve(m.group(1))}"', svg_text)
 
 
 def main() -> int:
@@ -35,6 +74,7 @@ def main() -> int:
     out_dir = folder / "resources"
     out_dir.mkdir(exist_ok=True)
     env = dict(os.environ, PYTHONPATH=os.pathsep.join([str(a.lib.resolve()), str(folder / "diagrams")]))
+    fonts = FontResolver()
     failed = 0
     for script in scripts:
         svg = out_dir / f"{script.stem}.svg"
@@ -46,7 +86,8 @@ def main() -> int:
             continue
         if proc.stderr.strip():
             print(f"WARN {script.name}: {proc.stderr.strip()}")
-        cairosvg.svg2png(url=str(svg), write_to=str(png), scale=SCALE)
+        svg_text = fonts.rewrite(svg.read_text(encoding="utf-8"))
+        cairosvg.svg2png(bytestring=svg_text.encode("utf-8"), write_to=str(png), scale=SCALE)
         print(f"ok   {png.relative_to(folder)}")
     return 1 if failed else 0
 

@@ -1,0 +1,5 @@
+{
+  "output_dir": "output",
+  "log_level": "INFO",
+  "greeting": "Hello"
+}

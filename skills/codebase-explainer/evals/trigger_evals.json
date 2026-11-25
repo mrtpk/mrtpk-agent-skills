@@ -1,0 +1,11 @@
+[
+  {"query": "Build an HTML study site that teaches the vLLM codebase to new team members, with guided tours.", "should_trigger": true},
+  {"query": "Make an onboarding website for github.com/example-org/storage-engine with diagrams and quizzes.", "should_trigger": true},
+  {"query": "I want a '<Project> Explained' site for this repo, with a code map and a glossary.", "should_trigger": true},
+  {"query": "Create a learning site that walks a beginner through how this compiler works, citing file:line.", "should_trigger": true},
+  {"query": "Write a Markdown deep dive of this repo before we forget how it works.", "should_trigger": false},
+  {"query": "Generate API reference docs from the docstrings with Sphinx.", "should_trigger": false},
+  {"query": "Improve the README of this project.", "should_trigger": false},
+  {"query": "Turn the design doc into a click-through presentation for Friday's meeting.", "should_trigger": false},
+  {"query": "Publish the experiment report in reports/ablation.md as a page.", "should_trigger": false}
+]

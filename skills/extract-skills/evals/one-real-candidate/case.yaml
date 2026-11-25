@@ -1,0 +1,5 @@
+schema_version: "1.1"
+name: one-real-candidate
+expected_outcome: |
+  Only the CI release-check sequence is worth keeping (done three times, with a trap). It goes to a script,
+  or to a skill only with a reason. All other items are rejected with reasons. Nothing is built.

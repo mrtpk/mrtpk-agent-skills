@@ -9,10 +9,17 @@ Script: `build_report_page.py` in this skill folder. Do not edit it for one repo
 
 ## Steps
 
-1. Load the `artifact-design` skill if the Artifact tool is present.
-2. Make sure the report has numbered H2 sections (`## 1. Verdict`, `## 2. ...`).
+1. If the Artifact tool is present, load the `artifact-design` skill only for the publish rules (title,
+   description, icon). The script owns the page design. Do not restyle the page.
+2. Use one work folder inside the workspace for all files of this skill, for example
+   `build/report-page/`. Do not use the skill folder, the report folder, or a folder outside the workspace.
+   Tell the user the path.
+3. Make sure the report has numbered H2 sections (`## 1. Verdict`, `## 2. ...`).
    The script makes the contents rail from them. Section 1 becomes the verdict box.
-3. Write `header.json` in a temporary folder, not in the skill folder:
+   When the report does not have them, add the numbers in a copy in the work folder. Do not change
+   the original report. When the report has no verdict section, ask the user for one. Do not invent it.
+   When the report links images by a relative path, correct the paths in the copy so that they still resolve.
+4. Write `header.json` in the work folder:
 
    ```json
    {
@@ -25,18 +32,18 @@ Script: `build_report_page.py` in this skill folder. Do not edit it for one repo
    ```
 
    Use at most four figures. Take each number from the report. Do not invent a number.
-4. If a table has a column of `yes`/`no` decisions, give its header name with `--kept-column`.
+5. If a table has a column of `yes`/`no` decisions, give its header name with `--kept-column`.
    Only the cells of that column become "kept" and "not kept" labels.
-5. Run:
+6. Run (`<work>` is the work folder):
 
    ```
-   uv run --with markdown python <skill>/build_report_page.py REPORT.md page.html --header header.json [--kept-column Kept]
+   uv run --with markdown python <skill>/build_report_page.py <report> <work>/page.html --header <work>/header.json [--kept-column Kept]
    ```
 
    It prints the size and the section count. Check that the count equals the H2 count.
-6. Publish `page.html` with the Artifact tool (icon `report`). Republish with the same path
+7. Publish `<work>/page.html` with the Artifact tool (icon `report`). Republish with the same path
    after each report change, so the URL stays the same.
-7. When the Artifact tool is not present, add `--standalone` to the command in step 5. The script then
+8. When the Artifact tool is not present, add `--standalone` to the command in step 6. The script then
    writes a full HTML document. Give the user the path of the file.
 
 ## Communication style
@@ -45,7 +52,6 @@ Apply these rules to all text that this skill produces (the header text and the 
 
 - Always write in ASD-STE100 (Simplified Technical English): short sentences, active voice, one instruction per sentence, approved words with one meaning, no idioms.
 - In replies to the user: be blunt. Do not patronize. Do not praise, soften, or pad.
-- In reviews: be honest and brutal. State the verdict and the defects first.
 - Text that this skill makes for other readers (pages, documents, reports, figures) follows the tone rules of this skill, for example neutral words for gaps.
 - Be brief and to the point.
 - Sentence limits: at most 20 words in an instruction, at most 25 words in a description.

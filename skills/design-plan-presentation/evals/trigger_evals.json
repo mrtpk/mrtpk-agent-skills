@@ -1,0 +1,11 @@
+[
+  {"query": "Turn docs/design/sharding.md into an interactive presentation I can click through in Thursday's meeting.", "should_trigger": true},
+  {"query": "Build a walkthrough page of the new architecture for the team meeting, served locally.", "should_trigger": true},
+  {"query": "Add a third act with the failure cases to the presentation in assets/presentation/cache.html.", "should_trigger": true},
+  {"query": "I need a demo page that animates the worked example of the proposal, option A vs B.", "should_trigger": true},
+  {"query": "Make a .pptx deck of the quarterly results.", "should_trigger": false},
+  {"query": "Publish this Markdown report as a static page people read alone.", "should_trigger": false},
+  {"query": "Write the design document for the new sharding scheme.", "should_trigger": false},
+  {"query": "Draw an SVG figure of the request flow for the README.", "should_trigger": false},
+  {"query": "Build a site that teaches this codebase with guided tours.", "should_trigger": false}
+]

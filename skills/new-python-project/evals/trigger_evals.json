@@ -1,0 +1,13 @@
+[
+  {"query": "Create a new Python project called acme-tool.", "should_trigger": true},
+  {"query": "Start a new py project for a CSV-to-JSON converter CLI.", "should_trigger": true},
+  {"query": "Scaffold a Python service named order-sync in ~/code/order-sync.", "should_trigger": true},
+  {"query": "Set up a fresh Python package repo for our pricing library, with uv and Docker.", "should_trigger": true},
+  {"query": "Bootstrap a new python repo, I'll call it log-parser.", "should_trigger": true},
+  {"query": "Add a reports module to this project.", "should_trigger": false},
+  {"query": "Move this repository to a src layout.", "should_trigger": false},
+  {"query": "Review the project structure of this repo.", "should_trigger": false},
+  {"query": "Write a one-file Python script that renames all .jpeg files to .jpg.", "should_trigger": false},
+  {"query": "Create a new Node.js project with TypeScript.", "should_trigger": false},
+  {"query": "Add a new CLI command to my-tool that exports data.", "should_trigger": false}
+]

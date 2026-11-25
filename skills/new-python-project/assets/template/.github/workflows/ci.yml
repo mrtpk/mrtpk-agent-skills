@@ -1,0 +1,116 @@
+# Generic GitHub Actions CI for a uv project. No third-party actions except the uv setup.
+# Keep UV_VERSION equal to the uv_build pin in pyproject.toml and to the uv image tag in the Dockerfile.
+name: ci
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  UV_VERSION: "0.13.7"
+  UV_FROZEN: "1"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: ${{ env.UV_VERSION }}
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+      - run: uv lock --check
+      - run: uv sync --locked
+      - run: uv run ruff format --check .
+      - run: uv run ruff check .
+      - run: uv run mypy
+
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: ${{ env.UV_VERSION }}
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+      - run: uv sync --locked
+      - run: uv run pytest --cov --cov-report=term --cov-report=xml --junitxml=report.xml
+      - name: Keep the test and coverage reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: |
+            report.xml
+            coverage.xml
+          if-no-files-found: ignore
+
+  # Build the wheel, install it outside the project, and run the tests against it.
+  # This job catches missing package data and paths that work only in a checkout.
+  wheel:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: ${{ env.UV_VERSION }}
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+      - run: uv build
+      - name: Test the installed wheel
+        run: |
+          WHEEL=$(ls dist/*.whl)
+          uv run --no-project --with "$WHEEL" \
+            python -c "import my_project; assert 'site-packages' in my_project.__file__, my_project.__file__"
+          uv run --no-project --with "$WHEEL" my-project --version
+          uv run --no-project --with "$WHEEL" --with pytest pytest -p no:cacheprovider
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
+
+  # Build the image on every run. Push it to GHCR only from the default branch and from tags.
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and run the image
+        run: |
+          IMAGE="ghcr.io/${GITHUB_REPOSITORY,,}"
+          SHORT_SHA="${GITHUB_SHA::8}"
+          echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
+          echo "SHORT_SHA=$SHORT_SHA" >> "$GITHUB_ENV"
+          docker build -t "$IMAGE:$SHORT_SHA" .
+          docker run --rm "$IMAGE:$SHORT_SHA" --version
+      - name: Push the image
+        if: github.event_name == 'push' && (github.ref_type == 'tag' || github.ref_name == github.event.repository.default_branch)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "$GH_TOKEN" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          docker push "$IMAGE:$SHORT_SHA"
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+            docker tag "$IMAGE:$SHORT_SHA" "$IMAGE:${{ github.ref_name }}"
+            docker push "$IMAGE:${{ github.ref_name }}"
+          else
+            docker tag "$IMAGE:$SHORT_SHA" "$IMAGE:latest"
+            docker push "$IMAGE:latest"
+          fi

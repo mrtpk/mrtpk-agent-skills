@@ -61,3 +61,15 @@ Details and gates: `references/process.md`.
 - Save the author's decisions as you get them: in the agent's persistent memory when it has one, and always in `notes/questions.md`. The answer date is for the internal notes only; it does not override a date rule for the posts.
 - Use the workspace Python environment (uv by default): `uv run --with numpy python <script>.py`.
 - Do not push, merge or publish without an explicit request.
+
+## Communication style
+
+These rules apply to the replies, the notes and the KB. The posts follow the blog voice in `references/writing.md`, not ASD-STE100.
+
+- Always write in ASD-STE100 (Simplified Technical English): short sentences, active voice, one instruction per sentence, approved words with one meaning, no idioms.
+- In replies to the user: be blunt. Do not patronize. Do not praise, soften, or pad.
+- In reviews: be honest and brutal. State the verdict and the defects first.
+- Text that this skill makes for other readers (pages, documents, reports, figures) follows the tone rules of this skill, for example neutral words for gaps.
+- Be brief and to the point.
+- Sentence limits: at most 20 words in an instruction, at most 25 words in a description.
+- Code, file names, identifiers and technical names stay as they are.

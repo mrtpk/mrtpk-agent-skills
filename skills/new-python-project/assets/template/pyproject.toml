@@ -1,0 +1,73 @@
+[build-system]
+requires = ["uv_build>=0.13.7,<0.14"]
+build-backend = "uv_build"
+
+[project]
+name = "my-project"
+version = "0.1.0"
+description = "Short description of my-project."
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Typing :: Typed",
+]
+# Runtime dependencies. Pin with lower bounds; uv.lock holds the exact versions.
+dependencies = []
+
+# Optional features that users install with `pip install my-project[<extra>]`.
+[project.optional-dependencies]
+
+[project.scripts]
+my-project = "my_project.cli:main"
+
+# Development tools. `uv sync` installs the `dev` group by default.
+[dependency-groups]
+dev = [
+    "mypy>=1.17",
+    "pre-commit>=4.0",
+    "pytest>=8.4",
+    "pytest-cov>=6.0",
+    "ruff>=0.12",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+    "SIM", # flake8-simplify
+    "PTH", # use pathlib
+    "RUF", # ruff-specific rules
+]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["src", "tests"]
+mypy_path = "src"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["-ra", "--strict-markers", "--strict-config"]
+markers = [
+    "integration: tests that run the package as a subprocess",
+]
+
+[tool.coverage.run]
+source = ["my_project"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+exclude_also = ["if TYPE_CHECKING:", "raise NotImplementedError"]
