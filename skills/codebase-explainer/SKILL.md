@@ -27,7 +27,7 @@ progress and commit. You do not write the pages yourself.
 | `references/page-templates.md` | when you plan the page list, and before you review pages |
 | `references/style-and-diagrams.md` | before you touch CSS or diagrams, or review screenshots |
 | `references/voice.md` | before you write text for readers: the language and tone rules (synced from `brand-kit`) |
-| `references/writing-and-accuracy.md` | give it to every writer and fact checker |
+| `references/writing-and-accuracy.md` | give it, with `references/voice.md`, to every writer and fact checker |
 | `references/tooling.md` | when you set up the folder, or when a build error is unclear |
 | `references/process.md` | before Phase 0 and before the full build (phases, batches, git) |
 | `references/subagent-prompts.md` | each time you start a subagent (templates A-G) |

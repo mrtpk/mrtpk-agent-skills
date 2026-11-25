@@ -10,24 +10,11 @@ Part of the `codebase-explainer` skill. Placeholders: `{PROJECT}`, `{SHA}`, `{SH
 
 The site language is a project choice (goal-and-questions.md, question 6; `language_style` in
 `explainer.json`). **Suggested default: ASD-STE100** (`ste`). With plain English, keep
-rules 3, 6, 7, 8 and 10 below and drop the word limits.
+rules 3, 6, 7, 8 and 10 in `references/voice.md` and drop the word limits.
 
-ASD-STE100 rules for site text (code, file names and technical names stay as they are):
-1. Approved, simple words. One word for one meaning.
-2. Max 20 words in an instruction sentence, max 25 in a descriptive sentence.
-3. Active voice. Passive only when the actor is unknown or not important.
-4. Simple tenses. No "-ing" forms as verbs.
-5. One instruction per sentence; the instruction first.
-6. Max 6 sentences per paragraph; one topic per paragraph.
-7. Numbered lists for steps; bulleted lists for items with no order.
-8. Warnings and cautions **before** the step they apply to.
-9. Keep articles ("the", "a").
-10. No idioms, jokes, slang or rhetorical questions (quiz questions are questions).
-
-Word substitutions: utilize/leverage → use; perform → do; initiate/commence → start; terminate → stop;
-obtain/retrieve → get; require → need, must; prior to → before; in order to → to; ensure → make sure;
-approximately → about; numerous → many; via → through; due to → because of; delete "robust",
-"seamless", "powerful", "harness" and say the fact.
+The ASD-STE100 rules 1-10 and the word substitutions are in `references/voice.md` (synced from `brand-kit`).
+Give it to every writer and fact checker with this file. `templates/STYLE.md` §6 is the project copy of the
+same rules: keep its rule list and substitution table equal to `references/voice.md`.
 
 **Fixed vocabulary.** Write a table in `STYLE.md` of the project's words: one word per thing, and the
 words not to use for it. LLM engine example: request (what a user sends) / sequence (the engine object);
@@ -36,9 +23,6 @@ block (KV cache block), not page or chunk; kernel (device program), not op.
 
 **Technical terms.** Define each term at its first use on the page and link it with `{{term id}}`.
 Link only the first use (and again in a far deep dive).
-
-**Tone.** Short and calm. Say what the code does, then why. A concrete example with real numbers is
-better than an abstract sentence.
 
 ### Accuracy rules
 

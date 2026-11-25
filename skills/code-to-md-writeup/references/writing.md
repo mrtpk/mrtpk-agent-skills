@@ -4,11 +4,10 @@ When the target repo has a style guide, it wins. Otherwise use this file.
 
 ## Voice
 
-- ASD-STE100 Simplified Technical English (SKILL.md, "Communication style"). Neutral technical voice.
+- Language, word substitutions and tone: `references/voice.md` (ASD-STE100, synced from `brand-kit`). Neutral technical voice.
 - "We" for the team. Name a person only for credit, and only when the owner approves it.
 - Define each term once, in one sentence, at its first use. Then give a small example with real numbers.
 - One idea per section. Start the section with the question it answers or with its conclusion.
-- No hype words: robust, seamless, powerful, leverage, game-changer, simply.
 - No filler openers or closers. Each part ends with a short "Summary" section of 2-4 bullets.
 
 ## Structure of one part

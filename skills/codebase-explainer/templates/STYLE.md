@@ -454,7 +454,7 @@ inference engine; replace them):
 | via | through, with |
 | due to | because of |
 | it is possible to | you can |
-| harness, robust, seamless, powerful | (delete; say the fact) |
+| harness (as a verb), robust, seamless, powerful, game-changer, simply | (delete; say the fact) |
 
 **Before and after**
 

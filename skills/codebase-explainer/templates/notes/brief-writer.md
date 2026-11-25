@@ -14,7 +14,7 @@ glossary terms you own. This file gives everything else. It is binding.
 3. instructions-svg.md (STYLE.md §10 overrides it: canvas 1100, min text 11).
 4. notes/facts.md: [FC] and [S] entries are verified; [W] entries are not. Still open the code and cite it yourself.
 5. The model page of your page type (finished and fact-checked): <concept> · <tour> · <module> · <basics> · <reference>.
-6. skills/codebase-explainer/references/writing-and-accuracy.md and page-templates.md.
+6. skills/codebase-explainer/references/writing-and-accuracy.md, voice.md and page-templates.md.
 7. notes/survey/*.md: a guide with file:line hints. NOT a source.
 
 ## Content rules

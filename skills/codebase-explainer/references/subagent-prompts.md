@@ -51,7 +51,7 @@ Mark each claim with file:line. Say "not checked" when you did not open the file
 You set up the tooling for "{SITE_NAME}", a static study site about {PROJECT}.
 Explainer folder: {EXPLAINER_PATH}. Target repo (READ ONLY): {TARGET_PATH} at {SHA}.
 Read these files of the codebase-explainer skill first: {SKILL_PATH}/references/page-templates.md,
-style-and-diagrams.md, writing-and-accuracy.md and tooling.md.
+style-and-diagrams.md, writing-and-accuracy.md, voice.md and tooling.md.
 The starter kit ({SKILL_PATH}/templates/) is already copied into the explainer folder.
 
 Do:

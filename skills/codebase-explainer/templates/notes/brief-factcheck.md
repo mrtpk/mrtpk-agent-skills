@@ -9,7 +9,7 @@ gives the batch name, the files, and the writer's list of uncertain claims.
 - Sibling site (optional, to check recap lines): <path or URL>
 
 ## Read first
-STYLE.md §6-7; skills/codebase-explainer/references/writing-and-accuracy.md; notes/facts.md ([FC]/[S] =
+STYLE.md §6-7; skills/codebase-explainer/references/writing-and-accuracy.md; skills/codebase-explainer/references/voice.md; notes/facts.md ([FC]/[S] =
 verified; [W] = not); notes/brief-writer.md §"Accuracy lessons" (the defect types found so far).
 
 ## For every claim
